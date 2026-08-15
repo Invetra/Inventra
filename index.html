@@ -384,7 +384,78 @@
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript">
   
 </script>
-  
+  <script>
+function startScanner() {
+  document.getElementById("scannerBox").style.display = "block";
+
+  document.getElementById("scanResult").textContent =
+    "Starting camera...";
+
+  const scanner = new Html5Qrcode("reader")
+
+  scanner.start(
+    { facingMode: "environment" },
+    {
+      fps: 10,
+      qrbox: {
+        width: 250,
+        height: 150
+      }
+    },
+    function(decodedText) {
+
+  const product = productDatabase[decodedText];
+
+  if (product) {
+
+  document.getElementById("scanResult").textContent =
+    "✅ " + product.name + " found! Adding to cart...";
+
+  scanner.stop();
+
+  addToCart(product.name, product.price);
+
+  return;
+
+} else {
+
+    document.getElementById("scanResult").textContent =
+      "❌ Product not found.";
+
+  }
+
+  scanner.stop();
+}
+  );
+}
+</script>
+  const productDatabase = {
+  "8901234567890": {
+    name: "Rice",
+    price: 60
+  },
+
+  "8901234567891": {
+    name: "Sugar",
+    price: 45
+  },
+
+  "8901234567892": {
+    name: "Biscuits",
+    price: 20
+  },
+
+  "8901234567893": {
+    name: "Chocolate",
+    price: 10
+  },
+
+  "8901234567894": {
+    name: "Kurkure",
+    price: 10
+  }
+};
+
 </body>
   <script>
   const searchBox = document.getElementById("productSearch");
