@@ -338,7 +338,7 @@
   
 <section class="section screen" id="cart" style="display:none;">
 
-  <h2 My Cart</h2>
+  <h2> My Cart</h2>
 
   <p>Your selected products will appear here.</p>
 
@@ -491,32 +491,34 @@ function addToCart(name, price) {
   updateCart();
   showScreen("cart");
 }
-    const cartItems = document.getElementById("cartItems");
-    const cartTotal = document.getElementById("cartTotal");
+    // Update cart
+function updateCart() {
 
-    cartItems.innerHTML = "";
+  const cartItems = document.getElementById("cartItems");
+  const cartTotal = document.getElementById("cartTotal");
 
-    let total = 0;
+  cartItems.innerHTML = "";
 
-    cart.forEach(function(item) {
+  let total = 0;
 
-  const product = document.createElement("p");
+  cart.forEach(function(item) {
 
-  const itemTotal = item.price * item.quantity;
+    const product = document.createElement("p");
 
-  product.textContent =
-    "🛒 " + item.name +
-    " × " + item.quantity +
-    " = ₹" + itemTotal;
+    const itemTotal = item.price * item.quantity;
 
-  cartItems.appendChild(product);
+    product.textContent =
+      "🛒 " + item.name +
+      " × " + item.quantity +
+      " = ₹" + itemTotal;
 
-  total += itemTotal;
-});
+    cartItems.appendChild(product);
 
-    cartTotal.textContent = "Total: ₹" + total;
-  }
+    total += itemTotal;
+  });
 
+  cartTotal.textContent = "Total: ₹" + total;
+}
   // Product search
   const searchBox = document.getElementById("productSearch");
   const products = document.querySelectorAll("#products .card");
