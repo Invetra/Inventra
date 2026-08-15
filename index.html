@@ -357,10 +357,6 @@
   🧾 Done Shopping & Generate Bill
 </button>
 <br><br>
-
-<button class="button" onclick="generateBill()">
-  🧾 Proceed to Billing
-</button>
 </section>
   <section class="section about" id="about">
 
@@ -398,8 +394,35 @@
 
     <br>
 
-    <button class="button" onclick="alert('Payment successful! Thank you for shopping with Inventra.')">
-      💳 Pay Now
+    <button class="button" onclick="proceedToPayment()">
+  💳 Pay Now
+</button>
+
+  </div>
+
+</section>
+  <section class="section screen" id="payment" style="display:none;">
+
+  <h2>📱 Payment</h2>
+
+  <p>Scan the QR code to complete your payment.</p>
+
+  <div class="card" style="max-width:500px; margin:30px auto;">
+
+    <h2>Inventra Payment</h2>
+
+    <p id="paymentAmount" style="font-size:24px; font-weight:bold;">
+      Amount: ₹0
+    </p>
+
+    <div id="qrcode" style="margin:25px auto; display:flex; justify-content:center;"></div>
+
+    <p style="margin:20px 0;">
+      📱 Scan this QR code to simulate payment
+    </p>
+
+    <button class="button" onclick="paymentComplete()">
+      ✅ Payment Completed
     </button>
 
   </div>
@@ -410,7 +433,7 @@
     © 2026 Inventra | Smart Trolley Shopping System
   </footer>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
   // Product database
   const productDatabase = {
@@ -607,6 +630,40 @@
     "Date: " + new Date().toLocaleString();
 
   showScreen("billing");
+}
+  function proceedToPayment() {
+
+  let total = 0;
+
+  cart.forEach(function(item) {
+    total += item.price;
+  });
+
+  document.getElementById("paymentAmount").textContent =
+    "Amount: ₹" + total;
+
+  showScreen("payment");
+
+  const qrBox = document.getElementById("qrcode");
+
+  qrBox.innerHTML = "";
+
+  new QRCode(qrBox, {
+    text: "INVENTRA DEMO PAYMENT | Amount: ₹" + total,
+    width: 220,
+    height: 220
+  });
+}
+
+function paymentComplete() {
+
+  alert("✅ Payment completed successfully!");
+
+  cart = [];
+
+  updateCart();
+
+  showScreen("home");
 }
 </script>
 
