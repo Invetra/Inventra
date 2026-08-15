@@ -277,11 +277,18 @@
   
   <div id="scannerBox" style="display:none; margin:25px 0;">
   <h3>📷 Scan Product Barcode</h3>
-  <video id="scanner" width="100%" style="max-width:500px; border-radius:12px;" autoplay></video>
-  <p id="scanResult">Point your camera at a barcode.</p>
-  <button class="button" onclick="stopScanner()">Close Scanner</button>
-</div>
 
+  <div id="reader" style="width:100%; max-width:500px; margin:20px auto;"></div>
+
+  <p id="scanResult">
+    Point your camera at a barcode.
+  </p>
+
+  <button class="button" onclick="stopScanner()">
+    Close Scanner
+  </button>
+
+</div>
   <div class="features">
 
     <div class="card">
@@ -373,7 +380,11 @@
   <footer>
     © 2026 Inventra | Smart Trolley Shopping System
   </footer>
-
+  
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript">
+  
+</script>
+  
 </body>
   <script>
   const searchBox = document.getElementById("productSearch");
