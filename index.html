@@ -273,6 +273,14 @@
 >
 
   <p>Select a product to view its details.</p>
+   <button class="button" onclick="startScanner()">📷 Scan Product</button>
+  
+  <div id="scannerBox" style="display:none; margin:25px 0;">
+  <h3>📷 Scan Product Barcode</h3>
+  <video id="scanner" width="100%" style="max-width:500px; border-radius:12px;" autoplay></video>
+  <p id="scanResult">Point your camera at a barcode.</p>
+  <button class="button" onclick="stopScanner()">Close Scanner</button>
+</div>
 
   <div class="features">
 
@@ -293,7 +301,7 @@
       <p><strong>₹45</strong></p>
       <p>📍 Aisle 2</p>
       <br>
-  <a href="#" class="button" onclick="addToCart('Rice', 60)">Add to Cart</a>
+  <a href="#" class="button" onclick="addToCart('Sugar', 45)">Add to Cart</a>
     </div>
 
     <div class="card">
@@ -303,7 +311,7 @@
       <p><strong>₹30</strong></p>
       <p>📍 Aisle 3</p>
       <br>
- <a href="#" class="button" onclick="addToCart('Rice', 60)">Add to Cart</a>
+ <a href="#" class="button" onclick="addToCart('Milk', 30)">Add to Cart</a>
     </div>
     
       <div class="card">
@@ -313,7 +321,7 @@
       <p><strong>₹10</strong></p>
       <p>📍 Aisle 4</p>
       <br>
-<a href="#" class="button" onclick="addToCart('Rice', 60)">Add to Cart</a>
+<a href="#" class="button" onclick="addToCart('Chocolate', 10)">Add to Cart</a>
     </div>
     
       <div class="card">
@@ -323,7 +331,7 @@
       <p><strong>₹10</strong></p>
       <p>📍 Aisle 5</p>
       <br>
-<a href="#" class="button" onclick="addToCart('Rice', 60)">Add to Cart</a>
+<a href="#" class="button" onclick="addToCart('Kurkure', 10)">Add to Cart</a>
     </div>
     
 
