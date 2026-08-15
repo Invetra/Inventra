@@ -1,4 +1,4 @@
-*<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+     font-family: Arial, sans-serif;
     }
 
     body {
@@ -472,42 +472,6 @@
   }
 
   // Add product to cart
-  function addToCart(name, price) {
-
-  const existingItem = cart.find(function(item) {
-    return item.name === name;
-  });
-
-  if (existingItem) {
-    existingItem.quantity++;
-  } else {
-    cart.push({
-      name: name,
-      price: price,
-      quantity: 1
-    });
-  }
-
-  updateCart();
-  showScreen("cart");
-function addToCart(name, price) {
-
-  const existingItem = cart.find(function(item) {
-    return item.name === name;
-  });
-
-  if (existingItem) {
-    existingItem.quantity++;
-  } else {
-    cart.push({
-      name: name,
-      price: price,
-      quantity: 1
-    });
-  }
-
-  updateCart();
-  showScreen("cart");
 function addToCart(name, price) {
 
   const existingItem = cart.find(function(item) {
@@ -527,9 +491,6 @@ function addToCart(name, price) {
   updateCart();
   showScreen("cart");
 }
-
-  // Update cart
-  function updateCart() {
     const cartItems = document.getElementById("cartItems");
     const cartTotal = document.getElementById("cartTotal");
 
@@ -727,5 +688,4 @@ function paymentComplete() {
 </script>
 
 </body>
-</html>
 </html>
