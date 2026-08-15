@@ -351,7 +351,11 @@
   <button class="button" onclick="showScreen('products')">
     Continue Shopping
   </button>
+<br><br>
 
+<button class="button" onclick="generateBill()">
+  🧾 Proceed to Billing
+</button>
 </section>
   <section class="section about" id="about">
 
@@ -365,7 +369,37 @@
     </p>
 
   </section>
+<section class="section screen" id="billing" style="display:none;">
 
+  <h2>🧾 Inventra Bill</h2>
+
+  <p>Thank you for shopping with us!</p>
+
+  <div class="card" style="max-width:600px; margin:30px auto; text-align:left;">
+
+    <h3 style="text-align:center;">INVENTRA</h3>
+
+    <p id="billDate"></p>
+
+    <hr><br>
+
+    <div id="billItems"></div>
+
+    <hr>
+
+    <h2 id="billTotal" style="text-align:right;">
+      Total: ₹0
+    </h2>
+
+    <br>
+
+    <button class="button" onclick="alert('Payment successful! Thank you for shopping with Inventra.')">
+      💳 Pay Now
+    </button>
+
+  </div>
+
+</section>
 
   <footer>
     © 2026 Inventra | Smart Trolley Shopping System
@@ -535,6 +569,40 @@
 
     document.getElementById("scannerBox").style.display = "none";
   }
+  function generateBill() {
+
+  const billItems = document.getElementById("billItems");
+  const billTotal = document.getElementById("billTotal");
+  const billDate = document.getElementById("billDate");
+
+  billItems.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach(function(item) {
+
+    const itemRow = document.createElement("p");
+
+    itemRow.style.display = "flex";
+    itemRow.style.justifyContent = "space-between";
+    itemRow.style.margin = "10px 0";
+
+    itemRow.innerHTML =
+      "<span>" + item.name + "</span>" +
+      "<strong>₹" + item.price + "</strong>";
+
+    billItems.appendChild(itemRow);
+
+    total += item.price;
+  });
+
+  billTotal.textContent = "Total: ₹" + total;
+
+  billDate.textContent =
+    "Date: " + new Date().toLocaleString();
+
+  showScreen("billing");
+}
 </script>
 
 </body>
