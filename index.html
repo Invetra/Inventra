@@ -187,7 +187,7 @@
     </nav>
   </header>
 
-  <section class="hero" id="home">
+  <section class="hero screen" id="home">
 
     <div class="hero-text">
       <h1>Welcome to <span>Inventra</span></h1>
@@ -197,7 +197,7 @@
         shopping faster, easier and more efficient.
       </p>
 
-      <a href="#features" class="button">Explore Features</a>
+     <a href="#" class="button" onclick="showScreen('floor')">Start Shopping</a>
     </div>
 
     <div class="trolley">
@@ -247,7 +247,7 @@
     </div>
 
   </section>
-  <section class="section" id="floor">
+  <section class="section screen" id="floor" style="display:none;">
 
   <h2>🏢 Floor 1</h2>
 
@@ -258,11 +258,11 @@
     <h3>Grocery Department</h3>
     <p>Rice, sugar, milk, biscuits, cooking oil and more.</p>
     <br>
-    <a href="#products" class="button">View Products</a>
+  <a href="#" class="button" onclick="showScreen('products')">View Products</a>
   </div>
 
 </section>
-<section class="section" id="products">
+<section class="section screen" id="products" style="display:none;">
 
   <h2>🛍️ Products</h2>
   <input 
@@ -346,5 +346,14 @@
       }
     });
   });
+</script>
+  <script>
+  function showScreen(screenId) {
+    document.querySelectorAll(".screen").forEach(function(screen) {
+      screen.style.display = "none";
+    });
+
+    document.getElementById(screenId).style.display = "block";
+  }
 </script>
 </html>
