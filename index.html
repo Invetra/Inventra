@@ -396,12 +396,13 @@ function startScanner() {
   scanner.start(
     { facingMode: "environment" },
     {
-      fps: 10,
-      qrbox: {
-        width: 250,
-        height: 150
-      }
-    },
+  fps: 15,
+  qrbox: {
+    width: 300,
+    height: 150
+  },
+  aspectRatio: 1.777778
+}
     function(decodedText) {
 
   const product = productDatabase[decodedText];
