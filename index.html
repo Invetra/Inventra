@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+*<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -473,14 +473,60 @@
 
   // Add product to cart
   function addToCart(name, price) {
+
+  const existingItem = cart.find(function(item) {
+    return item.name === name;
+  });
+
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
     cart.push({
       name: name,
-      price: price
+      price: price,
+      quantity: 1
     });
-
-    updateCart();
-    showScreen("cart");
   }
+
+  updateCart();
+  showScreen("cart");
+function addToCart(name, price) {
+
+  const existingItem = cart.find(function(item) {
+    return item.name === name;
+  });
+
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    cart.push({
+      name: name,
+      price: price,
+      quantity: 1
+    });
+  }
+
+  updateCart();
+  showScreen("cart");
+function addToCart(name, price) {
+
+  const existingItem = cart.find(function(item) {
+    return item.name === name;
+  });
+
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    cart.push({
+      name: name,
+      price: price,
+      quantity: 1
+    });
+  }
+
+  updateCart();
+  showScreen("cart");
+}
 
   // Update cart
   function updateCart() {
@@ -492,15 +538,20 @@
     let total = 0;
 
     cart.forEach(function(item) {
-      const product = document.createElement("p");
 
-      product.textContent =
-        "🛒 " + item.name + " - ₹" + item.price;
+  const product = document.createElement("p");
 
-      cartItems.appendChild(product);
+  const itemTotal = item.price * item.quantity;
 
-      total += item.price;
-    });
+  product.textContent =
+    "🛒 " + item.name +
+    " × " + item.quantity +
+    " = ₹" + itemTotal;
+
+  cartItems.appendChild(product);
+
+  total += itemTotal;
+});
 
     cartTotal.textContent = "Total: ₹" + total;
   }
@@ -609,20 +660,28 @@
 
   cart.forEach(function(item) {
 
-    const itemRow = document.createElement("p");
+  const itemRow = document.createElement("p");
 
-    itemRow.style.display = "flex";
-    itemRow.style.justifyContent = "space-between";
-    itemRow.style.margin = "10px 0";
+  const itemTotal = item.price * item.quantity;
 
-    itemRow.innerHTML =
-      "<span>" + item.name + "</span>" +
-      "<strong>₹" + item.price + "</strong>";
+  itemRow.style.display = "flex";
+  itemRow.style.justifyContent = "space-between";
+  itemRow.style.margin = "10px 0";
 
-    billItems.appendChild(itemRow);
+  itemRow.innerHTML =
+    "<span>" +
+    item.name +
+    " × " +
+    item.quantity +
+    "</span>" +
+    "<strong>₹" +
+    itemTotal +
+    "</strong>";
 
-    total += item.price;
-  });
+  billItems.appendChild(itemRow);
+
+  total += itemTotal;
+});
 
   billTotal.textContent = "Total: ₹" + total;
 
