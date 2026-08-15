@@ -283,7 +283,7 @@
       <p><strong>₹60</strong></p>
       <p>📍 Aisle 1</p>
       <br>
-      <a href="#" class="button">Scan Product</a>
+      <a href="#" class="button" onclick="addToCart('Rice', 60)">Add to Cart</a>
     </div>
 
     <div class="card">
@@ -293,7 +293,7 @@
       <p><strong>₹45</strong></p>
       <p>📍 Aisle 2</p>
       <br>
-      <a href="#" class="button">Scan Product</a>
+  <a href="#" class="button" onclick="addToCart('Rice', 60)">Add to Cart</a>
     </div>
 
     <div class="card">
@@ -303,7 +303,7 @@
       <p><strong>₹30</strong></p>
       <p>📍 Aisle 3</p>
       <br>
-      <a href="#" class="button">Scan Product</a>
+ <a href="#" class="button" onclick="addToCart('Rice', 60)">Add to Cart</a>
     </div>
     
       <div class="card">
@@ -313,7 +313,7 @@
       <p><strong>₹10</strong></p>
       <p>📍 Aisle 4</p>
       <br>
-      <a href="#" class="button">Scan Product</a>
+<a href="#" class="button" onclick="addToCart('Rice', 60)">Add to Cart</a>
     </div>
     
       <div class="card">
@@ -323,7 +323,7 @@
       <p><strong>₹10</strong></p>
       <p>📍 Aisle 5</p>
       <br>
-      <a href="#" class="button">Scan Product</a>
+<a href="#" class="button" onclick="addToCart('Rice', 60)">Add to Cart</a>
     </div>
     
 
@@ -392,6 +392,41 @@
     });
 
     document.getElementById(screenId).style.display = "block";
+  }
+</script>
+  <script>
+  let cart = [];
+
+  function addToCart(name, price) {
+    cart.push({
+      name: name,
+      price: price
+    });
+
+    updateCart();
+
+    showScreen('cart');
+  }
+
+  function updateCart() {
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
+    cartItems.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach(function(item) {
+      const product = document.createElement("p");
+
+      product.textContent = "🛒 " + item.name + " - ₹" + item.price;
+
+      cartItems.appendChild(product);
+
+      total += item.price;
+    });
+
+    cartTotal.textContent = "Total: ₹" + total;
   }
 </script>
 </html>
