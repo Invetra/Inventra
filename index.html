@@ -265,6 +265,12 @@
 <section class="section" id="products">
 
   <h2>🛍️ Products</h2>
+  <input 
+  type="text" 
+  id="productSearch" 
+  placeholder="🔎 Search for a product..."
+  style="width: 90%; max-width: 500px; padding: 15px; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px;"
+>
 
   <p>Select a product to view its details.</p>
 
@@ -320,4 +326,22 @@
   </footer>
 
 </body>
+  <script>
+  const searchBox = document.getElementById("productSearch");
+  const products = document.querySelectorAll("#products .card");
+
+  searchBox.addEventListener("input", function() {
+    const searchText = this.value.toLowerCase();
+
+    products.forEach(function(product) {
+      const productName = product.querySelector("h3").textContent.toLowerCase();
+
+      if (productName.includes(searchText)) {
+        product.style.display = "block";
+      } else {
+        product.style.display = "none";
+      }
+    });
+  });
+</script>
 </html>
