@@ -297,6 +297,11 @@
       <p>1 kg</p>
       <p><strong>₹60</strong></p>
       <p>📍 Aisle 1</p>
+      <br>
+
+<button class="button" onclick="navigateToProduct('Rice', 'Aisle 1')">
+  🧭 Navigate
+</button>
     </div>
 
     <div class="card">
@@ -401,34 +406,39 @@
   </div>
 
 </section>
-  <section class="section screen" id="payment" style="display:none;">
+ <section class="section screen" id="navigation" style="display:none;">
 
-  <h2>📱 Payment</h2>
+  <h2>🧭 Product Navigation</h2>
 
-  <p>Scan the QR code to complete your payment.</p>
+  <p id="navigationProduct">
+    Find your product easily inside the store.
+  </p>
 
-  <div class="card" style="max-width:500px; margin:30px auto;">
+  <div class="card" style="max-width:600px; margin:30px auto;">
 
-    <h2>Inventra Payment</h2>
+    <h3>📍 Your Destination</h3>
 
-    <p id="paymentAmount" style="font-size:24px; font-weight:bold;">
-      Amount: ₹0
+    <p id="navigationAisle" style="font-size:22px; margin:20px 0;">
+      Aisle 1
     </p>
 
-    <div id="qrcode" style="margin:25px auto; display:flex; justify-content:center;"></div>
+    <div style="font-size:70px; margin:20px;">
+      🛒 ➡️ 🛍️
+    </div>
 
-    <p style="margin:20px 0;">
-      📱 Scan this QR code to simulate payment
+    <p>
+      Follow the direction to reach your product.
     </p>
 
-    <button class="button" onclick="paymentComplete()">
-      ✅ Payment Completed
+    <br>
+
+    <button class="button" onclick="showScreen('products')">
+      ← Back to Products
     </button>
 
   </div>
 
 </section>
-
   <footer>
     © 2026 Inventra | Smart Trolley Shopping System
   </footer>
@@ -445,7 +455,7 @@
       name: "Sugar",
       price: 45
     },
-    "8901234567892": {
+    "8901765085344": {
       name: "Biscuits",
       price: 20
     },
@@ -470,6 +480,16 @@
 
     document.getElementById(screenId).style.display = "block";
   }
+  function navigateToProduct(productName, aisle) {
+
+  document.getElementById("navigationProduct").textContent =
+    "🛍️ Product: " + productName;
+
+  document.getElementById("navigationAisle").textContent =
+    "📍 " + aisle;
+
+  showScreen("navigation");
+}
 
   // Add product to cart
 function addToCart(name, price) {
