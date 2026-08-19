@@ -399,7 +399,7 @@
 
     <br>
 
-    <button class="button" onclick="alert('PAY BUTTON IS WORKING')">
+    <button class="button" onclick="proceedToPayment()">
   💳 Pay Now
 </button>
   </div>
@@ -763,13 +763,21 @@ function removeItem(index) {
 
   qrBox.innerHTML = "";
 
-  new QRCode(qrBox, {
-    text: "INVENTRA DEMO PAYMENT | Amount: ₹" + total,
-    width: 220,
-    height: 220
-  });
-}
+  if (typeof QRCode !== "undefined") {
 
+    new QRCode(qrBox, {
+      text: "INVENTRA DEMO PAYMENT | Amount: ₹" + total,
+      width: 220,
+      height: 220
+    });
+
+  } else {
+
+    qrBox.innerHTML =
+      "<p style='color:red;'>QR Code library could not load.</p>";
+
+  }
+}
 function paymentComplete() {
 
   alert("✅ Payment completed successfully!");
