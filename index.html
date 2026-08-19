@@ -492,6 +492,7 @@ function addToCart(name, price) {
   showScreen("cart");
 }
     // Update cart
+// Update cart
 function updateCart() {
 
   const cartItems = document.getElementById("cartItems");
@@ -501,16 +502,55 @@ function updateCart() {
 
   let total = 0;
 
-  cart.forEach(function(item) {
+  cart.forEach(function(item, index) {
 
-    const product = document.createElement("p");
+    const product = document.createElement("div");
+
+    product.style.display = "flex";
+    product.style.justifyContent = "space-between";
+    product.style.alignItems = "center";
+    product.style.padding = "15px";
+    product.style.margin = "10px 0";
+    product.style.background = "#f5f7fb";
+    product.style.borderRadius = "10px";
 
     const itemTotal = item.price * item.quantity;
 
-    product.textContent =
-      "🛒 " + item.name +
-      " × " + item.quantity +
-      " = ₹" + itemTotal;
+    product.innerHTML = `
+      <div style="text-align:left;">
+        <strong>🛒 ${item.name}</strong>
+        <br>
+        ₹${item.price} × ${item.quantity}
+        = <strong>₹${itemTotal}</strong>
+      </div>
+
+      <div>
+        <button 
+          class="button"
+          onclick="decreaseQuantity(${index})"
+          style="padding:8px 12px;">
+          −
+        </button>
+
+        <span style="margin:0 10px; font-weight:bold;">
+          ${item.quantity}
+        </span>
+
+        <button 
+          class="button"
+          onclick="increaseQuantity(${index})"
+          style="padding:8px 12px;">
+          +
+        </button>
+
+        <button 
+          class="button"
+          onclick="removeItem(${index})"
+          style="padding:8px 12px; background:#dc2626; margin-left:8px;">
+          🗑️
+        </button>
+      </div>
+    `;
 
     cartItems.appendChild(product);
 
@@ -518,6 +558,40 @@ function updateCart() {
   });
 
   cartTotal.textContent = "Total: ₹" + total;
+}
+
+
+// Increase quantity
+function increaseQuantity(index) {
+
+  cart[index].quantity++;
+
+  updateCart();
+}
+
+
+// Decrease quantity
+function decreaseQuantity(index) {
+
+  if (cart[index].quantity > 1) {
+
+    cart[index].quantity--;
+
+  } else {
+
+    cart.splice(index, 1);
+  }
+
+  updateCart();
+}
+
+
+// Remove product
+function removeItem(index) {
+
+  cart.splice(index, 1);
+
+  updateCart();
 }
   // Product search
   const searchBox = document.getElementById("productSearch");
@@ -658,7 +732,7 @@ function updateCart() {
   let total = 0;
 
   cart.forEach(function(item) {
-    total += item.price;
+    total += item.price * item.quantity;
   });
 
   document.getElementById("paymentAmount").textContent =
