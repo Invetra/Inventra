@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-     font-family: Arial, sans-serif;
+      font-family: Arial, sans-serif;
     }
 
     body {
@@ -197,11 +197,58 @@
         shopping faster, easier and more efficient.
       </p>
 
-     <a href="#" class="button" onclick="startShopping()">Start Shopping</a>
+      <a href="#" class="button" onclick="startShopping()">Start Shopping</a>
     </div>
 
     <div class="trolley">
       🛒
+    </div>
+
+  </section>
+
+
+  <!-- ESP8266 TROLLEY STATUS -->
+  <section class="section" id="espTrolleyStatus">
+
+    <h2>🛒 Trolley Status</h2>
+
+    <p id="espConnection">
+      ESP8266: Checking connection...
+    </p>
+
+    <div class="card" style="
+      max-width:500px;
+      margin:25px auto;
+      text-align:center;
+    ">
+
+      <h3>📦 Detected Products</h3>
+
+      <p id="espCount" style="
+        font-size:40px;
+        font-weight:bold;
+        margin:15px;
+      ">
+        0
+      </p>
+
+      <h3>⚖️ Total Weight</h3>
+
+      <p id="espWeight" style="
+        font-size:28px;
+        font-weight:bold;
+        margin:15px;
+      ">
+        0 g
+      </p>
+
+      <p id="cartComparison" style="
+        margin-top:20px;
+        font-weight:bold;
+      ">
+        Waiting for trolley data...
+      </p>
+
     </div>
 
   </section>
@@ -246,8 +293,10 @@
 
     </div>
 
-  </section>
-  <section class="section screen" id="floor" style="display:none;">
+</section>
+
+
+<section class="section screen" id="floor" style="display:none;">
 
   <h2>🏢 Floor 1</h2>
 
@@ -255,40 +304,62 @@
 
   <div class="card">
     <div class="icon">🛍️</div>
-  <h3>Floor 1</h3>
-<p>Grocery Department</p>
-<br>
-<a href="#" class="button" onclick="showScreen('products')">Enter Floor 1</a>
+    <h3>Floor 1</h3>
+    <p>Grocery Department</p>
+    <br>
+    <a href="#" class="button" onclick="showScreen('products')">
+      Enter Floor 1
+    </a>
   </div>
 
 </section>
+
+
 <section class="section screen" id="products" style="display:none;">
 
   <h2>🛍️ Products</h2>
-  <input 
-  type="text" 
-  id="productSearch" 
-  placeholder="🔎 Search for a product..."
-  style="width: 90%; max-width: 500px; padding: 15px; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px;"
->
+
+  <input
+    type="text"
+    id="productSearch"
+    placeholder="🔎 Search for a product..."
+    style="
+      width: 90%;
+      max-width: 500px;
+      padding: 15px;
+      margin: 20px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    "
+  >
 
   <p>Select a product to view its details.</p>
-   <button class="button" onclick="startScanner()">📷 Scan Product</button>
-  
-  <div id="scannerBox" style="display:none; margin:25px 0;">
-  <h3>📷 Scan Product Barcode</h3>
 
-  <div id="reader" style="width:100%; max-width:500px; margin:20px auto;"></div>
-
-  <p id="scanResult">
-    Point your camera at a barcode.
-  </p>
-
-  <button class="button" onclick="stopScanner()">
-    Close Scanner
+  <button class="button" onclick="startScanner()">
+    📷 Scan Product
   </button>
 
-</div>
+  <div id="scannerBox" style="display:none; margin:25px 0;">
+
+    <h3>📷 Scan Product Barcode</h3>
+
+    <div id="reader" style="
+      width:100%;
+      max-width:500px;
+      margin:20px auto;
+    "></div>
+
+    <p id="scanResult">
+      Point your camera at a barcode.
+    </p>
+
+    <button class="button" onclick="stopScanner()">
+      Close Scanner
+    </button>
+
+  </div>
+
   <div class="features">
 
     <div class="card">
@@ -299,9 +370,10 @@
       <p>📍 Aisle 1</p>
       <br>
 
-<button class="button" onclick="navigateToProduct('Rice', 'Aisle 1')">
-  🧭 Navigate
-</button>
+      <button class="button"
+        onclick="navigateToProduct('Rice', 'Aisle 1')">
+        🧭 Navigate
+      </button>
     </div>
 
     <div class="card">
@@ -319,31 +391,31 @@
       <p><strong>₹20</strong></p>
       <p>📍 Aisle 3</p>
     </div>
-    
-      <div class="card">
+
+    <div class="card">
       <div class="icon">🍫</div>
       <h3>Chocolate</h3>
       <p>10 gram</p>
       <p><strong>₹10</strong></p>
       <p>📍 Aisle 4</p>
     </div>
-    
-      <div class="card">
+
+    <div class="card">
       <div class="icon">🍟</div>
       <h3>Kurkure</h3>
       <p>50 gram</p>
       <p><strong>₹10</strong></p>
       <p>📍 Aisle 5</p>
     </div>
-    
 
   </div>
 
 </section>
-  
+
+
 <section class="section screen" id="cart" style="display:none;">
 
-  <h2> My Cart</h2>
+  <h2>My Cart</h2>
 
   <p>Your selected products will appear here.</p>
 
@@ -356,32 +428,43 @@
   <button class="button" onclick="showScreen('products')">
     Continue Shopping
   </button>
-    <br><br>
 
-<button class="button" onclick="generateBill()">
-  🧾 Done Shopping & Generate Bill
-</button>
-<br><br>
+  <br><br>
+
+  <button class="button" onclick="generateBill()">
+    🧾 Done Shopping & Generate Bill
+  </button>
+
+  <br><br>
+
 </section>
-  <section class="section about" id="about">
 
-    <h2>About Inventra</h2>
 
-    <p>
-      Inventra is an IoT-based smart retail concept that
-      combines a smart trolley, inventory tracking and
-      digital technologies to create a modern shopping
-      experience.
-    </p>
+<section class="section about" id="about">
 
-  </section>
+  <h2>About Inventra</h2>
+
+  <p>
+    Inventra is an IoT-based smart retail concept that
+    combines a smart trolley, inventory tracking and
+    digital technologies to create a modern shopping
+    experience.
+  </p>
+
+</section>
+
+
 <section class="section screen" id="billing" style="display:none;">
 
   <h2>🧾 Inventra Bill</h2>
 
   <p>Thank you for shopping with us!</p>
 
-  <div class="card" style="max-width:600px; margin:30px auto; text-align:left;">
+  <div class="card" style="
+    max-width:600px;
+    margin:30px auto;
+    text-align:left;
+  ">
 
     <h3 style="text-align:center;">INVENTRA</h3>
 
@@ -400,12 +483,15 @@
     <br>
 
     <button class="button" onclick="proceedToPayment()">
-  💳 Pay Now
-</button>
+      💳 Pay Now
+    </button>
+
   </div>
 
 </section>
- <section class="section screen" id="navigation" style="display:none;">
+
+
+<section class="section screen" id="navigation" style="display:none;">
 
   <h2>🧭 Product Navigation</h2>
 
@@ -413,11 +499,17 @@
     Find your product easily inside the store.
   </p>
 
-  <div class="card" style="max-width:600px; margin:30px auto;">
+  <div class="card" style="
+    max-width:600px;
+    margin:30px auto;
+  ">
 
     <h3>📍 Your Destination</h3>
 
-    <p id="navigationAisle" style="font-size:22px; margin:20px 0;">
+    <p id="navigationAisle" style="
+      font-size:22px;
+      margin:20px 0;
+    ">
       Aisle 1
     </p>
 
@@ -438,13 +530,18 @@
   </div>
 
 </section>
-  <section class="section screen" id="payment" style="display:none;">
+
+
+<section class="section screen" id="payment" style="display:none;">
 
   <h2>📱 Payment</h2>
 
   <p>Scan the QR code to complete your payment.</p>
 
-  <div class="card" style="max-width:600px; margin:30px auto;">
+  <div class="card" style="
+    max-width:600px;
+    margin:30px auto;
+  ">
 
     <h2>Inventra Payment</h2>
 
@@ -452,7 +549,10 @@
       Amount: ₹0
     </h3>
 
-    <div id="qrcode" style="margin:25px auto; width:220px;"></div>
+    <div id="qrcode" style="
+      margin:25px auto;
+      width:220px;
+    "></div>
 
     <p>
       📱 Scan this QR code to simulate payment
@@ -467,7 +567,9 @@
   </div>
 
 </section>
-  <div id="budgetPopup" style="
+
+
+<div id="budgetPopup" style="
   display:none;
   position:fixed;
   top:0;
@@ -503,218 +605,316 @@
     </button>
 
   </div>
+
 </div>
-  <footer>
-    © 2026 Inventra | Smart Trolley Shopping System
-  </footer>
-  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+
+<footer>
+  ©️ 2026 Inventra | Smart Trolley Shopping System
+</footer>
+
+
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+
 <script>
-  // Product database
+
+  // =====================================================
+  // PRODUCT DATABASE
+  // =====================================================
+
   const productDatabase = {
+
     "8901860633532": {
       name: "Rice",
       price: 60
     },
+
     "8901765126122": {
       name: "Sugar",
       price: 45
     },
+
     "8901765085344": {
       name: "Biscuits",
       price: 20
     },
+
     "8901234567893": {
       name: "Chocolate",
       price: 10
     },
+
     "8901234567894": {
       name: "Kurkure",
       price: 10
     }
+
   };
 
-  // Cart
+
+  // =====================================================
+  // CART
+  // =====================================================
+
   let cart = [];
   let shoppingBudget = 0;
+
+
   function startShopping() {
 
-  const budget = prompt(
-    "💰 What is your shopping budget today?\n\nEnter amount in ₹:"
-  );
+    const budget = prompt(
+      "💰 What is your shopping budget today?\n\nEnter amount in ₹:"
+    );
 
-  if (budget === null) {
-    return;
+    if (budget === null) {
+      return;
+    }
+
+    const amount = Number(budget);
+
+    if (isNaN(amount) || amount <= 0) {
+      alert("Please enter a valid budget.");
+      return;
+    }
+
+    shoppingBudget = amount;
+
+    showScreen("floor");
   }
 
-  const amount = Number(budget);
 
-  if (isNaN(amount) || amount <= 0) {
-    alert("Please enter a valid budget.");
-    return;
-  }
+  // =====================================================
+  // SCREEN NAVIGATION
+  // =====================================================
 
-  shoppingBudget = amount;
-
-  showScreen("floor");
-}
-
-  // Screen navigation
   function showScreen(screenId) {
+
     document.querySelectorAll(".screen").forEach(function(screen) {
       screen.style.display = "none";
     });
 
     document.getElementById(screenId).style.display = "block";
   }
+
+
   function navigateToProduct(productName, aisle) {
 
-  document.getElementById("navigationProduct").textContent =
-    "🛍️ Product: " + productName;
+    document.getElementById("navigationProduct").textContent =
+      "🛍️ Product: " + productName;
 
-  document.getElementById("navigationAisle").textContent =
-    "📍 " + aisle;
+    document.getElementById("navigationAisle").textContent =
+      "📍 " + aisle;
 
-  showScreen("navigation");
-}
-
-  // Add product to cart
-function addToCart(name, price) {
-
-  const existingItem = cart.find(function(item) {
-    return item.name === name;
-  });
-
-  if (existingItem) {
-    existingItem.quantity++;
-  } else {
-    cart.push({
-      name: name,
-      price: price,
-      quantity: 1
-    });
+    showScreen("navigation");
   }
 
-  updateCart();
-showScreen("cart");
-checkBudget();
-}
-    // Update cart
-// Update cart
-function updateCart() {
 
-  const cartItems = document.getElementById("cartItems");
-  const cartTotal = document.getElementById("cartTotal");
+  // =====================================================
+  // ADD TO CART
+  // =====================================================
 
-  cartItems.innerHTML = "";
+  function addToCart(name, price) {
 
-  let total = 0;
+    const existingItem = cart.find(function(item) {
+      return item.name === name;
+    });
 
-  cart.forEach(function(item, index) {
+    if (existingItem) {
 
-    const product = document.createElement("div");
+      existingItem.quantity++;
 
-    product.style.display = "flex";
-    product.style.justifyContent = "space-between";
-    product.style.alignItems = "center";
-    product.style.padding = "15px";
-    product.style.margin = "10px 0";
-    product.style.background = "#f5f7fb";
-    product.style.borderRadius = "10px";
+    } else {
 
-    const itemTotal = item.price * item.quantity;
+      cart.push({
+        name: name,
+        price: price,
+        quantity: 1
+      });
 
-    product.innerHTML = `
-      <div style="text-align:left;">
-        <strong>🛒 ${item.name}</strong>
-        <br>
-        ₹${item.price} × ${item.quantity}
-        = <strong>₹${itemTotal}</strong>
-      </div>
+    }
 
-      <div>
-        <button 
-          class="button"
-          onclick="decreaseQuantity(${index})"
-          style="padding:8px 12px;">
-          −
-        </button>
+    updateCart();
 
-        <span style="margin:0 10px; font-weight:bold;">
-          ${item.quantity}
-        </span>
+    showScreen("cart");
 
-        <button 
-          class="button"
-          onclick="removeItem(${index})"
-          style="padding:8px 12px; background:#dc2626; margin-left:8px;">
-          🗑️
-        </button>
-      </div>
-    `;
+    checkBudget();
 
-    cartItems.appendChild(product);
-
-    total += itemTotal;
-  });
-
-  cartTotal.textContent = "Total: ₹" + total;
-}
+    compareTrolleyWithCart();
+  }
 
 
-// Increase quantity
-function increaseQuantity(index) {
+  // =====================================================
+  // UPDATE CART
+  // =====================================================
 
-  cart[index].quantity++;
+  function updateCart() {
 
-  updateCart();
-}
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
+    cartItems.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach(function(item, index) {
+
+      const product = document.createElement("div");
+
+      product.style.display = "flex";
+      product.style.justifyContent = "space-between";
+      product.style.alignItems = "center";
+      product.style.padding = "15px";
+      product.style.margin = "10px 0";
+      product.style.background = "#f5f7fb";
+      product.style.borderRadius = "10px";
+
+      const itemTotal = item.price * item.quantity;
+
+      product.innerHTML = `
+        <div style="text-align:left;">
+          <strong>🛒 ${item.name}</strong>
+          <br>
+          ₹${item.price} × ${item.quantity}
+          = <strong>₹${itemTotal}</strong>
+        </div>
+
+        <div>
+
+          <button
+            class="button"
+            onclick="decreaseQuantity(${index})"
+            style="padding:8px 12px;">
+            −
+          </button>
+
+          <span style="
+            margin:0 10px;
+            font-weight:bold;
+          ">
+            ${item.quantity}
+          </span>
+
+          <button
+            class="button"
+            onclick="increaseQuantity(${index})"
+            style="padding:8px 12px;">
+            +
+          </button>
+
+          <button
+            class="button"
+            onclick="removeItem(${index})"
+            style="
+              padding:8px 12px;
+              background:#dc2626;
+              margin-left:8px;
+            ">
+            🗑️
+          </button>
+
+        </div>
+      `;
+
+      cartItems.appendChild(product);
+
+      total += itemTotal;
+
+    });
+
+    cartTotal.textContent = "Total: ₹" + total;
+
+    compareTrolleyWithCart();
+  }
 
 
-// Decrease quantity
-function decreaseQuantity(index) {
+  // =====================================================
+  // INCREASE QUANTITY
+  // =====================================================
 
-  if (cart[index].quantity > 1) {
+  function increaseQuantity(index) {
 
-    cart[index].quantity--;
+    cart[index].quantity++;
 
-  } else {
+    updateCart();
+
+  }
+
+
+  // =====================================================
+  // DECREASE QUANTITY
+  // =====================================================
+
+  function decreaseQuantity(index) {
+
+    if (cart[index].quantity > 1) {
+
+      cart[index].quantity--;
+
+    } else {
+
+      cart.splice(index, 1);
+
+    }
+
+    updateCart();
+
+  }
+
+
+  // =====================================================
+  // REMOVE PRODUCT
+  // =====================================================
+
+  function removeItem(index) {
 
     cart.splice(index, 1);
+
+    updateCart();
+
   }
 
-  updateCart();
-}
 
+  // =====================================================
+  // PRODUCT SEARCH
+  // =====================================================
 
-// Remove product
-function removeItem(index) {
-
-  cart.splice(index, 1);
-
-  updateCart();
-}
-  // Product search
   const searchBox = document.getElementById("productSearch");
   const products = document.querySelectorAll("#products .card");
 
+
   searchBox.addEventListener("input", function() {
+
     const searchText = this.value.toLowerCase();
 
     products.forEach(function(product) {
+
       const productName =
         product.querySelector("h3").textContent.toLowerCase();
 
       if (productName.includes(searchText)) {
+
         product.style.display = "block";
+
       } else {
+
         product.style.display = "none";
+
       }
+
     });
+
   });
 
-  // Barcode scanner
+
+  // =====================================================
+  // BARCODE SCANNER
+  // =====================================================
+
   let html5QrCode = null;
+
 
   function startScanner() {
 
@@ -725,20 +925,25 @@ function removeItem(index) {
 
     html5QrCode = new Html5Qrcode("reader");
 
+
     html5QrCode.start(
+
       { facingMode: "environment" },
 
       {
         fps: 10,
+
         qrbox: {
           width: 250,
           height: 150
         }
       },
 
+
       function(decodedText) {
 
         const product = productDatabase[decodedText];
+
 
         if (product) {
 
@@ -747,7 +952,10 @@ function removeItem(index) {
 
           stopScanner();
 
-          addToCart(product.name, product.price);
+          addToCart(
+            product.name,
+            product.price
+          );
 
         } else {
 
@@ -755,145 +963,488 @@ function removeItem(index) {
             "❌ Product not found: " + decodedText;
 
         }
+
       },
 
+
       function(errorMessage) {
-        // Scanner is continuously looking for a barcode.
+        // Scanner continuously searches for barcode.
       }
+
+
     ).catch(function(error) {
 
       document.getElementById("scanResult").textContent =
         "❌ Camera could not start. Please allow camera permission.";
 
       console.log(error);
+
     });
+
   }
 
-  // Stop scanner
+
+  // =====================================================
+  // STOP SCANNER
+  // =====================================================
+
   function stopScanner() {
 
     if (html5QrCode) {
 
       html5QrCode.stop()
+
         .then(function() {
+
           html5QrCode.clear();
+
           html5QrCode = null;
+
         })
+
         .catch(function(error) {
+
           console.log(error);
+
         });
+
     }
 
-    document.getElementById("scannerBox").style.display = "none";
+    document.getElementById("scannerBox").style.display =
+      "none";
+
   }
+
+
+  // =====================================================
+  // BILL
+  // =====================================================
+
   function generateBill() {
 
-  const billItems = document.getElementById("billItems");
-  const billTotal = document.getElementById("billTotal");
-  const billDate = document.getElementById("billDate");
+    const billItems =
+      document.getElementById("billItems");
 
-  billItems.innerHTML = "";
+    const billTotal =
+      document.getElementById("billTotal");
 
-  let total = 0;
+    const billDate =
+      document.getElementById("billDate");
 
-  cart.forEach(function(item) {
 
-  const itemRow = document.createElement("p");
+    billItems.innerHTML = "";
 
-  const itemTotal = item.price * item.quantity;
+    let total = 0;
 
-  itemRow.style.display = "flex";
-  itemRow.style.justifyContent = "space-between";
-  itemRow.style.margin = "10px 0";
 
-  itemRow.innerHTML =
-    "<span>" +
-    item.name +
-    " × " +
-    item.quantity +
-    "</span>" +
-    "<strong>₹" +
-    itemTotal +
-    "</strong>";
+    cart.forEach(function(item) {
 
-  billItems.appendChild(itemRow);
+      const itemRow =
+        document.createElement("p");
 
-  total += itemTotal;
-});
+      const itemTotal =
+        item.price * item.quantity;
 
-  billTotal.textContent = "Total: ₹" + total;
 
-  billDate.textContent =
-    "Date: " + new Date().toLocaleString();
+      itemRow.style.display = "flex";
 
-  showScreen("billing");
-}
-  function proceedToPayment() {
+      itemRow.style.justifyContent =
+        "space-between";
 
-  let total = 0;
+      itemRow.style.margin =
+        "10px 0";
 
-  cart.forEach(function(item) {
-    total += item.price * item.quantity;
-  });
 
-  document.getElementById("paymentAmount").textContent =
-    "Amount: ₹" + total;
+      itemRow.innerHTML =
+        "<span>" +
+        item.name +
+        " × " +
+        item.quantity +
+        "</span>" +
 
-  showScreen("payment");
+        "<strong>₹" +
+        itemTotal +
+        "</strong>";
 
-  const qrBox = document.getElementById("qrcode");
 
-  qrBox.innerHTML = "";
+      billItems.appendChild(itemRow);
 
-  if (typeof QRCode !== "undefined") {
+      total += itemTotal;
 
-    new QRCode(qrBox, {
-      text: "INVENTRA DEMO PAYMENT | Amount: ₹" + total,
-      width: 220,
-      height: 220
     });
 
-  } else {
 
-    qrBox.innerHTML =
-      "<p style='color:red;'>QR Code library could not load.</p>";
+    billTotal.textContent =
+      "Total: ₹" + total;
+
+
+    billDate.textContent =
+      "Date: " +
+      new Date().toLocaleString();
+
+
+    showScreen("billing");
 
   }
-}
-function paymentComplete() {
 
-  alert("✅ Payment completed successfully!");
 
-  cart = [];
+  // =====================================================
+  // PAYMENT
+  // =====================================================
 
-  updateCart();
+  function proceedToPayment() {
 
-  showScreen("home");
-}
+    let total = 0;
+
+
+    cart.forEach(function(item) {
+
+      total +=
+        item.price *
+        item.quantity;
+
+    });
+
+
+    document.getElementById(
+      "paymentAmount"
+    ).textContent =
+      "Amount: ₹" + total;
+
+
+    showScreen("payment");
+
+
+    const qrBox =
+      document.getElementById("qrcode");
+
+
+    qrBox.innerHTML = "";
+
+
+    if (typeof QRCode !== "undefined") {
+
+      new QRCode(qrBox, {
+
+        text:
+          "INVENTRA DEMO PAYMENT | Amount: ₹" +
+          total,
+
+        width: 220,
+
+        height: 220
+
+      });
+
+    } else {
+
+      qrBox.innerHTML =
+        "<p style='color:red;'>" +
+        "QR Code library could not load." +
+        "</p>";
+
+    }
+
+  }
+
+
+  function paymentComplete() {
+
+    alert(
+      "✅ Payment completed successfully!"
+    );
+
+    cart = [];
+
+    updateCart();
+
+    showScreen("home");
+
+  }
+
+
+  // =====================================================
+  // BUDGET
+  // =====================================================
+
   function checkBudget() {
 
-  let total = 0;
+    let total = 0;
 
-  cart.forEach(function(item) {
-    total += item.price * item.quantity;
-  });
 
-  if (shoppingBudget > 0 && total > shoppingBudget) {
+    cart.forEach(function(item) {
 
-    document.getElementById("budgetMessage").textContent =
-      "Your current shopping total is ₹" + total +
-      ", which is above your budget of ₹" + shoppingBudget +
-      ". Would you like to continue shopping?";
+      total +=
+        item.price *
+        item.quantity;
 
-    document.getElementById("budgetPopup").style.display = "flex";
+    });
+
+
+    if (
+      shoppingBudget > 0 &&
+      total > shoppingBudget
+    ) {
+
+      document.getElementById(
+        "budgetMessage"
+      ).textContent =
+
+        "Your current shopping total is ₹" +
+        total +
+
+        ", which is above your budget of ₹" +
+        shoppingBudget +
+
+        ". Would you like to continue shopping?";
+
+
+      document.getElementById(
+        "budgetPopup"
+      ).style.display = "flex";
+
+    }
+
   }
-}
 
 
-function continueShopping() {
+  function continueShopping() {
 
-  document.getElementById("budgetPopup").style.display = "none";
-}
+    document.getElementById(
+      "budgetPopup"
+    ).style.display = "none";
+
+  }
+
+
+  // =====================================================
+  // ESP8266 CONNECTION
+  // =====================================================
+
+  // Use the IP address shown by your ESP8266
+  const ESP8266_IP = "10.230.218.96";
+
+
+  let espProductCount = 0;
+  let espWeight = 0;
+
+
+  // =====================================================
+  // GET SCANNED PRODUCT COUNT
+  // =====================================================
+
+  function getScannedProductCount() {
+
+    let scannedCount = 0;
+
+
+    cart.forEach(function(item) {
+
+      scannedCount += item.quantity;
+
+    });
+
+
+    return scannedCount;
+
+  }
+
+
+  // =====================================================
+  // COMPARE TROLLEY WITH SCANNED PRODUCTS
+  // =====================================================
+
+  function compareTrolleyWithCart() {
+
+    const comparison =
+      document.getElementById(
+        "cartComparison"
+      );
+
+
+    if (!comparison) {
+      return;
+    }
+
+
+    const scannedCount =
+      getScannedProductCount();
+
+
+    if (
+      espProductCount >
+      scannedCount
+    ) {
+
+      comparison.innerHTML =
+        "⚠️ WARNING: Unscanned product detected!<br>" +
+        "Scanned: " +
+        scannedCount +
+        " | Trolley: " +
+        espProductCount;
+
+      comparison.style.color =
+        "#dc2626";
+
+
+    } else if (
+      espProductCount ===
+      scannedCount
+    ) {
+
+      comparison.innerHTML =
+        "✅ Trolley matches scanned products<br>" +
+        "Scanned: " +
+        scannedCount +
+        " | Trolley: " +
+        espProductCount;
+
+      comparison.style.color =
+        "#16a34a";
+
+
+    } else {
+
+      comparison.innerHTML =
+        "ℹ️ Waiting for trolley update...<br>" +
+        "Scanned: " +
+        scannedCount +
+        " | Trolley: " +
+        espProductCount;
+
+      comparison.style.color =
+        "#2563eb";
+
+    }
+
+  }
+
+
+  // =====================================================
+  // GET ESP8266 DATA
+  // =====================================================
+
+  async function getESP8266Data() {
+
+    try {
+
+      const response =
+        await fetch(
+          "http://" +
+          ESP8266_IP +
+          "/data"
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "ESP8266 response error"
+        );
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      // Get count
+      espProductCount =
+        Number(data.count) || 0;
+
+
+      // Get weight
+      espWeight =
+        Number(data.weight) || 0;
+
+
+      // Connected
+      document.getElementById(
+        "espConnection"
+      ).innerHTML =
+        "ESP8266: Connected ✅";
+
+
+      document.getElementById(
+        "espConnection"
+      ).style.color =
+        "#16a34a";
+
+
+      // Display count
+      document.getElementById(
+        "espCount"
+      ).textContent =
+        espProductCount;
+
+
+      // Display weight
+      document.getElementById(
+        "espWeight"
+      ).textContent =
+        espWeight + " g";
+
+
+      // Compare
+      compareTrolleyWithCart();
+
+
+    } catch (error) {
+
+      document.getElementById(
+        "espConnection"
+      ).innerHTML =
+        "ESP8266: Not Connected ❌";
+
+
+      document.getElementById(
+        "espConnection"
+      ).style.color =
+        "#dc2626";
+
+
+      document.getElementById(
+        "espCount"
+      ).textContent =
+        "0";
+
+
+      document.getElementById(
+        "espWeight"
+      ).textContent =
+        "0 g";
+
+
+      document.getElementById(
+        "cartComparison"
+      ).innerHTML =
+        "Waiting for ESP8266 connection...";
+
+
+      console.log(
+        "ESP8266 connection error:",
+        error
+      );
+
+    }
+
+  }
+
+
+  // =====================================================
+  // CHECK ESP8266 EVERY SECOND
+  // =====================================================
+
+  setInterval(
+    getESP8266Data,
+    1000
+  );
+
+
+  // First check immediately
+  getESP8266Data();
+
 </script>
 
 </body>
