@@ -1,1173 +1,893 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Inventra | Smart Trolley</title>
 
-
-<!-- ================================================= -->
-<!-- SCANNER LIBRARY -->
-<!-- ================================================= -->
-
 <script src="https://unpkg.com/html5-qrcode"></script>
-
-
-<!-- ================================================= -->
-<!-- QR CODE LIBRARY -->
-<!-- ================================================= -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-
 <style>
 
-/* ================================================= */
-/* GENERAL */
-/* ================================================= */
+* {
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: Arial, Helvetica, sans-serif;
+
 }
 
-body{
-    background:#f5f7fb;
-    color:#222;
+body {
+
+    background: #f5f7fb;
+
+    color: #222;
+
 }
 
+header {
 
-/* ================================================= */
-/* HEADER */
-/* ================================================= */
+    background: #111827;
 
-header{
-    background:#111827;
-    color:white;
-    padding:18px 20px;
-    text-align:center;
+    color: white;
+
+    padding: 18px 20px;
+
+    text-align: center;
+
 }
 
-header h1{
-    font-size:28px;
+header h1 {
+
+    font-size: 28px;
+
 }
 
-header p{
-    margin-top:5px;
-    opacity:.8;
+header p {
+
+    margin-top: 5px;
+
+    opacity: .8;
+
 }
 
+.screen {
 
-/* ================================================= */
-/* SCREEN */
-/* ================================================= */
+    padding: 25px 18px;
 
-.screen{
-    padding:25px 18px;
-    max-width:900px;
-    margin:auto;
+    max-width: 900px;
+
+    margin: auto;
+
 }
 
+.hero {
 
-/* ================================================= */
-/* HERO */
-/* ================================================= */
+    text-align: center;
 
-.hero{
-    text-align:center;
-    padding:60px 20px;
+    padding: 60px 20px;
+
 }
 
-.hero h2{
-    font-size:32px;
-    margin-bottom:12px;
+.hero h2 {
+
+    font-size: 32px;
+
+    margin-bottom: 12px;
+
 }
 
-.hero p{
-    color:#666;
-    margin-bottom:25px;
+.hero p {
+
+    color: #666;
+
+    margin-bottom: 25px;
+
 }
 
+button {
 
-/* ================================================= */
-/* BUTTONS */
-/* ================================================= */
+    border: none;
 
-button{
-    border:none;
-    padding:13px 20px;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:16px;
-    background:#111827;
-    color:white;
-    margin:5px;
+    padding: 13px 20px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    background: #111827;
+
+    color: white;
+
+    margin: 5px;
+
 }
 
-button:hover{
-    opacity:.9;
+button:hover {
+
+    opacity: .9;
+
 }
 
-.primary{
-    background:#2563eb;
+.primary { background: #2563eb; }
+
+.success { background: #16a34a; }
+
+.danger { background: #dc2626; }
+
+.warning { background: #f59e0b; }
+
+.secondary { background: #64748b; }
+
+.card {
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin: 15px 0;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+
 }
 
-.success{
-    background:#16a34a;
+.product-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+    gap: 15px;
+
+    margin-top: 20px;
+
 }
 
-.danger{
-    background:#dc2626;
+.product-card {
+
+    background: white;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+
+    text-align: center;
+
 }
 
-.warning{
-    background:#f59e0b;
+.product-emoji {
+
+    font-size: 52px;
+
+    line-height: 1.3;
+
+    margin-bottom: 10px;
+
 }
 
-.secondary{
-    background:#64748b;
+.product-card h3 {
+
+    margin-bottom: 8px;
+
 }
 
+.price {
 
-/* ================================================= */
-/* CARDS */
-/* ================================================= */
+    font-size: 20px;
 
-.card{
-    background:white;
-    border-radius:15px;
-    padding:20px;
-    margin:15px 0;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    font-weight: bold;
+
+    color: #2563eb;
+
 }
 
+.weight {
 
-/* ================================================= */
-/* PRODUCT GRID */
-/* ================================================= */
+    color: #666;
 
-.product-grid{
-    display:grid;
-    grid-template-columns:
-        repeat(auto-fit,minmax(180px,1fr));
+    margin: 8px 0;
 
-    gap:15px;
-
-    margin-top:20px;
 }
 
-.product-card{
-    background:white;
-    padding:18px;
-    border-radius:15px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
-    text-align:center;
+input {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 9px;
+
+    font-size: 16px;
+
+    margin: 8px 0;
+
 }
 
-.product-card h3{
-    margin-bottom:8px;
+.stat {
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    margin: 8px 0 20px;
+
 }
 
-.price{
-    font-size:20px;
-    font-weight:bold;
-    color:#2563eb;
+.small {
+
+    color: #666;
+
+    font-size: 14px;
+
 }
 
-.weight{
-    color:#666;
-    margin:8px 0;
+.center { text-align: center; }
+
+.success-box {
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    margin-top: 15px;
+
 }
 
+.warning-box {
 
-/* ================================================= */
-/* INPUT */
-/* ================================================= */
+    background: #fef3c7;
 
-input{
-    width:100%;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:9px;
-    font-size:16px;
-    margin:8px 0;
+    color: #92400e;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    margin-top: 15px;
+
 }
 
+.danger-box {
 
-/* ================================================= */
-/* TEXT */
-/* ================================================= */
+    background: #fee2e2;
 
-.stat{
-    font-size:28px;
-    font-weight:bold;
-    margin:8px 0 20px;
+    color: #991b1b;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    margin-top: 15px;
+
 }
 
-.small{
-    color:#666;
-    font-size:14px;
+.waiting-box {
+
+    background: #e0f2fe;
+
+    color: #075985;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    margin-top: 15px;
+
 }
 
-.center{
-    text-align:center;
+#scannerBox { display: none; }
+
+#reader {
+
+    width: 100%;
+
+    max-width: 500px;
+
+    margin: 20px auto;
+
 }
 
+.cart-item {
 
-/* ================================================= */
-/* STATUS BOXES */
-/* ================================================= */
+    display: flex;
 
-.success-box{
-    background:#dcfce7;
-    color:#166534;
-    padding:15px;
-    border-radius:12px;
-    margin-top:15px;
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #eee;
+
+    gap: 12px;
+
 }
 
-.warning-box{
-    background:#fef3c7;
-    color:#92400e;
-    padding:15px;
-    border-radius:12px;
-    margin-top:15px;
+.cart-total {
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    margin-top: 20px;
+
 }
 
-.danger-box{
-    background:#fee2e2;
-    color:#991b1b;
-    padding:15px;
-    border-radius:12px;
-    margin-top:15px;
+.product-list { margin-top: 15px; }
+
+.product-list div {
+
+    padding: 8px;
+
+    border-bottom: 1px solid #eee;
+
 }
 
-.waiting-box{
-    background:#e0f2fe;
-    color:#075985;
-    padding:15px;
-    border-radius:12px;
-    margin-top:15px;
-}
+#paymentQR {
 
+    display: flex;
 
-/* ================================================= */
-/* SCANNER */
-/* ================================================= */
+    justify-content: center;
 
-#scannerBox{
-    display:none;
-}
+    margin: 25px;
 
-#reader{
-    width:100%;
-    max-width:500px;
-    margin:20px auto;
-}
-
-
-/* ================================================= */
-/* CART */
-/* ================================================= */
-
-.cart-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px 0;
-    border-bottom:1px solid #eee;
-}
-
-.cart-total{
-    font-size:22px;
-    font-weight:bold;
-    margin-top:20px;
-}
-
-
-/* ================================================= */
-/* PRODUCT LIST */
-/* ================================================= */
-
-.product-list{
-    margin-top:15px;
-}
-
-.product-list div{
-    padding:8px;
-    border-bottom:1px solid #eee;
-}
-
-
-/* ================================================= */
-/* PAYMENT */
-/* ================================================= */
-
-#paymentQR{
-    display:flex;
-    justify-content:center;
-    margin:25px;
 }
 
 </style>
 
 </head>
 
-
 <body>
-
-
-<!-- ================================================= -->
-<!-- HEADER -->
-<!-- ================================================= -->
 
 <header>
 
-<h1>🛒 INVENTRA</h1>
+    <h1>🛒 INVENTRA</h1>
 
-<p>
-Smart Trolley Shopping System
-</p>
+    <p>Smart Trolley Shopping System</p>
 
 </header>
 
-
-
-<!-- ================================================= -->
 <!-- HOME -->
-<!-- ================================================= -->
 
-<section
-id="home"
-class="screen"
->
+<section id="home" class="screen">
 
-<div class="hero">
+    <div class="hero">
 
-<h2>
-Welcome to Inventra
-</h2>
+        <h2>Welcome to Inventra</h2>
 
-<p>
-A smarter and easier way to shop.
-</p>
+        <p>A smarter and easier way to shop.</p>
 
+        <button class="primary" onclick="startShopping()">
 
-<button
-class="primary"
-onclick="startShopping()"
->
+            Start Shopping
 
-Start Shopping
+        </button>
 
-</button>
+        <br>
 
+        <button class="secondary" onclick="showScreen('features')">
 
-<br>
+            Features
 
+        </button>
 
-<button
-class="secondary"
-onclick="showScreen('features')"
->
-
-Features
-
-</button>
-
-</div>
+    </div>
 
 </section>
 
-
-
-<!-- ================================================= -->
 <!-- FEATURES -->
-<!-- ================================================= -->
 
-<section
-id="features"
-class="screen"
-style="display:none;"
->
+<section id="features" class="screen" style="display:none;">
 
-<h2>
-✨ Inventra Features
-</h2>
+    <h2>✨ Inventra Features</h2>
 
+    <div class="card">
 
-<div class="card">
+        <h3>📱 Product Scanning</h3>
 
-<h3>
-📱 Product Scanning
-</h3>
+        <p>Scan the product barcode before placing it inside the trolley.</p>
 
-<p>
-Scan the product barcode before placing
-it inside the trolley.
-</p>
+    </div>
 
-</div>
+    <div class="card">
 
+        <h3>🛒 Product Authentication</h3>
 
-<div class="card">
+        <p>Only scanned products are authenticated by the trolley.</p>
 
-<h3>
-🛒 Product Authentication
-</h3>
+    </div>
 
-<p>
-Only scanned products are authenticated
-by the trolley.
-</p>
+    <div class="card">
 
-</div>
+        <h3>⚖️ Trolley Monitoring</h3>
 
+        <p>The trolley detects product placement automatically.</p>
 
-<div class="card">
+    </div>
 
-<h3>
-⚖️ Trolley Monitoring
-</h3>
+    <div class="card">
 
-<p>
-The trolley detects product placement
-automatically.
-</p>
+        <h3>🚨 Extra Product Detection</h3>
 
-</div>
+        <p>Unscanned products trigger an alert.</p>
 
+    </div>
 
-<div class="card">
+    <div class="center">
 
-<h3>
-🚨 Extra Product Detection
-</h3>
+        <button class="secondary" onclick="showScreen('home')">← Back</button>
 
-<p>
-Unscanned products trigger an alert.
-</p>
-
-</div>
-
-
-<div class="center">
-
-<button
-onclick="showScreen('home')"
->
-
-← Back
-
-</button>
-
-</div>
+    </div>
 
 </section>
 
-
-
-<!-- ================================================= -->
 <!-- FLOOR -->
-<!-- ================================================= -->
 
-<section
-id="floor"
-class="screen"
-style="display:none;"
->
+<section id="floor" class="screen" style="display:none;">
 
-<div class="center">
+    <div class="center">
 
-<h2>
-🏬 Mall Floor
-</h2>
+        <h2>🏬 Mall Floor</h2>
 
-<p>
-Select a floor to start shopping.
-</p>
+        <p>Select a floor to start shopping.</p>
 
+        <div class="card">
 
-<div class="card">
+            <h3>Floor 1 — Grocery</h3>
 
-<h3>
-Floor 1 — Grocery
-</h3>
+            <p>Salt, Atta, Butter, Milk, Green Peas, Ice Cream and Snacks</p>
 
-<p>
-Rice, Sugar, Biscuits, Chocolate & Kurkure
-</p>
+            <button class="primary" onclick="showScreen('products')">
 
+                Enter Floor 1
 
-<button
-class="primary"
-onclick="showScreen('products')"
->
+            </button>
 
-Enter Floor 1
+        </div>
 
-</button>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
+<!-- PRODUCTS -->
 
+<section id="products" class="screen" style="display:none;">
 
-<!-- ================================================= -->
-<!-- PRODUCTS / MAIN SHOPPING SCREEN -->
-<!-- ================================================= -->
+    <h2>🛍️ Grocery Products</h2>
 
-<section
-id="products"
-class="screen"
-style="display:none;"
->
+    <input
 
-<h2>
-🛍️ Grocery Products
-</h2>
+        id="productSearch"
 
+        type="text"
 
-<input
-id="productSearch"
-type="text"
-placeholder="🔎 Search products..."
-oninput="searchProducts()"
->
+        placeholder="🔎 Search products..."
 
+        oninput="searchProducts()"
 
+    >
 
-<!-- ================================================= -->
-<!-- LIVE SCANNER -->
-<!-- ================================================= -->
+    <div class="card center">
 
-<div class="card center">
+        <h3>📷 Scan Your Product</h3>
 
-<h3>
-📷 Scan Your Product
-</h3>
+        <p id="scanInstruction">
 
+            Scan a product before placing it inside the trolley.
 
-<p id="scanInstruction">
+        </p>
 
-Scan a product before placing it
-inside the trolley.
+        <button class="primary" onclick="startScanner()">
 
-</p>
+            📷 Scan Product
 
+        </button>
 
-<button
-class="primary"
-onclick="startScanner()"
->
+        <div id="scannerBox">
 
-📷 Scan Product
+            <div id="reader"></div>
 
-</button>
+            <p id="scanResult">Waiting for barcode...</p>
 
+            <button class="danger" onclick="stopScanner()">
 
-<div id="scannerBox">
+                Stop Scanner
 
-<div id="reader"></div>
+            </button>
 
+        </div>
 
-<p
-id="scanResult"
->
+    </div>
 
-Waiting for barcode...
+    <div id="liveProductStatus" class="card">
 
-</p>
+        <h3>📦 Current Product</h3>
 
+        <div id="currentProduct" class="waiting-box">
 
-<button
-class="danger"
-onclick="stopScanner()"
->
+            No product scanned yet.
 
-Stop Scanner
+        </div>
 
-</button>
+    </div>
 
-</div>
+    <div class="card">
 
-</div>
+        <h3>🛒 Live Trolley Status</h3>
 
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
 
+            <div>
 
-<!-- ================================================= -->
-<!-- CURRENT PRODUCT STATUS -->
-<!-- ================================================= -->
+                <p class="small">Scanned</p>
 
-<div
-id="liveProductStatus"
-class="card"
->
+                <p id="liveScannedCount" class="stat">0</p>
 
-<h3>
-📦 Current Product
-</h3>
+            </div>
 
+            <div>
 
-<div
-id="currentProduct"
-class="waiting-box"
->
+                <p class="small">In Trolley</p>
 
-No product scanned yet.
+                <p id="liveTrolleyCount" class="stat">0</p>
 
-</div>
+            </div>
 
-</div>
+            <div>
 
+                <p class="small">Virtual Weight</p>
 
+                <p id="liveLogicalWeight" class="stat">0 g</p>
 
-<!-- ================================================= -->
-<!-- LIVE TROLLEY -->
-<!-- ================================================= -->
+            </div>
 
-<div class="card">
+        </div>
 
-<h3>
-🛒 Live Trolley Status
-</h3>
+        <div id="liveTrolleyMessage" class="waiting-box">
 
+            Scan a product to begin.
 
-<div
-style="
-display:grid;
-grid-template-columns:
-repeat(3,1fr);
-gap:10px;
-text-align:center;
-"
->
+        </div>
 
+        <h4 style="margin-top:20px;">Products in Trolley</h4>
 
-<div>
+        <div id="liveTrolleyProducts" class="product-list">
 
-<p class="small">
-Scanned
-</p>
+            <p class="small">No products in trolley.</p>
 
-<p
-id="liveScannedCount"
-class="stat"
->
+        </div>
 
-0
+    </div>
 
-</p>
+    <div id="productGrid" class="product-grid"></div>
 
-</div>
+    <div class="center">
 
+        <button class="secondary" onclick="showScreen('cart')">
 
-<div>
+            🛒 View Cart
 
-<p class="small">
-In Trolley
-</p>
+        </button>
 
-<p
-id="liveTrolleyCount"
-class="stat"
->
+    </div>
 
-0
+</section>
 
-</p>
-
-</div>
-
-
-<div>
-
-<p class="small">
-Virtual Weight
-</p>
-
-<p
-id="liveLogicalWeight"
-class="stat"
->
-
-0 g
-
-</p>
-
-</div>
-
-
-</div>
-
-
-<div
-id="liveTrolleyMessage"
-class="waiting-box"
->
-
-Scan a product to begin.
-
-</div>
-
-
-<h4
-style="margin-top:20px;"
->
-
-Products in Trolley
-
-</h4>
-
-
-<div
-id="liveTrolleyProducts"
-class="product-list"
->
-
-<p class="small">
-
-No products in trolley.
-
-</p>
-
-</div>
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- PRODUCT LIST -->
-<!-- ================================================= -->
-
-<div
-id="productGrid"
-class="product-grid"
->
-</div>
-
-
-
-<!-- ================================================= -->
 <!-- CART -->
-<!-- ================================================= -->
 
-<div class="center">
+<section id="cart" class="screen" style="display:none;">
 
-<button
-class="secondary"
-onclick="showScreen('cart')"
->
+    <h2>🛒 My Cart</h2>
 
-🛒 View Cart
+    <div id="cartItems" class="card">
 
-</button>
+        <p class="center">Your cart is empty.</p>
 
-</div>
+    </div>
 
-</section>
+    <div class="card">
 
+        <p class="cart-total">Total: ₹<span id="cartTotal">0</span></p>
 
+        <p>Items: <strong id="cartCount">0</strong></p>
 
-<!-- ================================================= -->
-<!-- CART -->
-<!-- ================================================= -->
+    </div>
 
-<section
-id="cart"
-class="screen"
-style="display:none;"
->
+    <div class="center">
 
-<h2>
-🛒 My Cart
-</h2>
+        <button class="secondary" onclick="showScreen('products')">
 
+            ← Continue Shopping
 
-<div
-id="cartItems"
-class="card"
->
+        </button>
 
-<p class="center">
+        <button class="success" onclick="doneShopping()">
 
-Your cart is empty.
+            Done Shopping & Generate Bill
 
-</p>
+        </button>
 
-</div>
-
-
-<div class="card">
-
-<p class="cart-total">
-
-Total: ₹
-<span id="cartTotal">
-0
-</span>
-
-</p>
-
-
-<p>
-
-Items:
-<strong id="cartCount">
-0
-</strong>
-
-</p>
-
-</div>
-
-
-<div class="center">
-
-<button
-class="secondary"
-onclick="showScreen('products')"
->
-
-← Continue Shopping
-
-</button>
-
-
-<button
-class="success"
-onclick="doneShopping()"
->
-
-Done Shopping & Generate Bill
-
-</button>
-
-</div>
+    </div>
 
 </section>
 
-
-
-<!-- ================================================= -->
 <!-- OLD TROLLEY STATUS -->
-<!-- ================================================= -->
 
-<section
-id="espTrolleyStatus"
-class="screen"
-style="display:none;"
->
+<section id="espTrolleyStatus" class="screen" style="display:none;">
 
-<h2>
-🛒 Trolley Status
-</h2>
+    <h2>🛒 Trolley Status</h2>
 
+    <p id="espConnection">ESP8266: Checking connection...</p>
 
-<p
-id="espConnection"
->
+    <div class="card center">
 
-ESP8266: Checking connection...
+        <h3>📱 Scanned Products</h3>
 
-</p>
+        <p id="espScannedCount" class="stat">0</p>
 
+        <h3>📦 Products in Trolley</h3>
 
-<div class="card center">
+        <p id="espTrolleyCount" class="stat">0</p>
 
-<h3>
-📱 Scanned Products
-</h3>
+        <h3>⚖️ Virtual Trolley Weight</h3>
 
-<p
-id="espScannedCount"
-class="stat"
->
-0
-</p>
+        <p id="espLogicalWeight" class="stat">0 g</p>
 
+    </div>
 
-<h3>
-📦 Products in Trolley
-</h3>
+    <div class="card">
 
-<p
-id="espTrolleyCount"
-class="stat"
->
-0
-</p>
+        <h3>📱 Waiting for Placement</h3>
 
+        <div id="authorizedProducts" class="product-list">
 
-<h3>
-⚖️ Virtual Trolley Weight
-</h3>
+            <p class="small">No scanned products waiting.</p>
 
-<p
-id="espLogicalWeight"
-class="stat"
->
-0 g
-</p>
+        </div>
 
-</div>
+    </div>
 
+    <div class="card">
 
-<div class="card">
+        <h3>✅ Authenticated Products</h3>
 
-<h3>
-📱 Waiting for Placement
-</h3>
+        <div id="trolleyProducts" class="product-list">
 
-<div
-id="authorizedProducts"
-class="product-list"
->
+            <p class="small">No products in trolley.</p>
 
-<p class="small">
-No scanned products waiting.
-</p>
+        </div>
 
-</div>
+    </div>
 
-</div>
+    <div id="cartComparison" class="card">Waiting for trolley data...</div>
 
+    <div class="center">
 
-<div class="card">
+        <button class="secondary" onclick="showScreen('cart')">← Back to Cart</button>
 
-<h3>
-✅ Authenticated Products
-</h3>
+        <button class="danger" onclick="resetTrolley()">Reset Trolley</button>
 
-<div
-id="trolleyProducts"
-class="product-list"
->
-
-<p class="small">
-No products in trolley.
-</p>
-
-</div>
-
-</div>
-
-
-<div
-id="cartComparison"
-class="card"
->
-
-Waiting for trolley data...
-
-</div>
-
-
-<div class="center">
-
-<button
-class="secondary"
-onclick="showScreen('cart')"
->
-
-← Back to Cart
-
-</button>
-
-
-<button
-class="danger"
-onclick="resetTrolley()"
->
-
-Reset Trolley
-
-</button>
-
-</div>
+    </div>
 
 </section>
 
-
-
-<!-- ================================================= -->
 <!-- BILL -->
-<!-- ================================================= -->
 
-<section
-id="bill"
-class="screen"
-style="display:none;"
->
+<section id="bill" class="screen" style="display:none;">
 
-<h2>
-🧾 Inventra Bill
-</h2>
+    <h2>🧾 Inventra Bill</h2>
 
+    <div id="billContent" class="card"></div>
 
-<div
-id="billContent"
-class="card"
->
-</div>
+    <div class="center">
 
+        <button class="primary" onclick="showPayment()">💳 Pay Now</button>
 
-<div class="center">
+        <button class="secondary" onclick="showScreen('products')">Continue Shopping</button>
 
-<button
-class="primary"
-onclick="showPayment()"
->
-
-💳 Pay Now
-
-</button>
-
-
-<button
-class="secondary"
-onclick="showScreen('products')"
->
-
-Continue Shopping
-
-</button>
-
-</div>
+    </div>
 
 </section>
 
-
-
-<!-- ================================================= -->
 <!-- PAYMENT -->
-<!-- ================================================= -->
 
-<section
-id="payment"
-class="screen"
-style="display:none;"
->
+<section id="payment" class="screen" style="display:none;">
 
-<div class="center">
+    <div class="center">
 
-<h2>
-💳 Payment
-</h2>
+        <h2>💳 Payment</h2>
 
+        <div class="card">
 
-<div class="card">
+            <h3>Scan to Pay</h3>
 
-<h3>
-Scan to Pay
-</h3>
+            <div id="paymentQR"></div>
 
+            <p>Amount: ₹<strong id="paymentAmount">0</strong></p>
 
-<div id="paymentQR"></div>
+        </div>
 
+        <button class="success" onclick="paymentComplete()">
 
-<p>
+            ✅ Payment Completed
 
-Amount:
-₹<strong id="paymentAmount">
-0
-</strong>
+        </button>
 
-</p>
+        <button class="secondary" onclick="showScreen('bill')">← Back</button>
 
-</div>
-
-
-<button
-class="success"
-onclick="paymentComplete()"
->
-
-✅ Payment Completed
-
-</button>
-
-
-<button
-class="secondary"
-onclick="showScreen('bill')"
->
-
-← Back
-
-</button>
-
-</div>
+    </div>
 
 </section>
-
-
 
 <script>
 
-
 // =====================================================
+
 // ESP8266
-// =====================================================
-
-const ESP8266_IP =
-    "10.230.218.96";
-
 
 // =====================================================
-// PRODUCT DATABASE
+
+const ESP8266_IP = "10.230.218.96";
+
+// =====================================================
+
+// UPDATED PRODUCT DATABASE
+
+// Barcode, product name, price, assigned weight, emoji
+
 // =====================================================
 
 const productDatabase = {
 
-    "8901860633532":{
-        name:"Rice",
-        price:60,
-        weight:250
+    "8906160690209": {
+
+        name: "Tata Salt",
+
+        price: 80,
+
+        weight: 250,
+
+        emoji: "🧂"
+
     },
 
-    "8901765126122":{
-        name:"Sugar",
-        price:45,
-        weight:250
+    "8902102163930": {
+
+        name: "Aashirvaad Atta",
+
+        price: 100,
+
+        weight: 250,
+
+        emoji: "🌾"
+
     },
 
-    "8901765085344":{
-        name:"Biscuits",
-        price:20,
-        weight:250
+    "8906073788116": {
+
+        name: "Amul Butter",
+
+        price: 40,
+
+        weight: 250,
+
+        emoji: "🧈"
+
     },
 
-    "8901234567893":{
-        name:"Chocolate",
-        price:10,
-        weight:250
+    "8908000034334": {
+
+        name: "Milk",
+
+        price: 35,
+
+        weight: 250,
+
+        emoji: "🥛"
+
     },
 
-    "8901234567894":{
-        name:"Kurkure",
-        price:10,
-        weight:250
+    "8901324010664": {
+
+        name: "Green Peas",
+
+        price: 45,
+
+        weight: 250,
+
+        emoji: "🫛"
+
+    },
+
+    "8906136382824": {
+
+        name: "Kwality Walls Ice Cream",
+
+        price: 60,
+
+        weight: 250,
+
+        emoji: "🍦"
+
+    },
+
+    "8906014765985": {
+
+        name: "Kurkure",
+
+        price: 10,
+
+        weight: 250,
+
+        emoji: "🌶️"
+
+    },
+
+    "8901860630241": {
+
+        name: "Pringles",
+
+        price: 20,
+
+        weight: 250,
+
+        emoji: "🥔"
+
+    },
+
+    "8901248164252": {
+
+        name: "Cheetos",
+
+        price: 15,
+
+        weight: 250,
+
+        emoji: "🧀"
+
+    },
+
+    "8904275300259": {
+
+        name: "Mdew",
+
+        price: 10,
+
+        weight: 250,
+
+        emoji: "🥤"
+
     }
 
 };
 
-
 // =====================================================
+
 // GLOBAL VARIABLES
+
 // =====================================================
 
 let cart = [];
@@ -1178,81 +898,57 @@ let html5QrCode = null;
 
 let scannerRunning = false;
 
-
-// Prevent duplicate barcode detections
 let lastScannedBarcode = "";
 
 let lastScanTime = 0;
 
-
 // =====================================================
+
 // SCREEN MANAGEMENT
+
 // =====================================================
 
-function showScreen(screenId){
+function showScreen(screenId) {
 
-    const screens =
-        document.querySelectorAll(
-            ".screen"
-        );
+    document.querySelectorAll(".screen").forEach(function(screen) {
 
+        screen.style.display = "none";
 
-    screens.forEach(
-        function(screen){
+    });
 
-            screen.style.display =
-                "none";
+    const selected = document.getElementById(screenId);
 
-        }
-    );
+    if (selected) {
 
-
-    const selected =
-        document.getElementById(
-            screenId
-        );
-
-
-    if(selected){
-
-        selected.style.display =
-            "block";
+        selected.style.display = "block";
 
     }
 
-
     window.scrollTo({
-        top:0,
-        behavior:"smooth"
+
+        top: 0,
+
+        behavior: "smooth"
+
     });
 
-
-    if(
-        screenId ===
-        "products"
-    ){
+    if (screenId === "products") {
 
         renderProducts();
+
+        searchProducts();
 
         updateLiveTrolley();
 
     }
 
-
-    if(
-        screenId ===
-        "cart"
-    ){
+    if (screenId === "cart") {
 
         updateCart();
 
     }
 
-
-    if(
-        screenId ===
-        "espTrolleyStatus"
-    ){
+    if (screenId === "espTrolleyStatus") {
 
         getESPData();
 
@@ -1260,550 +956,347 @@ function showScreen(screenId){
 
 }
 
-
 // =====================================================
+
 // START SHOPPING
+
 // =====================================================
 
-function startShopping(){
+function startShopping() {
 
-    const amount =
-        prompt(
-            "Enter your shopping budget (₹):"
-        );
+    const amount = prompt("Enter your shopping budget (₹):");
 
+    if (amount === null) return;
 
-    if(
-        amount === null
-    ){
+    const value = Number(amount);
 
-        return;
+    if (isNaN(value) || value <= 0) {
 
-    }
-
-
-    const value =
-        Number(amount);
-
-
-    if(
-        isNaN(value) ||
-        value <= 0
-    ){
-
-        alert(
-            "Please enter a valid budget."
-        );
+        alert("Please enter a valid budget.");
 
         return;
 
     }
-
 
     budget = value;
-
 
     showScreen("floor");
 
 }
 
-
-// =====================================================
-// RENDER PRODUCTS
 // =====================================================
 
-function renderProducts(){
+// RENDER PRODUCTS WITH VISIBLE EMOJIS
 
-    const grid =
-        document.getElementById(
-            "productGrid"
-        );
+// =====================================================
 
+function renderProducts() {
 
-    if(!grid){
+    const grid = document.getElementById("productGrid");
 
-        return;
-
-    }
-
+    if (!grid) return;
 
     grid.innerHTML = "";
 
+    Object.keys(productDatabase).forEach(function(barcode) {
 
-    Object.keys(
-        productDatabase
-    )
-    .forEach(
-        function(barcode){
+        const product = productDatabase[barcode];
 
-            const product =
-                productDatabase[
-                    barcode
-                ];
+        const card = document.createElement("div");
 
+        card.className = "product-card";
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+        card.dataset.name = product.name.toLowerCase();
 
+        card.innerHTML = `
 
-            card.className =
-                "product-card";
+            <div class="product-emoji" aria-label="${product.name}">
 
+                ${product.emoji}
 
-            card.dataset.name =
-                product.name.toLowerCase();
+            </div>
 
+            <h3>${product.name}</h3>
 
-            card.innerHTML = `
+            <p class="price">₹${product.price}</p>
 
-                <h3>
-                    ${product.name}
-                </h3>
+            <p class="weight">
 
-                <p class="price">
-                    ₹${product.price}
-                </p>
+                Assigned Weight: ${product.weight} g
 
-                <p class="weight">
-                    Assigned Weight:
-                    250 g
-                </p>
+            </p>
 
-                <p class="small">
-                    Barcode:
-                    ${barcode}
-                </p>
+            <p class="small">
 
-            `;
+                Barcode: ${barcode}
 
+            </p>
 
-            grid.appendChild(card);
+        `;
 
-        }
-    );
+        grid.appendChild(card);
+
+    });
 
 }
 
-
-// =====================================================
-// SEARCH
 // =====================================================
 
-function searchProducts(){
+// SEARCH PRODUCTS
 
-    const search =
-        document
-        .getElementById(
-            "productSearch"
-        )
-        .value
-        .toLowerCase();
+// =====================================================
 
+function searchProducts() {
 
-    const cards =
-        document.querySelectorAll(
-            ".product-card"
-        );
+    const search = document.getElementById("productSearch").value.toLowerCase();
 
+    document.querySelectorAll("#productGrid .product-card").forEach(function(card) {
 
-    cards.forEach(
-        function(card){
+        card.style.display = card.dataset.name.includes(search) ? "block" : "none";
 
-            const name =
-                card.dataset.name;
-
-
-            card.style.display =
-                name.includes(search)
-                ? "block"
-                : "none";
-
-        }
-    );
+    });
 
 }
 
-
 // =====================================================
+
 // START SCANNER
+
 // =====================================================
 
-async function startScanner(){
+async function startScanner() {
 
-    const scannerBox =
-        document.getElementById(
-            "scannerBox"
-        );
+    const scannerBox = document.getElementById("scannerBox");
 
+    const result = document.getElementById("scanResult");
 
-    const result =
-        document.getElementById(
-            "scanResult"
-        );
+    scannerBox.style.display = "block";
 
+    result.textContent = "📷 Starting camera...";
 
-    scannerBox.style.display =
-        "block";
+    try {
 
+        if (html5QrCode && scannerRunning) {
 
-    result.textContent =
-        "📷 Starting camera...";
-
-
-    try{
-
-        // Stop old scanner first
-        if(
-            html5QrCode &&
-            scannerRunning
-        ){
-
-            try{
+            try {
 
                 await html5QrCode.stop();
 
-            }
+            } catch (e) {}
 
-            catch(e){}
-
-
-            scannerRunning =
-                false;
+            scannerRunning = false;
 
         }
 
+        if (html5QrCode) {
 
-        // Clear old scanner
-        if(html5QrCode){
-
-            try{
+            try {
 
                 html5QrCode.clear();
 
-            }
-
-            catch(e){}
+            } catch (e) {}
 
         }
 
-
-        html5QrCode =
-            new Html5Qrcode(
-                "reader"
-            );
-
+        html5QrCode = new Html5Qrcode("reader");
 
         await html5QrCode.start(
 
-            {
-                facingMode:
-                    "environment"
-            },
+            { facingMode: "environment" },
 
             {
 
-                fps:15,
+                fps: 15,
 
-                qrbox:{
-                    width:280,
-                    height:160
-                },
+                qrbox: { width: 280, height: 160 },
 
-                formatsToSupport:[
+                formatsToSupport: [
+
                     Html5QrcodeSupportedFormats.EAN_13,
+
                     Html5QrcodeSupportedFormats.EAN_8,
+
                     Html5QrcodeSupportedFormats.UPC_A,
+
                     Html5QrcodeSupportedFormats.UPC_E,
+
                     Html5QrcodeSupportedFormats.CODE_128,
+
                     Html5QrcodeSupportedFormats.CODE_39
+
                 ]
 
             },
 
-            function(decodedText){
+            function(decodedText) {
 
-                handleScannedBarcode(
-                    decodedText
-                );
+                handleScannedBarcode(decodedText);
 
             },
 
-            function(errorMessage){
+            function(errorMessage) {
 
                 // Scanner searching.
+
             }
 
         );
 
+        scannerRunning = true;
 
-        scannerRunning =
-            true;
+        result.textContent = "📷 Point camera at the product barcode.";
 
+    } catch (error) {
 
-        result.textContent =
-            "📷 Point camera at the product barcode.";
+        console.error(error);
 
-    }
-
-    catch(error){
-
-        console.error(
-            error
-        );
-
-
-        result.textContent =
-            "❌ Camera could not start. Please allow camera permission.";
+        result.textContent = "❌ Camera could not start. Please allow camera permission.";
 
     }
 
 }
 
-
 // =====================================================
+
 // STOP SCANNER
+
 // =====================================================
 
-async function stopScanner(){
+async function stopScanner() {
 
-    if(
-        html5QrCode &&
-        scannerRunning
-    ){
+    if (html5QrCode && scannerRunning) {
 
-        try{
+        try {
 
             await html5QrCode.stop();
 
-        }
+        } catch (error) {
 
-        catch(error){
-
-            console.log(
-                error
-            );
+            console.log(error);
 
         }
 
-
-        scannerRunning =
-            false;
+        scannerRunning = false;
 
     }
 
+    const scannerBox = document.getElementById("scannerBox");
 
-    const scannerBox =
-        document.getElementById(
-            "scannerBox"
-        );
+    if (scannerBox) {
 
-
-    if(scannerBox){
-
-        scannerBox.style.display =
-            "none";
+        scannerBox.style.display = "none";
 
     }
 
 }
 
-
 // =====================================================
+
 // HANDLE BARCODE
+
 // =====================================================
 
-async function handleScannedBarcode(
-    barcode
-){
+async function handleScannedBarcode(barcode) {
 
-    barcode =
-        String(
-            barcode
-        ).trim();
+    barcode = String(barcode).trim();
 
+    const now = Date.now();
 
-    // ================================================
-    // PREVENT DUPLICATE CAMERA READ
-    // ================================================
-
-    const now =
-        Date.now();
-
-
-    if(
-        barcode ===
-        lastScannedBarcode
-        &&
-        now - lastScanTime <
-        2000
-    ){
+    if (barcode === lastScannedBarcode && now - lastScanTime < 2000) {
 
         return;
 
     }
 
+    lastScannedBarcode = barcode;
 
-    lastScannedBarcode =
-        barcode;
+    lastScanTime = now;
 
+    console.log("Barcode scanned:", barcode);
 
-    lastScanTime =
-        now;
+    const product = productDatabase[barcode];
 
+    if (!product) {
 
-    console.log(
-        "Barcode scanned:",
-        barcode
-    );
+        document.getElementById("scanResult").textContent =
 
-
-    const product =
-        productDatabase[
-            barcode
-        ];
-
-
-    // ================================================
-    // PRODUCT NOT FOUND
-    // ================================================
-
-    if(!product){
-
-        document
-        .getElementById(
-            "scanResult"
-        )
-        .textContent =
-            "❌ Product not found: " +
-            barcode;
-
+            "❌ Product not found: " + barcode;
 
         return;
 
     }
 
-
-    // Stop scanner
     await stopScanner();
 
+    const currentProduct = document.getElementById("currentProduct");
 
-    const currentProduct =
-        document.getElementById(
-            "currentProduct"
-        );
-
-
-    currentProduct.className =
-        "waiting-box";
-
+    currentProduct.className = "waiting-box";
 
     currentProduct.innerHTML = `
 
         ⏳ Authorizing
-        <strong>
-            ${product.name}
-        </strong>...
+
+        <strong>${product.emoji} ${product.name}</strong>...
 
     `;
 
+    try {
 
-    // ================================================
-    // SEND AUTHORIZATION TO ESP
-    // ================================================
+        const response = await fetch(
 
-    try{
+            "http://" + ESP8266_IP +
 
-        const response =
-            await fetch(
+            "/authorize?name=" +
 
-                "http://" +
-                ESP8266_IP +
-                "/authorize?name=" +
-                encodeURIComponent(
-                    product.name
-                ) +
-                "&t=" +
-                Date.now(),
+            encodeURIComponent(product.name) +
 
-                {
-                    method:"GET",
+            "&t=" + Date.now(),
 
-                    cache:"no-store"
-                }
+            {
 
-            );
+                method: "GET",
 
+                cache: "no-store"
 
-        const result =
-            await response.text();
+            }
 
-
-        console.log(
-            "ESP response:",
-            result
         );
 
+        const result = await response.text();
 
-        if(
-            !response.ok
-        ){
+        console.log("ESP response:", result);
 
-            currentProduct.className =
-                "danger-box";
+        if (!response.ok) {
 
+            currentProduct.className = "danger-box";
 
-            currentProduct.innerHTML = `
-
-                ❌ ${result}
-
-            `;
-
+            currentProduct.innerHTML = `❌ ${result}`;
 
             return;
 
         }
 
+        addToCart(product.name, product.price);
 
-        // ============================================
-        // AUTHORIZED SUCCESSFULLY
-        // ============================================
-
-        addToCart(
-            product.name,
-            product.price
-        );
-
-
-        currentProduct.className =
-            "success-box";
-
+        currentProduct.className = "success-box";
 
         currentProduct.innerHTML = `
 
-            <h3>
-                ✅ ${product.name} Authorized
-            </h3>
+            <h3>✅ ${product.emoji} ${product.name} Authorized</h3>
+
+            <p>Place the product inside the trolley.</p>
 
             <p>
-                Place the product inside
-                the trolley.
-            </p>
 
-            <p>
                 Assigned Weight:
-                <strong>
-                    250 g
-                </strong>
+
+                <strong>${product.weight} g</strong>
+
             </p>
 
             <br>
 
-            <button
-                class="primary"
-                onclick="startScanner()"
-            >
+            <button class="primary" onclick="startScanner()">
 
                 📷 Scan Next Product
 
@@ -1811,52 +1304,32 @@ async function handleScannedBarcode(
 
         `;
 
+        document.getElementById("scanInstruction").textContent =
 
-        document
-        .getElementById(
-            "scanInstruction"
-        )
-        .textContent =
             "Product authorized. Place it in the trolley or scan the next product.";
 
+        document.getElementById("scanResult").textContent =
 
-        document
-        .getElementById(
-            "scanResult"
-        )
-        .textContent =
-            "✅ " +
-            product.name +
-            " authorized successfully.";
+            "✅ " + product.name + " authorized successfully.";
 
-
-        // Get current trolley state immediately
         updateLiveTrolley();
 
-    }
+    } catch (error) {
 
-    catch(error){
+        console.error("Authorization error:", error);
 
-        console.error(
-            "Authorization error:",
-            error
-        );
-
-
-        currentProduct.className =
-            "danger-box";
-
+        currentProduct.className = "danger-box";
 
         currentProduct.innerHTML = `
 
-            <h3>
-                🔴 ESP8266 Connection Failed
-            </h3>
+            <h3>🔴 ESP8266 Connection Failed</h3>
 
             <p>
-                Make sure the phone and
-                ESP8266 are connected
+
+                Make sure the phone and ESP8266 are connected
+
                 to the same Wi-Fi.
+
             </p>
 
         `;
@@ -1865,469 +1338,275 @@ async function handleScannedBarcode(
 
 }
 
-
 // =====================================================
+
 // ADD TO CART
+
 // =====================================================
 
-function addToCart(
-    name,
-    price
-){
+function addToCart(name, price) {
 
-    const existing =
-        cart.find(
-            function(item){
+    const existing = cart.find(function(item) {
 
-                return item.name ===
-                    name;
+        return item.name === name;
 
-            }
-        );
+    });
 
-
-    if(existing){
+    if (existing) {
 
         existing.quantity++;
 
-    }
-
-    else{
+    } else {
 
         cart.push({
 
-            name:name,
+            name: name,
 
-            price:price,
+            price: price,
 
-            weight:250,
+            weight: 250,
 
-            quantity:1
+            quantity: 1
 
         });
 
     }
 
-
     updateCart();
-
 
     checkBudget();
 
 }
 
-
 // =====================================================
+
 // UPDATE CART
+
 // =====================================================
 
-function updateCart(){
+function updateCart() {
 
-    const container =
-        document.getElementById(
-            "cartItems"
-        );
+    const container = document.getElementById("cartItems");
 
+    const totalElement = document.getElementById("cartTotal");
 
-    const totalElement =
-        document.getElementById(
-            "cartTotal"
-        );
+    const countElement = document.getElementById("cartCount");
 
+    if (!container) return;
 
-    const countElement =
-        document.getElementById(
-            "cartCount"
-        );
+    if (cart.length === 0) {
 
+        container.innerHTML = `<p class="center">Your cart is empty.</p>`;
 
-    if(!container){
+        totalElement.textContent = "0";
+
+        countElement.textContent = "0";
 
         return;
 
     }
-
-
-    if(
-        cart.length ===
-        0
-    ){
-
-        container.innerHTML = `
-
-            <p class="center">
-                Your cart is empty.
-            </p>
-
-        `;
-
-
-        totalElement.textContent =
-            "0";
-
-
-        countElement.textContent =
-            "0";
-
-
-        return;
-
-    }
-
 
     let total = 0;
 
     let count = 0;
 
+    container.innerHTML = "";
 
-    container.innerHTML =
-        "";
+    cart.forEach(function(item) {
 
+        const itemTotal = item.price * item.quantity;
 
-    cart.forEach(
-        function(item){
+        total += itemTotal;
 
-            const itemTotal =
-                item.price *
-                item.quantity;
+        count += item.quantity;
 
+        const div = document.createElement("div");
 
-            total +=
-                itemTotal;
+        div.className = "cart-item";
 
+        const product = Object.values(productDatabase).find(function(p) {
 
-            count +=
-                item.quantity;
+            return p.name === item.name;
 
+        });
 
-            const div =
-                document.createElement(
-                    "div"
-                );
+        const emoji = product ? product.emoji : "🛍️";
 
+        div.innerHTML = `
 
-            div.className =
-                "cart-item";
+            <div>
 
+                <strong>${emoji} ${item.name}</strong>
 
-            div.innerHTML = `
+                <br>
 
-                <div>
+                <span class="small">₹${item.price} × ${item.quantity}</span>
 
-                    <strong>
-                        ${item.name}
-                    </strong>
+                <br>
 
-                    <br>
+                <span class="small">
 
-                    <span class="small">
+                    Assigned weight: ${item.weight * item.quantity} g
 
-                        ₹${item.price}
-                        ×
-                        ${item.quantity}
+                </span>
 
-                    </span>
+            </div>
 
-                    <br>
+            <strong>₹${itemTotal}</strong>
 
-                    <span class="small">
+        `;
 
-                        Assigned weight:
-                        ${item.weight *
-                        item.quantity}
-                        g
+        container.appendChild(div);
 
-                    </span>
+    });
 
-                </div>
+    totalElement.textContent = total;
 
-
-                <strong>
-
-                    ₹${itemTotal}
-
-                </strong>
-
-            `;
-
-
-            container.appendChild(
-                div
-            );
-
-        }
-    );
-
-
-    totalElement.textContent =
-        total;
-
-
-    countElement.textContent =
-        count;
+    countElement.textContent = count;
 
 }
 
-
 // =====================================================
+
 // BUDGET
+
 // =====================================================
 
-function checkBudget(){
+function checkBudget() {
 
     let total = 0;
 
+    cart.forEach(function(item) {
 
-    cart.forEach(
-        function(item){
+        total += item.price * item.quantity;
 
-            total +=
-                item.price *
-                item.quantity;
+    });
 
-        }
-    );
+    if (budget > 0 && total > budget) {
 
-
-    if(
-        budget > 0 &&
-        total > budget
-    ){
-
-        console.log(
-            "Budget exceeded."
-        );
+        console.log("Budget exceeded.");
 
     }
 
 }
 
-
 // =====================================================
+
 // LIVE TROLLEY DATA
+
 // =====================================================
 
-async function updateLiveTrolley(){
+async function updateLiveTrolley() {
 
-    try{
+    try {
 
-        const response =
-            await fetch(
+        const response = await fetch(
 
-                "http://" +
-                ESP8266_IP +
-                "/data?t=" +
-                Date.now(),
+            "http://" + ESP8266_IP + "/data?t=" + Date.now(),
 
-                {
-                    method:"GET",
+            {
 
-                    cache:"no-store"
-                }
+                method: "GET",
 
-            );
+                cache: "no-store"
 
+            }
 
-        if(
-            !response.ok
-        ){
+        );
 
-            throw new Error(
-                "ESP not responding"
-            );
+        if (!response.ok) {
+
+            throw new Error("ESP not responding");
 
         }
 
+        const data = await response.json();
 
-        const data =
-            await response.json();
+        document.getElementById("liveScannedCount").textContent = data.scannedCount;
 
+        document.getElementById("liveTrolleyCount").textContent = data.trolleyCount;
 
-        // ==========================================
-        // COUNTS
-        // ==========================================
+        document.getElementById("liveLogicalWeight").textContent = data.logicalWeight + " g";
 
-        document
-        .getElementById(
-            "liveScannedCount"
-        )
-        .textContent =
-            data.scannedCount;
+        const productList = document.getElementById("liveTrolleyProducts");
 
+        if (data.trolleyProducts && data.trolleyProducts.length > 0) {
 
-        document
-        .getElementById(
-            "liveTrolleyCount"
-        )
-        .textContent =
-            data.trolleyCount;
+            productList.innerHTML = data.trolleyProducts.map(function(name) {
 
+                const product = Object.values(productDatabase).find(function(p) {
 
-        document
-        .getElementById(
-            "liveLogicalWeight"
-        )
-        .textContent =
-            data.logicalWeight +
-            " g";
+                    return p.name === name;
 
+                });
 
-        // ==========================================
-        // PRODUCTS IN TROLLEY
-        // ==========================================
+                const emoji = product ? product.emoji : "🛒";
 
-        const productList =
-            document.getElementById(
-                "liveTrolleyProducts"
-            );
+                return `
 
+                    <div>
 
-        if(
-            data.trolleyProducts &&
-            data.trolleyProducts.length >
-            0
-        ){
+                        ${emoji} <strong>${name}</strong>
 
-            productList.innerHTML =
-                data.trolleyProducts
-                .map(
-                    function(product){
+                        <span class="small">— 250 g</span>
 
-                        return `
+                    </div>
 
-                            <div>
+                `;
 
-                                ✅
-                                <strong>
-                                    ${product}
-                                </strong>
+            }).join("");
 
-                                <span class="small">
+        } else {
 
-                                    — 250 g
-
-                                </span>
-
-                            </div>
-
-                        `;
-
-                    }
-                )
-                .join("");
+            productList.innerHTML = `<p class="small">No products in trolley.</p>`;
 
         }
 
-        else{
+        const message = document.getElementById("liveTrolleyMessage");
 
-            productList.innerHTML = `
+        if (data.extra === true) {
 
-                <p class="small">
-                    No products in trolley.
-                </p>
-
-            `;
-
-        }
-
-
-        // ==========================================
-        // STATUS MESSAGE
-        // ==========================================
-
-        const message =
-            document.getElementById(
-                "liveTrolleyMessage"
-            );
-
-
-        // EXTRA PRODUCT
-        if(
-            data.extra === true
-        ){
-
-            message.className =
-                "danger-box";
-
+            message.className = "danger-box";
 
             message.innerHTML = `
 
-                <h3>
-                    🚨 EXTRA PRODUCT DETECTED
-                </h3>
+                <h3>🚨 EXTRA PRODUCT DETECTED</h3>
 
-                <p>
-                    This product was not scanned.
-                </p>
+                <p>This product was not scanned.</p>
 
                 <br>
 
-                <strong>
-                    Please remove it from
-                    the trolley.
-                </strong>
+                <strong>Please remove it from the trolley.</strong>
 
             `;
 
-        }
+        } else if (data.authorizedProducts && data.authorizedProducts.length > 0) {
 
-
-        // WAITING FOR PLACEMENT
-        else if(
-            data.authorizedProducts &&
-            data.authorizedProducts.length >
-            0
-        ){
-
-            message.className =
-                "waiting-box";
-
+            message.className = "waiting-box";
 
             message.innerHTML = `
 
-                ⏳
-
-                <strong>
-                    Product Authorized
-                </strong>
+                ⏳ <strong>Product Authorized</strong>
 
                 <br><br>
 
-                Place the scanned product
-                inside the trolley.
+                Place the scanned product inside the trolley.
 
             `;
 
-        }
+        } else if (data.trolleyCount > 0) {
 
-
-        // AUTHENTICATED
-        else if(
-            data.trolleyCount >
-            0
-        ){
-
-            message.className =
-                "success-box";
-
+            message.className = "success-box";
 
             message.innerHTML = `
 
-                <h3>
-                    ✅ Trolley Updated
-                </h3>
+                <h3>✅ Trolley Updated</h3>
 
-                <p>
-                    All placed products
-                    are authenticated.
-                </p>
+                <p>All placed products are authenticated.</p>
 
                 <br>
 
-                <button
-                    class="primary"
-                    onclick="startScanner()"
-                >
+                <button class="primary" onclick="startScanner()">
 
                     📷 Scan Next Product
 
@@ -2335,23 +1614,13 @@ async function updateLiveTrolley(){
 
             `;
 
-        }
+        } else {
 
-
-        // EMPTY
-        else{
-
-            message.className =
-                "waiting-box";
-
+            message.className = "waiting-box";
 
             message.innerHTML = `
 
-                🛒
-
-                <strong>
-                    Trolley is empty.
-                </strong>
+                🛒 <strong>Trolley is empty.</strong>
 
                 <br><br>
 
@@ -2361,134 +1630,79 @@ async function updateLiveTrolley(){
 
         }
 
-    }
+    } catch (error) {
 
-    catch(error){
-
-        console.log(
-            "Live trolley update:",
-            error
-        );
+        console.log("Live trolley update:", error);
 
     }
 
 }
 
-
 // =====================================================
+
 // OLD TROLLEY STATUS
+
 // =====================================================
 
-async function getESPData(){
+async function getESPData() {
 
-    try{
+    try {
 
-        const response =
-            await fetch(
+        const response = await fetch(
 
-                "http://" +
-                ESP8266_IP +
-                "/data?t=" +
-                Date.now(),
+            "http://" + ESP8266_IP + "/data?t=" + Date.now(),
 
-                {
-                    cache:"no-store"
-                }
+            { cache: "no-store" }
 
-            );
+        );
 
+        if (!response.ok) {
 
-        if(
-            !response.ok
-        ){
-
-            throw new Error(
-                "ESP not responding"
-            );
+            throw new Error("ESP not responding");
 
         }
 
+        const data = await response.json();
 
-        const data =
-            await response.json();
+        document.getElementById("espConnection").textContent = "🟢 ESP8266 Connected";
 
+        document.getElementById("espConnection").style.color = "#16a34a";
 
-        document
-        .getElementById(
-            "espConnection"
-        )
-        .textContent =
-            "🟢 ESP8266 Connected";
+        document.getElementById("espScannedCount").textContent = data.scannedCount;
 
+        document.getElementById("espTrolleyCount").textContent = data.trolleyCount;
 
-        document
-        .getElementById(
-            "espConnection"
-        )
-        .style.color =
-            "#16a34a";
-
-
-        document
-        .getElementById(
-            "espScannedCount"
-        )
-        .textContent =
-            data.scannedCount;
-
-
-        document
-        .getElementById(
-            "espTrolleyCount"
-        )
-        .textContent =
-            data.trolleyCount;
-
-
-        document
-        .getElementById(
-            "espLogicalWeight"
-        )
-        .textContent =
-            data.logicalWeight +
-            " g";
-
+        document.getElementById("espLogicalWeight").textContent = data.logicalWeight + " g";
 
         displayProductList(
+
             "authorizedProducts",
-            data.authorizedProducts,
-            "No scanned products waiting."
-        );
 
+            data.authorizedProducts,
+
+            "No scanned products waiting."
+
+        );
 
         displayProductList(
+
             "trolleyProducts",
+
             data.trolleyProducts,
+
             "No products in trolley."
+
         );
 
+        const comparison = document.getElementById("cartComparison");
 
-        const comparison =
-            document.getElementById(
-                "cartComparison"
-            );
+        if (data.extra === true) {
 
-
-        if(
-            data.extra === true
-        ){
-
-            comparison.className =
-                "card danger-box";
-
+            comparison.className = "card danger-box";
 
             comparison.innerHTML = `
 
-                🚨
-
-                <strong>
-                    EXTRA PRODUCT DETECTED
-                </strong>
+                🚨 <strong>EXTRA PRODUCT DETECTED</strong>
 
                 <br><br>
 
@@ -2496,17 +1710,9 @@ async function getESPData(){
 
             `;
 
-        }
+        } else if (data.authorizedProducts && data.authorizedProducts.length > 0) {
 
-        else if(
-            data.authorizedProducts &&
-            data.authorizedProducts.length >
-            0
-        ){
-
-            comparison.className =
-                "card waiting-box";
-
+            comparison.className = "card waiting-box";
 
             comparison.innerHTML = `
 
@@ -2518,476 +1724,302 @@ async function getESPData(){
 
             `;
 
-        }
+        } else if (data.trolleyCount > 0) {
 
-        else if(
-            data.trolleyCount >
-            0
-        ){
-
-            comparison.className =
-                "card success-box";
-
+            comparison.className = "card success-box";
 
             comparison.innerHTML = `
 
-                ✅ All placed products
-                are authenticated.
+                ✅ All placed products are authenticated.
 
             `;
 
-        }
+        } else {
 
-        else{
+            comparison.className = "card";
 
-            comparison.className =
-                "card";
-
-
-            comparison.innerHTML = `
-
-                🛒 Trolley is empty.
-
-            `;
+            comparison.innerHTML = "🛒 Trolley is empty.";
 
         }
 
-    }
+    } catch (error) {
 
-    catch(error){
+        document.getElementById("espConnection").textContent = "🔴 ESP8266 Not Connected";
 
-        document
-        .getElementById(
-            "espConnection"
-        )
-        .textContent =
-            "🔴 ESP8266 Not Connected";
-
-
-        document
-        .getElementById(
-            "espConnection"
-        )
-        .style.color =
-            "#dc2626";
+        document.getElementById("espConnection").style.color = "#dc2626";
 
     }
 
 }
 
-
 // =====================================================
+
 // DISPLAY PRODUCT LIST
+
 // =====================================================
 
-function displayProductList(
-    elementId,
-    products,
-    emptyMessage
-){
+function displayProductList(elementId, products, emptyMessage) {
 
-    const container =
-        document.getElementById(
-            elementId
-        );
+    const container = document.getElementById(elementId);
 
+    if (!products || products.length === 0) {
 
-    if(
-        !products ||
-        products.length ===
-        0
-    ){
-
-        container.innerHTML =
-            `<p class="small">
-                ${emptyMessage}
-            </p>`;
+        container.innerHTML = `<p class="small">${emptyMessage}</p>`;
 
         return;
 
     }
 
+    container.innerHTML = "";
 
-    container.innerHTML =
-        "";
+    products.forEach(function(name) {
 
+        const div = document.createElement("div");
 
-    products.forEach(
-        function(product){
+        const product = Object.values(productDatabase).find(function(p) {
 
-            const div =
-                document.createElement(
-                    "div"
-                );
+            return p.name === name;
 
+        });
 
-            div.innerHTML = `
+        const emoji = product ? product.emoji : "🛒";
 
-                <strong>
-                    ${product}
-                </strong>
+        div.innerHTML = `
 
-                <span class="small">
-                    — 250 g
-                </span>
+            ${emoji} <strong>${name}</strong>
 
-            `;
+            <span class="small">— 250 g</span>
 
+        `;
 
-            container.appendChild(
-                div
-            );
+        container.appendChild(div);
 
-        }
-    );
+    });
 
 }
 
-
 // =====================================================
+
 // RESET TROLLEY
+
 // =====================================================
 
-async function resetTrolley(){
+async function resetTrolley() {
 
-    const confirmReset =
-        confirm(
-            "Reset the Inventra trolley?"
+    const confirmReset = confirm("Reset the Inventra trolley?");
+
+    if (!confirmReset) return;
+
+    try {
+
+        const response = await fetch(
+
+            "http://" + ESP8266_IP + "/reset?t=" + Date.now(),
+
+            { cache: "no-store" }
+
         );
 
+        const text = await response.text();
 
-    if(!confirmReset){
-
-        return;
-
-    }
-
-
-    try{
-
-        const response =
-            await fetch(
-
-                "http://" +
-                ESP8266_IP +
-                "/reset?t=" +
-                Date.now(),
-
-                {
-                    cache:"no-store"
-                }
-
-            );
-
-
-        const text =
-            await response.text();
-
-
-        console.log(
-            text
-        );
-
+        console.log(text);
 
         cart = [];
 
-
         updateCart();
 
+        document.getElementById("currentProduct").className = "waiting-box";
 
-        document
-        .getElementById(
-            "currentProduct"
-        )
-        .className =
-            "waiting-box";
+        document.getElementById("currentProduct").innerHTML = "No product scanned yet.";
 
-
-        document
-        .getElementById(
-            "currentProduct"
-        )
-        .innerHTML =
-            "No product scanned yet.";
-
-
-        alert(
-            "✅ Trolley reset successfully."
-        );
-
+        alert("✅ Trolley reset successfully.");
 
         updateLiveTrolley();
 
-    }
+    } catch (error) {
 
-    catch(error){
-
-        alert(
-            "❌ Could not reset trolley."
-        );
+        alert("❌ Could not reset trolley.");
 
     }
 
 }
 
-
 // =====================================================
+
 // DONE SHOPPING
+
 // =====================================================
 
-function doneShopping(){
+function doneShopping() {
 
-    if(
-        cart.length ===
-        0
-    ){
+    if (cart.length === 0) {
 
-        alert(
-            "Your cart is empty."
-        );
+        alert("Your cart is empty.");
 
         return;
 
     }
-
 
     generateBill();
 
 }
 
-
 // =====================================================
+
 // GENERATE BILL
+
 // =====================================================
 
-function generateBill(){
+function generateBill() {
 
-    const bill =
-        document.getElementById(
-            "billContent"
-        );
-
+    const bill = document.getElementById("billContent");
 
     let total = 0;
 
     let itemCount = 0;
 
-
     let html = `
 
-        <h3>
-            Inventra Shopping Bill
-        </h3>
+        <h3>Inventra Shopping Bill</h3>
 
         <hr>
 
     `;
 
+    cart.forEach(function(item) {
 
-    cart.forEach(
-        function(item){
+        const itemTotal = item.price * item.quantity;
 
-            const itemTotal =
-                item.price *
-                item.quantity;
+        total += itemTotal;
 
+        itemCount += item.quantity;
 
-            total +=
-                itemTotal;
+        const product = Object.values(productDatabase).find(function(p) {
 
+            return p.name === item.name;
 
-            itemCount +=
-                item.quantity;
+        });
 
+        const emoji = product ? product.emoji : "🛍️";
 
-            html += `
+        html += `
 
-                <div class="cart-item">
+            <div class="cart-item">
 
-                    <div>
+                <div>
 
-                        <strong>
-                            ${item.name}
-                        </strong>
+                    <strong>${emoji} ${item.name}</strong>
 
-                        <br>
+                    <br>
 
-                        <span class="small">
-
-                            ₹${item.price}
-                            ×
-                            ${item.quantity}
-
-                        </span>
-
-                    </div>
-
-
-                    <strong>
-                        ₹${itemTotal}
-                    </strong>
+                    <span class="small">₹${item.price} × ${item.quantity}</span>
 
                 </div>
 
-            `;
+                <strong>₹${itemTotal}</strong>
 
-        }
-    );
+            </div>
 
+        `;
+
+    });
 
     html += `
 
         <hr>
 
-        <p>
+        <p>Total Products: <strong>${itemCount}</strong></p>
 
-            Total Products:
-            <strong>
-                ${itemCount}
-            </strong>
-
-        </p>
-
-
-        <p class="cart-total">
-
-            Total Amount:
-            ₹${total}
-
-        </p>
+        <p class="cart-total">Total Amount: ₹${total}</p>
 
     `;
 
+    bill.innerHTML = html;
 
-    bill.innerHTML =
-        html;
-
-
-    showScreen(
-        "bill"
-    );
+    showScreen("bill");
 
 }
 
-
-// =====================================================
-// PAYMENT
 // =====================================================
 
-function showPayment(){
+// PAYMENT QR
+
+// =====================================================
+
+function showPayment() {
 
     let total = 0;
 
+    cart.forEach(function(item) {
 
-    cart.forEach(
-        function(item){
+        total += item.price * item.quantity;
 
-            total +=
-                item.price *
-                item.quantity;
+    });
 
-        }
-    );
+    document.getElementById("paymentAmount").textContent = total;
 
+    const qr = document.getElementById("paymentQR");
 
-    document
-    .getElementById(
-        "paymentAmount"
-    )
-    .textContent =
-        total;
+    qr.innerHTML = "";
 
+    new QRCode(qr, {
 
-    const qr =
-        document.getElementById(
-            "paymentQR"
-        );
+        text: "INVENTRA-PAYMENT-AMOUNT-" + total,
 
+        width: 220,
 
-    qr.innerHTML =
-        "";
+        height: 220
 
+    });
 
-    new QRCode(
-        qr,
-        {
-
-            text:
-                "INVENTRA-PAYMENT-AMOUNT-" +
-                total,
-
-            width:220,
-
-            height:220
-
-        }
-    );
-
-
-    showScreen(
-        "payment"
-    );
+    showScreen("payment");
 
 }
 
-
 // =====================================================
+
 // PAYMENT COMPLETE
+
 // =====================================================
 
-function paymentComplete(){
+function paymentComplete() {
 
     alert(
-        "✅ Payment completed successfully!\n\nThank you for shopping with Inventra."
-    );
 
+        "✅ Payment completed successfully!\n\nThank you for shopping with Inventra."
+
+    );
 
     cart = [];
 
-
     updateCart();
 
-
-    showScreen(
-        "home"
-    );
+    showScreen("home");
 
 }
 
-
 // =====================================================
+
 // FAST LIVE POLLING
-// =====================================================
-
-// Every 300 ms while website is open.
-// This gives near-instant UI updates.
-
-setInterval(
-    function(){
-
-        const productsScreen =
-            document.getElementById(
-                "products"
-            );
-
-
-        if(
-            productsScreen &&
-            productsScreen.style.display !==
-            "none"
-        ){
-
-            updateLiveTrolley();
-
-        }
-
-    },
-    300
-);
-
 
 // =====================================================
+
+setInterval(function() {
+
+    const productsScreen = document.getElementById("products");
+
+    if (productsScreen && productsScreen.style.display !== "none") {
+
+        updateLiveTrolley();
+
+    }
+
+}, 300);
+
+// =====================================================
+
 // INITIALIZE
+
 // =====================================================
 
 renderProducts();
