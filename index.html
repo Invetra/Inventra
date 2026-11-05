@@ -1,193 +1,1302 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inventra | Smart Trolley</title>
+
 <script src="https://unpkg.com/html5-qrcode"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#f3f5f9;color:#172033}
-header{background:#111827;color:white;text-align:center;padding:18px 14px}
-header h1{margin:0 0 6px;font-size:clamp(25px,6vw,34px)}
-header p{margin:0}
-main{width:100%;max-width:760px;margin:auto;padding:12px}
-.card{background:white;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 2px 10px #0f172a0b}
-button,a.btn{display:inline-block;min-height:44px;padding:12px 16px;border:0;border-radius:9px;background:#2563eb;color:white;text-decoration:none;font-weight:bold;margin:5px 4px 5px 0;font-size:16px;cursor:pointer}
-button:disabled{opacity:.55;cursor:not-allowed}
-.secondary{background:#64748b!important}
-input,select{width:100%;min-height:46px;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:17px;background:white;color:#172033}
-label{display:block;margin:12px 0 6px}
-.notice{padding:12px;border-radius:9px;background:#e0f2fe;color:#075985;margin-top:10px;overflow-wrap:anywhere}
-.product{padding:10px;border:1px solid #e5e7eb;border-radius:10px;margin:8px 0}
-#authorizeLink{display:none;background:#15803d}
-#reader{width:100%;max-width:520px;margin:12px auto;overflow:hidden;border-radius:10px}
-#reader video{width:100%!important;max-width:100%!important;object-fit:cover}
-.camera-controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.camera-controls button{flex:1 1 130px}
-small{color:#64748b}
-@media(max-width:480px){
- main{padding:8px}
- .card{padding:13px;margin:9px 0;border-radius:12px}
- button,a.btn{width:100%;margin:5px 0;text-align:center}
- #reader{max-width:100%}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #222;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 18px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 28px;
+}
+
+header p {
+    margin-top: 5px;
+    opacity: .8;
+}
+
+.screen {
+    padding: 25px 18px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+button {
+    border: none;
+    padding: 13px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    background: #111827;
+    color: white;
+    margin: 5px;
+}
+
+button:hover {
+    opacity: .9;
+}
+
+.primary { background: #2563eb; }
+.success { background: #16a34a; }
+.danger { background: #dc2626; }
+.warning { background: #f59e0b; }
+.secondary { background: #64748b; }
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.product-card {
+    background: white;
+    padding: 18px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    text-align: center;
+}
+
+.product-emoji {
+    font-size: 52px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.product-card h3 {
+    margin-bottom: 8px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.weight {
+    color: #666;
+    margin: 8px 0;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.small {
+    color: #666;
+    font-size: 14px;
+}
+
+.center {
+    text-align: center;
+}
+
+.success-box {
+    background: #dcfce7;
+    color: #166534;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.warning-box {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.danger-box {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.waiting-box {
+    background: #e0f2fe;
+    color: #075985;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+#scannerBox {
+    display: none;
+}
+
+#reader {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    gap: 12px;
+}
+
+.cart-total {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#paymentQR {
+    display: flex;
+    justify-content: center;
+    margin: 25px;
 }
 </style>
 </head>
+
 <body>
-<header><h1>🛒 INVENTRA</h1><p>Smart Trolley Shopping System</p></header>
-<main>
-<section class="card">
-<h2>Scan a product</h2>
-<p>Tap <b>Start camera</b> and allow camera access. Point the rear camera at the product barcode. After it is detected, tap <b>Authorize on Trolley</b>.</p>
-<div id="reader"></div>
-<div class="camera-controls">
-<button id="startBtn" type="button" onclick="startScanner()">Start camera</button>
-<button id="stopBtn" class="secondary" type="button" onclick="stopScanner()" disabled>Stop camera</button>
-</div>
-<div id="cameraPickerWrap" style="display:none">
-<label for="cameraPicker"><b>Choose camera</b></label>
-<select id="cameraPicker" aria-label="Choose camera"></select>
-</div>
-<label for="barcode"><b>Barcode (manual entry)</b></label>
-<input id="barcode" inputmode="numeric" autocomplete="off" placeholder="Enter barcode manually">
-<button type="button" onclick="handleCode(document.getElementById('barcode').value)">Use barcode</button>
-<div id="message" class="notice" role="status" aria-live="polite">Ready to scan.</div>
-<a id="authorizeLink" class="btn" target="_blank" rel="noopener">Authorize on Trolley</a>
-<a class="btn secondary" href="http://172.20.10.5/status" target="_blank" rel="noopener">Open Live Trolley Status</a>
+
+<header>
+    <h1>🛒 INVENTRA</h1>
+    <p>Smart Trolley Shopping System</p>
+</header>
+
+<!-- HOME -->
+
+<section id="home" class="screen">
+
+    <div class="hero">
+
+        <h2>Welcome to Inventra</h2>
+
+        <p>A smarter and easier way to shop.</p>
+
+        <button class="primary" onclick="startShopping()">
+            Start Shopping
+        </button>
+
+        <br>
+
+        <button class="secondary" onclick="showScreen('features')">
+            Features
+        </button>
+
+    </div>
+
 </section>
-<section class="card"><h2>Product catalog</h2><div id="catalog"></div></section>
-</main>
+
+<!-- FEATURES -->
+
+<section id="features" class="screen" style="display:none;">
+
+    <h2>✨ Inventra Features</h2>
+
+    <div class="card">
+        <h3>📱 Product Scanning</h3>
+        <p>Scan the product barcode before placing it inside the trolley.</p>
+    </div>
+
+    <div class="card">
+        <h3>🛒 Product Authentication</h3>
+        <p>Only scanned products are authenticated by the trolley.</p>
+    </div>
+
+    <div class="card">
+        <h3>⚖️ Trolley Monitoring</h3>
+        <p>The trolley detects product placement automatically.</p>
+    </div>
+
+    <div class="card">
+        <h3>🚨 Extra Product Detection</h3>
+        <p>Unscanned products trigger an alert.</p>
+    </div>
+
+    <div class="center">
+        <button class="secondary" onclick="showScreen('home')">
+            ← Back
+        </button>
+    </div>
+
+</section>
+
+<!-- FLOOR -->
+
+<section id="floor" class="screen" style="display:none;">
+
+    <div class="center">
+
+        <h2>🏬 Mall Floor</h2>
+
+        <p>Select a floor to start shopping.</p>
+
+        <div class="card">
+
+            <h3>Floor 1 — Grocery</h3>
+
+            <p>Salt, Atta, Butter, Milk, Green Peas, Ice Cream and Snacks</p>
+
+            <button class="primary" onclick="showScreen('products')">
+                Enter Floor 1
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- PRODUCTS -->
+
+<section id="products" class="screen" style="display:none;">
+
+    <h2>🛍️ Grocery Products</h2>
+
+    <input
+        id="productSearch"
+        type="text"
+        placeholder="🔎 Search products..."
+        oninput="searchProducts()"
+    >
+
+    <div class="card center">
+
+        <h3>📷 Scan Your Product</h3>
+
+        <p id="scanInstruction">
+            Scan a product before placing it inside the trolley.
+        </p>
+
+        <button class="primary" onclick="startScanner()">
+            📷 Scan Product
+        </button>
+
+        <div id="scannerBox">
+
+            <div id="reader"></div>
+
+            <p id="scanResult">Waiting for barcode...</p>
+
+            <button class="danger" onclick="stopScanner()">
+                Stop Scanner
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- CURRENT PRODUCT RESULT -->
+
+    <div id="liveProductStatus" class="card">
+
+        <h3>📦 Current Product</h3>
+
+        <div id="currentProduct" class="waiting-box">
+            No product scanned yet.
+        </div>
+
+    </div>
+
+    <div id="productGrid" class="product-grid"></div>
+
+    <div class="center">
+
+        <button class="secondary" onclick="showScreen('cart')">
+            🛒 View Cart
+        </button>
+
+    </div>
+
+</section>
+
+<!-- CART -->
+
+<section id="cart" class="screen" style="display:none;">
+
+    <h2>🛒 My Cart</h2>
+
+    <div id="cartItems" class="card">
+        <p class="center">Your cart is empty.</p>
+    </div>
+
+    <div class="card">
+
+        <p class="cart-total">
+            Total: ₹<span id="cartTotal">0</span>
+        </p>
+
+        <p>Items: <strong id="cartCount">0</strong></p>
+
+    </div>
+
+    <div class="center">
+
+        <button class="secondary" onclick="showScreen('products')">
+            ← Continue Shopping
+        </button>
+
+        <button class="success" onclick="doneShopping()">
+            Done Shopping & Generate Bill
+        </button>
+
+    </div>
+
+</section>
+
+<!-- BILL -->
+
+<section id="bill" class="screen" style="display:none;">
+
+    <h2>🧾 Inventra Bill</h2>
+
+    <div id="billContent" class="card"></div>
+
+    <div class="center">
+
+        <button class="primary" onclick="showPayment()">
+            💳 Pay Now
+        </button>
+
+        <button class="secondary" onclick="showScreen('products')">
+            Continue Shopping
+        </button>
+
+    </div>
+
+</section>
+
+<!-- PAYMENT -->
+
+<section id="payment" class="screen" style="display:none;">
+
+    <div class="center">
+
+        <h2>💳 Payment</h2>
+
+        <div class="card">
+
+            <h3>Scan to Pay</h3>
+
+            <div id="paymentQR"></div>
+
+            <p>
+                Amount: ₹<strong id="paymentAmount">0</strong>
+            </p>
+
+        </div>
+
+        <button class="success" onclick="paymentComplete()">
+            ✅ Payment Completed
+        </button>
+
+        <button class="secondary" onclick="showScreen('bill')">
+            ← Back
+        </button>
+
+    </div>
+
+</section>
+
 <script>
-const ESP='http://172.20.10.5';
-const products={
-'8906160690209':['Tata Salt',80,'🧂'],
-'8901765126122':['Aashirvaad Atta',100,'🌾'],
-'8906073788116':['Amul Butter',40,'🧈'],
-'8908000034334':['Milk',35,'🥛'],
-'8901324010664':['Green Peas',45,'🫛'],
-'8906136382824':['Kwality Walls Ice Cream',60,'🍦'],
-'8906014765985':['Kurkure',10,'🌶️'],
-'8901860630241':['Pringles',20,'🥔'],
-'8901248164252':['Cheetos',15,'🧀'],
-'8904275300259':['Mdew',10,'🥤']
+
+// =====================================================
+// ESP8266 IP ADDRESS
+// =====================================================
+
+const ESP8266_IP = "172.20.10.5";
+
+// =====================================================
+// PRODUCT DATABASE
+// Barcode, name, price, assigned weight, emoji
+// =====================================================
+
+const productDatabase = {
+
+    "8906160690209": {
+        name: "Tata Salt",
+        price: 80,
+        weight: 250,
+        emoji: "🧂"
+    },
+
+    "8902102163930": {
+        name: "Aashirvaad Atta",
+        price: 100,
+        weight: 250,
+        emoji: "🌾"
+    },
+
+    "8906073788116": {
+        name: "Amul Butter",
+        price: 40,
+        weight: 250,
+        emoji: "🧈"
+    },
+
+    "8908000034334": {
+        name: "Milk",
+        price: 35,
+        weight: 250,
+        emoji: "🥛"
+    },
+
+    "8901324010664": {
+        name: "Green Peas",
+        price: 45,
+        weight: 250,
+        emoji: "🫛"
+    },
+
+    "8906136382824": {
+        name: "Kwality Walls Ice Cream",
+        price: 60,
+        weight: 250,
+        emoji: "🍦"
+    },
+
+    "8906014765985": {
+        name: "Kurkure",
+        price: 10,
+        weight: 250,
+        emoji: "🌶️"
+    },
+
+    "8901860630241": {
+        name: "Pringles",
+        price: 20,
+        weight: 250,
+        emoji: "🥔"
+    },
+
+    "8901248164252": {
+        name: "Cheetos",
+        price: 15,
+        weight: 250,
+        emoji: "🧀"
+    },
+
+    "8904275300259": {
+        name: "Mdew",
+        price: 10,
+        weight: 250,
+        emoji: "🥤"
+    }
+
 };
 
-let scanner=null,locked=false,cameraList=[];
-function say(t){document.getElementById('message').textContent=t}
+// =====================================================
+// GLOBAL VARIABLES
+// =====================================================
 
-function handleCode(raw){
- const code=String(raw||'').replace(/\\D/g,'').trim(),p=products[code];
- if(!p){say('Barcode not in demo catalog. Please scan one of the listed products.');return}
- document.getElementById('barcode').value=code;
- const a=document.getElementById('authorizeLink');
- a.href=ESP+'/authorize?name='+encodeURIComponent(p[0])+'&t='+Date.now();
- a.style.display='inline-block';
- a.textContent='Authorize '+p[0]+' on Trolley';
- say('Scanned '+p[0]+'. Tap the green authorization button, then place the item on the trolley.');
+let cart = [];
+
+let budget = 0;
+
+let html5QrCode = null;
+
+let scannerRunning = false;
+
+let lastScannedBarcode = "";
+
+let lastScanTime = 0;
+
+// =====================================================
+// SCREEN MANAGEMENT
+// =====================================================
+
+function showScreen(screenId) {
+
+    document.querySelectorAll(".screen").forEach(function(screen) {
+
+        screen.style.display = "none";
+
+    });
+
+    const selected = document.getElementById(screenId);
+
+    if (selected) {
+
+        selected.style.display = "block";
+
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    if (screenId === "products") {
+
+        renderProducts();
+
+        searchProducts();
+
+    }
+
+    if (screenId === "cart") {
+
+        updateCart();
+
+    }
+
 }
 
-function scannerConfig(){
- return {
-  fps:10,
-  qrbox:(viewWidth,viewHeight)=>({
-   width:Math.max(220,Math.min(viewWidth-24,420)),
-   height:Math.max(90,Math.min(150,Math.floor(viewHeight*.42)))
-  }),
-  aspectRatio:1.777,
-  formatsToSupport:[
-   Html5QrcodeSupportedFormats.EAN_13,
-   Html5QrcodeSupportedFormats.EAN_8,
-   Html5QrcodeSupportedFormats.UPC_A,
-   Html5QrcodeSupportedFormats.UPC_E,
-   Html5QrcodeSupportedFormats.CODE_128,
-   Html5QrcodeSupportedFormats.CODE_39
-  ]
- };
+// =====================================================
+// START SHOPPING
+// =====================================================
+
+function startShopping() {
+
+    const amount = prompt("Enter your shopping budget (₹):");
+
+    if (amount === null) return;
+
+    const value = Number(amount);
+
+    if (isNaN(value) || value <= 0) {
+
+        alert("Please enter a valid budget.");
+
+        return;
+
+    }
+
+    budget = value;
+
+    showScreen("floor");
+
 }
 
-function onDetected(text){
- if(locked)return;
- locked=true;
- handleCode(text);
- setTimeout(()=>locked=false,1800);
+// =====================================================
+// RENDER PRODUCTS
+// =====================================================
+
+function renderProducts() {
+
+    const grid = document.getElementById("productGrid");
+
+    if (!grid) return;
+
+    grid.innerHTML = "";
+
+    Object.keys(productDatabase).forEach(function(barcode) {
+
+        const product = productDatabase[barcode];
+
+        const card = document.createElement("div");
+
+        card.className = "product-card";
+
+        card.dataset.name = product.name.toLowerCase();
+
+        card.innerHTML = `
+
+            <div class="product-emoji" aria-label="${product.name}">
+                ${product.emoji}
+            </div>
+
+            <h3>${product.name}</h3>
+
+            <p class="price">₹${product.price}</p>
+
+            <p class="weight">
+                Assigned Weight: ${product.weight} g
+            </p>
+
+            <p class="small">
+                Barcode: ${barcode}
+            </p>
+
+        `;
+
+        grid.appendChild(card);
+
+    });
+
 }
 
-async function startWithCamera(camera){
- if(!scanner)scanner=new Html5Qrcode('reader',{verbose:false});
- await scanner.start(camera,scannerConfig(),onDetected,()=>{});
- document.getElementById('startBtn').disabled=true;
- document.getElementById('stopBtn').disabled=false;
- say('Camera is on. Hold the barcode steady inside the scanning box.');
+// =====================================================
+// SEARCH PRODUCTS
+// =====================================================
+
+function searchProducts() {
+
+    const search = document.getElementById("productSearch").value.toLowerCase();
+
+    document.querySelectorAll("#productGrid .product-card").forEach(function(card) {
+
+        card.style.display =
+            card.dataset.name.includes(search) ? "block" : "none";
+
+    });
+
 }
 
-async function startScanner(){
- if(scanner && scanner.isScanning)return;
- if(!window.isSecureContext){
-  say('Camera access needs a secure HTTPS page. Open the GitHub Pages address beginning with https://');
-  return;
- }
- if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-  say('This browser does not provide camera access. Open this page in Chrome or Safari using the HTTPS website address.');
-  return;
- }
- document.getElementById('startBtn').disabled=true;
- say('Requesting camera permission… Please tap Allow if your phone asks.');
- try{
-  scanner=new Html5Qrcode('reader',{verbose:false});
-  // First request the phone's rear camera. If that fails, list available cameras.
-  try{
-   await startWithCamera({facingMode:'environment'});
-  }catch(firstError){
-   const cams=await Html5Qrcode.getCameras();
-   cameraList=cams||[];
-   if(!cameraList.length)throw firstError;
-   const picker=document.getElementById('cameraPicker');
-   picker.innerHTML='';
-   cameraList.forEach((cam,i)=>{
-    const option=document.createElement('option');
-    option.value=cam.id;
-    option.textContent=cam.label||('Camera '+(i+1));
-    picker.appendChild(option);
-   });
-   document.getElementById('cameraPickerWrap').style.display='block';
-   await startWithCamera(cameraList[0].id);
-  }
- }catch(e){
-  scanner=null;
-  document.getElementById('startBtn').disabled=false;
-  document.getElementById('stopBtn').disabled=true;
-  const detail=(e&&e.message)?e.message:String(e);
-  say('Camera could not start. Check that you opened the HTTPS GitHub Pages link, allow camera permission in your browser settings, and close other apps using the camera. Details: '+detail+' You can still enter the barcode manually below.');
- }
+// =====================================================
+// START SCANNER
+// =====================================================
+
+async function startScanner() {
+
+    const scannerBox = document.getElementById("scannerBox");
+
+    const result = document.getElementById("scanResult");
+
+    scannerBox.style.display = "block";
+
+    result.textContent = "📷 Starting camera...";
+
+    try {
+
+        if (html5QrCode && scannerRunning) {
+
+            try {
+                await html5QrCode.stop();
+            } catch (e) {}
+
+            scannerRunning = false;
+
+        }
+
+        if (html5QrCode) {
+
+            try {
+                html5QrCode.clear();
+            } catch (e) {}
+
+        }
+
+        html5QrCode = new Html5Qrcode("reader");
+
+        await html5QrCode.start(
+
+            { facingMode: "environment" },
+
+            {
+
+                fps: 15,
+
+                qrbox: {
+                    width: 280,
+                    height: 160
+                },
+
+                formatsToSupport: [
+
+                    Html5QrcodeSupportedFormats.EAN_13,
+
+                    Html5QrcodeSupportedFormats.EAN_8,
+
+                    Html5QrcodeSupportedFormats.UPC_A,
+
+                    Html5QrcodeSupportedFormats.UPC_E,
+
+                    Html5QrcodeSupportedFormats.CODE_128,
+
+                    Html5QrcodeSupportedFormats.CODE_39
+
+                ]
+
+            },
+
+            function(decodedText) {
+
+                handleScannedBarcode(decodedText);
+
+            },
+
+            function(errorMessage) {
+
+                // Scanner searching.
+
+            }
+
+        );
+
+        scannerRunning = true;
+
+        result.textContent = "📷 Point camera at the product barcode.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        result.textContent =
+            "❌ Camera could not start. Please allow camera permission.";
+
+    }
+
 }
 
-async function stopScanner(){
- if(scanner){
-  try{if(scanner.isScanning)await scanner.stop();await scanner.clear()}catch(e){}
-  scanner=null;
- }
- document.getElementById('startBtn').disabled=false;
- document.getElementById('stopBtn').disabled=true;
- say('Camera stopped.');
+// =====================================================
+// STOP SCANNER
+// =====================================================
+
+async function stopScanner() {
+
+    if (html5QrCode && scannerRunning) {
+
+        try {
+
+            await html5QrCode.stop();
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+        scannerRunning = false;
+
+    }
+
+    const scannerBox = document.getElementById("scannerBox");
+
+    if (scannerBox) {
+
+        scannerBox.style.display = "none";
+
+    }
+
 }
 
-document.getElementById('cameraPicker').addEventListener('change',async function(){
- const selected=this.value;
- if(!selected)return;
- try{
-  if(scanner&&scanner.isScanning)await scanner.stop();
-  await startWithCamera(selected);
- }catch(e){say('Could not switch camera: '+(e.message||e));}
-});
+// =====================================================
+// HANDLE BARCODE
+// =====================================================
 
-document.getElementById('catalog').innerHTML=Object.entries(products).map(([code,p])=>
- `<div class="product">${p[2]} <b>${p[0]}</b> — ₹${p[1]}<br><small>${code}</small><br><button type="button" onclick="handleCode('${code}')">Select</button></div>`).join('');
+async function handleScannedBarcode(barcode) {
 
-document.addEventListener('visibilitychange',()=>{
- if(document.hidden && scanner && scanner.isScanning)stopScanner();
-});
+    barcode = String(barcode).trim();
+
+    const now = Date.now();
+
+    if (
+        barcode === lastScannedBarcode &&
+        now - lastScanTime < 2000
+    ) {
+
+        return;
+
+    }
+
+    lastScannedBarcode = barcode;
+
+    lastScanTime = now;
+
+    console.log("Barcode scanned:", barcode);
+
+    const product = productDatabase[barcode];
+
+    if (!product) {
+
+        document.getElementById("scanResult").textContent =
+            "❌ Product not found: " + barcode;
+
+        return;
+
+    }
+
+    await stopScanner();
+
+    const currentProduct = document.getElementById("currentProduct");
+
+    currentProduct.className = "waiting-box";
+
+    currentProduct.innerHTML = `
+
+        ⏳ Authorizing
+
+        <strong>${product.emoji} ${product.name}</strong>...
+
+    `;
+
+    try {
+
+        // =============================================
+        // SEND AUTHORIZATION REQUEST TO ESP8266
+        // =============================================
+
+        const response = await fetch(
+
+            "http://" + ESP8266_IP +
+            "/authorize?name=" +
+            encodeURIComponent(product.name) +
+            "&t=" + Date.now(),
+
+            {
+
+                method: "GET",
+
+                cache: "no-store"
+
+            }
+
+        );
+
+        const result = await response.text();
+
+        console.log("ESP response:", result);
+
+        // =============================================
+        // AUTHORIZATION FAILED
+        // =============================================
+
+        if (!response.ok) {
+
+            currentProduct.className = "danger-box";
+
+            currentProduct.innerHTML = `
+                ❌ ${result}
+            `;
+
+            document.getElementById("scanResult").textContent =
+                "❌ Product authorization failed.";
+
+            return;
+
+        }
+
+        // =============================================
+        // AUTHORIZATION SUCCESSFUL
+        // ONLY NOW ADD TO CART
+        // =============================================
+
+        addToCart(
+            product.name,
+            product.price,
+            product.weight
+        );
+
+        currentProduct.className = "success-box";
+
+        currentProduct.innerHTML = `
+
+            <h3>
+                ✅ ${product.emoji} ${product.name} Authorized
+            </h3>
+
+            <p>Place the product inside the trolley.</p>
+
+            <p>
+                Assigned Weight:
+                <strong>${product.weight} g</strong>
+            </p>
+
+            <br>
+
+            <button class="primary" onclick="startScanner()">
+                📷 Scan Next Product
+            </button>
+
+        `;
+
+        document.getElementById("scanInstruction").textContent =
+            "Product authorized. Place it in the trolley or scan the next product.";
+
+        document.getElementById("scanResult").textContent =
+            "✅ " + product.name + " authorized successfully.";
+
+    } catch (error) {
+
+        console.error("Authorization error:", error);
+
+        currentProduct.className = "danger-box";
+
+        currentProduct.innerHTML = `
+
+            <h3>🔴 ESP8266 Connection Failed</h3>
+
+            <p>
+                Make sure the phone and ESP8266 are connected
+                to the same Wi-Fi.
+            </p>
+
+            <p>
+                Check the ESP8266 IP address and browser
+                connection permissions.
+            </p>
+
+        `;
+
+        document.getElementById("scanResult").textContent =
+            "❌ Authorization request failed.";
+
+    }
+
+}
+
+// =====================================================
+// ADD TO CART
+// =====================================================
+
+function addToCart(name, price, weight) {
+
+    const existing = cart.find(function(item) {
+
+        return item.name === name;
+
+    });
+
+    if (existing) {
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+
+            name: name,
+
+            price: price,
+
+            weight: weight,
+
+            quantity: 1
+
+        });
+
+    }
+
+    updateCart();
+
+    checkBudget();
+
+}
+
+// =====================================================
+// UPDATE CART
+// =====================================================
+
+function updateCart() {
+
+    const container = document.getElementById("cartItems");
+
+    const totalElement = document.getElementById("cartTotal");
+
+    const countElement = document.getElementById("cartCount");
+
+    if (!container) return;
+
+    if (cart.length === 0) {
+
+        container.innerHTML =
+            `<p class="center">Your cart is empty.</p>`;
+
+        totalElement.textContent = "0";
+
+        countElement.textContent = "0";
+
+        return;
+
+    }
+
+    let total = 0;
+
+    let count = 0;
+
+    container.innerHTML = "";
+
+    cart.forEach(function(item) {
+
+        const itemTotal = item.price * item.quantity;
+
+        total += itemTotal;
+
+        count += item.quantity;
+
+        const div = document.createElement("div");
+
+        div.className = "cart-item";
+
+        const product = Object.values(productDatabase).find(function(p) {
+
+            return p.name === item.name;
+
+        });
+
+        const emoji = product ? product.emoji : "🛍️";
+
+        div.innerHTML = `
+
+            <div>
+
+                <strong>${emoji} ${item.name}</strong>
+
+                <br>
+
+                <span class="small">
+                    ₹${item.price} × ${item.quantity}
+                </span>
+
+                <br>
+
+                <span class="small">
+                    Assigned weight:
+                    ${item.weight * item.quantity} g
+                </span>
+
+            </div>
+
+            <strong>₹${itemTotal}</strong>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+    totalElement.textContent = total;
+
+    countElement.textContent = count;
+
+}
+
+// =====================================================
+// BUDGET
+// =====================================================
+
+function checkBudget() {
+
+    let total = 0;
+
+    cart.forEach(function(item) {
+
+        total += item.price * item.quantity;
+
+    });
+
+    if (budget > 0 && total > budget) {
+
+        console.log("Budget exceeded.");
+
+        alert("⚠️ Your shopping total has exceeded your budget!");
+
+    }
+
+}
+
+// =====================================================
+// DONE SHOPPING
+// =====================================================
+
+function doneShopping() {
+
+    if (cart.length === 0) {
+
+        alert("Your cart is empty.");
+
+        return;
+
+    }
+
+    generateBill();
+
+}
+
+// =====================================================
+// GENERATE BILL
+// =====================================================
+
+function generateBill() {
+
+    const bill = document.getElementById("billContent");
+
+    let total = 0;
+
+    let itemCount = 0;
+
+    let html = `
+
+        <h3>Inventra Shopping Bill</h3>
+
+        <hr>
+
+    `;
+
+    cart.forEach(function(item) {
+
+        const itemTotal = item.price * item.quantity;
+
+        total += itemTotal;
+
+        itemCount += item.quantity;
+
+        const product = Object.values(productDatabase).find(function(p) {
+
+            return p.name === item.name;
+
+        });
+
+        const emoji = product ? product.emoji : "🛍️";
+
+        html += `
+
+            <div class="cart-item">
+
+                <div>
+
+                    <strong>${emoji} ${item.name}</strong>
+
+                    <br>
+
+                    <span class="small">
+                        ₹${item.price} × ${item.quantity}
+                    </span>
+
+                </div>
+
+                <strong>₹${itemTotal}</strong>
+
+            </div>
+
+        `;
+
+    });
+
+    html += `
+
+        <hr>
+
+        <p>
+            Total Products:
+            <strong>${itemCount}</strong>
+        </p>
+
+        <p class="cart-total">
+            Total Amount: ₹${total}
+        </p>
+
+    `;
+
+    bill.innerHTML = html;
+
+    showScreen("bill");
+
+}
+
+// =====================================================
+// PAYMENT QR
+// =====================================================
+
+function showPayment() {
+
+    let total = 0;
+
+    cart.forEach(function(item) {
+
+        total += item.price * item.quantity;
+
+    });
+
+    document.getElementById("paymentAmount").textContent = total;
+
+    const qr = document.getElementById("paymentQR");
+
+    qr.innerHTML = "";
+
+    new QRCode(qr, {
+
+        text: "INVENTRA-PAYMENT-AMOUNT-" + total,
+
+        width: 220,
+
+        height: 220
+
+    });
+
+    showScreen("payment");
+
+}
+
+// =====================================================
+// PAYMENT COMPLETE
+// =====================================================
+
+function paymentComplete() {
+
+    alert(
+
+        "✅ Payment completed successfully!\n\nThank you for shopping with Inventra."
+
+    );
+
+    cart = [];
+
+    budget = 0;
+
+    updateCart();
+
+    document.getElementById("currentProduct").className =
+        "waiting-box";
+
+    document.getElementById("currentProduct").innerHTML =
+        "No product scanned yet.";
+
+    document.getElementById("scanInstruction").textContent =
+        "Scan a product before placing it inside the trolley.";
+
+    showScreen("home");
+
+}
+
+// =====================================================
+// INITIALIZE
+// =====================================================
+
+renderProducts();
+
 </script>
+
 </body>
 </html>
