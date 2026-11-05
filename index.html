@@ -1,2031 +1,1482 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Inventra | Smart Trolley</title>
-
-<script src="https://unpkg.com/html5-qrcode"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<style>
-
-* {
-
-    margin: 0;
-
-    padding: 0;
-
-    box-sizing: border-box;
-
-    font-family: Arial, Helvetica, sans-serif;
-
-}
-
-body {
-
-    background: #f5f7fb;
-
-    color: #222;
-
-}
-
-header {
-
-    background: #111827;
-
-    color: white;
-
-    padding: 18px 20px;
-
-    text-align: center;
-
-}
-
-header h1 {
-
-    font-size: 28px;
-
-}
-
-header p {
-
-    margin-top: 5px;
-
-    opacity: .8;
-
-}
-
-.screen {
-
-    padding: 25px 18px;
-
-    max-width: 900px;
-
-    margin: auto;
-
-}
-
-.hero {
-
-    text-align: center;
-
-    padding: 60px 20px;
-
-}
-
-.hero h2 {
-
-    font-size: 32px;
-
-    margin-bottom: 12px;
-
-}
-
-.hero p {
-
-    color: #666;
-
-    margin-bottom: 25px;
-
-}
-
-button {
-
-    border: none;
-
-    padding: 13px 20px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-size: 16px;
-
-    background: #111827;
-
-    color: white;
-
-    margin: 5px;
-
-}
-
-button:hover {
-
-    opacity: .9;
-
-}
-
-.primary { background: #2563eb; }
-
-.success { background: #16a34a; }
-
-.danger { background: #dc2626; }
-
-.warning { background: #f59e0b; }
-
-.secondary { background: #64748b; }
-
-.card {
-
-    background: white;
-
-    border-radius: 15px;
-
-    padding: 20px;
-
-    margin: 15px 0;
-
-    box-shadow: 0 3px 12px rgba(0,0,0,.08);
-
-}
-
-.product-grid {
-
-    display: grid;
-
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-
-    gap: 15px;
-
-    margin-top: 20px;
-
-}
-
-.product-card {
-
-    background: white;
-
-    padding: 18px;
-
-    border-radius: 15px;
-
-    box-shadow: 0 3px 12px rgba(0,0,0,.08);
-
-    text-align: center;
-
-}
-
-.product-emoji {
-
-    font-size: 52px;
-
-    line-height: 1.3;
-
-    margin-bottom: 10px;
-
-}
-
-.product-card h3 {
-
-    margin-bottom: 8px;
-
-}
-
-.price {
-
-    font-size: 20px;
-
-    font-weight: bold;
-
-    color: #2563eb;
-
-}
-
-.weight {
-
-    color: #666;
-
-    margin: 8px 0;
-
-}
-
-input {
-
-    width: 100%;
-
-    padding: 12px;
-
-    border: 1px solid #ccc;
-
-    border-radius: 9px;
-
-    font-size: 16px;
-
-    margin: 8px 0;
-
-}
-
-.stat {
-
-    font-size: 28px;
-
-    font-weight: bold;
-
-    margin: 8px 0 20px;
-
-}
-
-.small {
-
-    color: #666;
-
-    font-size: 14px;
-
-}
-
-.center { text-align: center; }
-
-.success-box {
-
-    background: #dcfce7;
-
-    color: #166534;
-
-    padding: 15px;
-
-    border-radius: 12px;
-
-    margin-top: 15px;
-
-}
-
-.warning-box {
-
-    background: #fef3c7;
-
-    color: #92400e;
-
-    padding: 15px;
-
-    border-radius: 12px;
-
-    margin-top: 15px;
-
-}
-
-.danger-box {
-
-    background: #fee2e2;
-
-    color: #991b1b;
-
-    padding: 15px;
-
-    border-radius: 12px;
-
-    margin-top: 15px;
-
-}
-
-.waiting-box {
-
-    background: #e0f2fe;
-
-    color: #075985;
-
-    padding: 15px;
-
-    border-radius: 12px;
-
-    margin-top: 15px;
-
-}
-
-#scannerBox { display: none; }
-
-#reader {
-
-    width: 100%;
-
-    max-width: 500px;
-
-    margin: 20px auto;
-
-}
-
-.cart-item {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 12px 0;
-
-    border-bottom: 1px solid #eee;
-
-    gap: 12px;
-
-}
-
-.cart-total {
-
-    font-size: 22px;
-
-    font-weight: bold;
-
-    margin-top: 20px;
-
-}
-
-.product-list { margin-top: 15px; }
-
-.product-list div {
-
-    padding: 8px;
-
-    border-bottom: 1px solid #eee;
-
-}
-
-#paymentQR {
-
-    display: flex;
-
-    justify-content: center;
-
-    margin: 25px;
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-
-    <h1>🛒 INVENTRA</h1>
-
-    <p>Smart Trolley Shopping System</p>
-
-</header>
-
-<!-- HOME -->
-
-<section id="home" class="screen">
-
-    <div class="hero">
-
-        <h2>Welcome to Inventra</h2>
-
-        <p>A smarter and easier way to shop.</p>
-
-        <button class="primary" onclick="startShopping()">
-
-            Start Shopping
-
-        </button>
-
-        <br>
-
-        <button class="secondary" onclick="showScreen('features')">
-
-            Features
-
-        </button>
-
-    </div>
-
-</section>
-
-<!-- FEATURES -->
-
-<section id="features" class="screen" style="display:none;">
-
-    <h2>✨ Inventra Features</h2>
-
-    <div class="card">
-
-        <h3>📱 Product Scanning</h3>
-
-        <p>Scan the product barcode before placing it inside the trolley.</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>🛒 Product Authentication</h3>
-
-        <p>Only scanned products are authenticated by the trolley.</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>⚖️ Trolley Monitoring</h3>
-
-        <p>The trolley detects product placement automatically.</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>🚨 Extra Product Detection</h3>
-
-        <p>Unscanned products trigger an alert.</p>
-
-    </div>
-
-    <div class="center">
-
-        <button class="secondary" onclick="showScreen('home')">← Back</button>
-
-    </div>
-
-</section>
-
-<!-- FLOOR -->
-
-<section id="floor" class="screen" style="display:none;">
-
-    <div class="center">
-
-        <h2>🏬 Mall Floor</h2>
-
-        <p>Select a floor to start shopping.</p>
-
-        <div class="card">
-
-            <h3>Floor 1 — Grocery</h3>
-
-            <p>Salt, Atta, Butter, Milk, Green Peas, Ice Cream and Snacks</p>
-
-            <button class="primary" onclick="showScreen('products')">
-
-                Enter Floor 1
-
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- PRODUCTS -->
-
-<section id="products" class="screen" style="display:none;">
-
-    <h2>🛍️ Grocery Products</h2>
-
-    <input
-
-        id="productSearch"
-
-        type="text"
-
-        placeholder="🔎 Search products..."
-
-        oninput="searchProducts()"
-
-    >
-
-    <div class="card center">
-
-        <h3>📷 Scan Your Product</h3>
-
-        <p id="scanInstruction">
-
-            Scan a product before placing it inside the trolley.
-
-        </p>
-
-        <button class="primary" onclick="startScanner()">
-
-            📷 Scan Product
-
-        </button>
-
-        <div id="scannerBox">
-
-            <div id="reader"></div>
-
-            <p id="scanResult">Waiting for barcode...</p>
-
-            <button class="danger" onclick="stopScanner()">
-
-                Stop Scanner
-
-            </button>
-
-        </div>
-
-    </div>
-
-    <div id="liveProductStatus" class="card">
-
-        <h3>📦 Current Product</h3>
-
-        <div id="currentProduct" class="waiting-box">
-
-            No product scanned yet.
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h3>🛒 Live Trolley Status</h3>
-
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
-
-            <div>
-
-                <p class="small">Scanned</p>
-
-                <p id="liveScannedCount" class="stat">0</p>
-
-            </div>
-
-            <div>
-
-                <p class="small">In Trolley</p>
-
-                <p id="liveTrolleyCount" class="stat">0</p>
-
-            </div>
-
-            <div>
-
-                <p class="small">Virtual Weight</p>
-
-                <p id="liveLogicalWeight" class="stat">0 g</p>
-
-            </div>
-
-        </div>
-
-        <div id="liveTrolleyMessage" class="waiting-box">
-
-            Scan a product to begin.
-
-        </div>
-
-        <h4 style="margin-top:20px;">Products in Trolley</h4>
-
-        <div id="liveTrolleyProducts" class="product-list">
-
-            <p class="small">No products in trolley.</p>
-
-        </div>
-
-    </div>
-
-    <div id="productGrid" class="product-grid"></div>
-
-    <div class="center">
-
-        <button class="secondary" onclick="showScreen('cart')">
-
-            🛒 View Cart
-
-        </button>
-
-    </div>
-
-</section>
-
-<!-- CART -->
-
-<section id="cart" class="screen" style="display:none;">
-
-    <h2>🛒 My Cart</h2>
-
-    <div id="cartItems" class="card">
-
-        <p class="center">Your cart is empty.</p>
-
-    </div>
-
-    <div class="card">
-
-        <p class="cart-total">Total: ₹<span id="cartTotal">0</span></p>
-
-        <p>Items: <strong id="cartCount">0</strong></p>
-
-    </div>
-
-    <div class="center">
-
-        <button class="secondary" onclick="showScreen('products')">
-
-            ← Continue Shopping
-
-        </button>
-
-        <button class="success" onclick="doneShopping()">
-
-            Done Shopping & Generate Bill
-
-        </button>
-
-    </div>
-
-</section>
-
-<!-- OLD TROLLEY STATUS -->
-
-<section id="espTrolleyStatus" class="screen" style="display:none;">
-
-    <h2>🛒 Trolley Status</h2>
-
-    <p id="espConnection">ESP8266: Checking connection...</p>
-
-    <div class="card center">
-
-        <h3>📱 Scanned Products</h3>
-
-        <p id="espScannedCount" class="stat">0</p>
-
-        <h3>📦 Products in Trolley</h3>
-
-        <p id="espTrolleyCount" class="stat">0</p>
-
-        <h3>⚖️ Virtual Trolley Weight</h3>
-
-        <p id="espLogicalWeight" class="stat">0 g</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>📱 Waiting for Placement</h3>
-
-        <div id="authorizedProducts" class="product-list">
-
-            <p class="small">No scanned products waiting.</p>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h3>✅ Authenticated Products</h3>
-
-        <div id="trolleyProducts" class="product-list">
-
-            <p class="small">No products in trolley.</p>
-
-        </div>
-
-    </div>
-
-    <div id="cartComparison" class="card">Waiting for trolley data...</div>
-
-    <div class="center">
-
-        <button class="secondary" onclick="showScreen('cart')">← Back to Cart</button>
-
-        <button class="danger" onclick="resetTrolley()">Reset Trolley</button>
-
-    </div>
-
-</section>
-
-<!-- BILL -->
-
-<section id="bill" class="screen" style="display:none;">
-
-    <h2>🧾 Inventra Bill</h2>
-
-    <div id="billContent" class="card"></div>
-
-    <div class="center">
-
-        <button class="primary" onclick="showPayment()">💳 Pay Now</button>
-
-        <button class="secondary" onclick="showScreen('products')">Continue Shopping</button>
-
-    </div>
-
-</section>
-
-<!-- PAYMENT -->
-
-<section id="payment" class="screen" style="display:none;">
-
-    <div class="center">
-
-        <h2>💳 Payment</h2>
-
-        <div class="card">
-
-            <h3>Scan to Pay</h3>
-
-            <div id="paymentQR"></div>
-
-            <p>Amount: ₹<strong id="paymentAmount">0</strong></p>
-
-        </div>
-
-        <button class="success" onclick="paymentComplete()">
-
-            ✅ Payment Completed
-
-        </button>
-
-        <button class="secondary" onclick="showScreen('bill')">← Back</button>
-
-    </div>
-
-</section>
-
-<script>
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include "HX711.h"
+#include <math.h>
 
 // =====================================================
-
-// ESP8266
-
+// INVENTRA SMART TROLLEY
+// FINAL MULTI-PRODUCT VERSION
 // =====================================================
 
-const ESP8266_IP = "10.230.218.96";
-
+// =====================================================
+// PINS
 // =====================================================
 
-// UPDATED PRODUCT DATABASE
+#define DOUT D6
+#define SCK  D5
 
-// Barcode, product name, price, assigned weight, emoji
+#define LED_PIN D7
+#define BUZZER_PIN D2
 
 // =====================================================
+// WIFI
+// =====================================================
 
-const productDatabase = {
+const char* ssid = "Manavi_10";
+const char* password = "manavi1002";
 
-    "8906160690209": {
+ESP8266WebServer server(80);
+HX711 scale;
 
-        name: "Tata Salt",
+// =====================================================
+// CALIBRATION
+// =====================================================
 
-        price: 80,
+float calibration_factor = 420.0;
 
-        weight: 250,
+// =====================================================
+// INVENTRA SETTINGS
+// =====================================================
 
-        emoji: "🧂"
+// Your current trolley is treated as 1 kg capacity.
+// 250 g logical weight per scanned product.
+const int MAX_PRODUCTS = 4;
 
-    },
+const int PRODUCT_WEIGHT = 250;
 
-    "8902102163930": {
+const int MAX_CAPACITY = 1000;
 
-        name: "Aashirvaad Atta",
+// =====================================================
+// LOAD CELL DETECTION
+// =====================================================
 
-        price: 100,
+// Minimum confirmed change required.
+// Small fluctuations below this are ignored.
+const float DETECTION_THRESHOLD = 0.60;
 
-        weight: 250,
+// How much the sensor is allowed to move while
+// confirming that the object has settled.
+const float STABILITY_BAND = 0.10;
 
-        emoji: "🌾"
+// Product must remain stable for this long.
+const unsigned long CONFIRM_TIME = 700;
 
-    },
+// Sensor reading interval.
+const unsigned long SENSOR_INTERVAL = 40;
 
-    "8906073788116": {
+// After a confirmed event, ignore another event briefly.
+const unsigned long EVENT_LOCKOUT = 800;
 
-        name: "Amul Butter",
+// After scanning, give the sensor time to settle.
+// IMPORTANT: this does NOT change the baseline.
+const unsigned long SCAN_SETTLE_TIME = 700;
 
-        price: 40,
+// =====================================================
+// PRODUCT ARRAYS
+// =====================================================
 
-        weight: 250,
+// Scanned but not yet physically placed.
+String authorizedProducts[MAX_PRODUCTS];
+int authorizedCount = 0;
 
-        emoji: "🧈"
+// Physically placed and authorized.
+String trolleyProducts[MAX_PRODUCTS];
+int trolleyCount = 0;
 
-    },
+// =====================================================
+// EXTRA PRODUCT
+// =====================================================
 
-    "8908000034334": {
+bool extraProductDetected = false;
 
-        name: "Milk",
+// =====================================================
+// LOAD CELL STATE
+// =====================================================
 
-        price: 35,
+// This is the last CONFIRMED physical trolley state.
+float baselineWeight = 0.0;
 
-        weight: 250,
+// Candidate physical state while detecting a change.
+float candidateWeight = 0.0;
 
-        emoji: "🥛"
+// Are we currently checking a possible change?
+bool checkingChange = false;
 
-    },
+unsigned long changeStartTime = 0;
 
-    "8901324010664": {
+unsigned long lastSensorRead = 0;
 
-        name: "Green Peas",
+unsigned long lastEventTime = 0;
 
-        price: 45,
+// =====================================================
+// AUTHORIZATION STATE
+// =====================================================
 
-        weight: 250,
+bool waitingForPlacement = false;
 
-        emoji: "🫛"
+unsigned long authorizationTime = 0;
 
-    },
+// =====================================================
+// EXTRA PRODUCT STATE
+// =====================================================
 
-    "8906136382824": {
+// When an extra product is detected, freeze normal
+// product-removal processing until it is removed.
+bool extraRemovalPending = false;
 
-        name: "Kwality Walls Ice Cream",
+// =====================================================
+// CORS
+// =====================================================
 
-        price: 60,
+void allowCORS()
+{
+  server.sendHeader(
+    "Access-Control-Allow-Origin",
+    "*"
+  );
 
-        weight: 250,
+  server.sendHeader(
+    "Access-Control-Allow-Methods",
+    "GET, OPTIONS"
+  );
 
-        emoji: "🍦"
+  server.sendHeader(
+    "Access-Control-Allow-Headers",
+    "*"
+  );
+}
 
-    },
+// =====================================================
+// ALERT OFF
+// =====================================================
 
-    "8906014765985": {
+void alertOff()
+{
+  digitalWrite(
+    LED_PIN,
+    LOW
+  );
 
-        name: "Kurkure",
+  digitalWrite(
+    BUZZER_PIN,
+    LOW
+  );
+}
 
-        price: 10,
+// =====================================================
+// BUZZER
+// =====================================================
 
-        weight: 250,
+void beep()
+{
+  digitalWrite(
+    BUZZER_PIN,
+    HIGH
+  );
 
-        emoji: "🌶️"
+  delay(120);
 
-    },
+  digitalWrite(
+    BUZZER_PIN,
+    LOW
+  );
+}
 
-    "8901860630241": {
+// =====================================================
+// ALERT ON
+// =====================================================
 
-        name: "Pringles",
+void alertOn()
+{
+  digitalWrite(
+    LED_PIN,
+    HIGH
+  );
 
-        price: 20,
+  beep();
+}
 
-        weight: 250,
+// =====================================================
+// PRODUCT ARRAY → JSON
+// =====================================================
 
-        emoji: "🥔"
+String makeProductArray(
+  String products[],
+  int count
+)
+{
+  String result = "[";
 
-    },
-
-    "8901248164252": {
-
-        name: "Cheetos",
-
-        price: 15,
-
-        weight: 250,
-
-        emoji: "🧀"
-
-    },
-
-    "8904275300259": {
-
-        name: "Mdew",
-
-        price: 10,
-
-        weight: 250,
-
-        emoji: "🥤"
-
+  for (
+    int i = 0;
+    i < count;
+    i++
+  )
+  {
+    if (i > 0)
+    {
+      result += ",";
     }
 
-};
+    result += "\"";
+    result += products[i];
+    result += "\"";
+  }
 
-// =====================================================
+  result += "]";
 
-// GLOBAL VARIABLES
-
-// =====================================================
-
-let cart = [];
-
-let budget = 0;
-
-let html5QrCode = null;
-
-let scannerRunning = false;
-
-let lastScannedBarcode = "";
-
-let lastScanTime = 0;
-
-// =====================================================
-
-// SCREEN MANAGEMENT
-
-// =====================================================
-
-function showScreen(screenId) {
-
-    document.querySelectorAll(".screen").forEach(function(screen) {
-
-        screen.style.display = "none";
-
-    });
-
-    const selected = document.getElementById(screenId);
-
-    if (selected) {
-
-        selected.style.display = "block";
-
-    }
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
-
-    if (screenId === "products") {
-
-        renderProducts();
-
-        searchProducts();
-
-        updateLiveTrolley();
-
-    }
-
-    if (screenId === "cart") {
-
-        updateCart();
-
-    }
-
-    if (screenId === "espTrolleyStatus") {
-
-        getESPData();
-
-    }
-
+  return result;
 }
 
 // =====================================================
-
-// START SHOPPING
-
+// SERIAL STATUS
 // =====================================================
 
-function startShopping() {
-
-    const amount = prompt("Enter your shopping budget (₹):");
-
-    if (amount === null) return;
-
-    const value = Number(amount);
-
-    if (isNaN(value) || value <= 0) {
-
-        alert("Please enter a valid budget.");
-
-        return;
-
-    }
-
-    budget = value;
-
-    showScreen("floor");
-
-}
-
-// =====================================================
-
-// RENDER PRODUCTS WITH VISIBLE EMOJIS
-
-// =====================================================
-
-function renderProducts() {
-
-    const grid = document.getElementById("productGrid");
-
-    if (!grid) return;
-
-    grid.innerHTML = "";
-
-    Object.keys(productDatabase).forEach(function(barcode) {
-
-        const product = productDatabase[barcode];
-
-        const card = document.createElement("div");
-
-        card.className = "product-card";
-
-        card.dataset.name = product.name.toLowerCase();
-
-        card.innerHTML = `
-
-            <div class="product-emoji" aria-label="${product.name}">
-
-                ${product.emoji}
-
-            </div>
-
-            <h3>${product.name}</h3>
-
-            <p class="price">₹${product.price}</p>
-
-            <p class="weight">
-
-                Assigned Weight: ${product.weight} g
-
-            </p>
-
-            <p class="small">
-
-                Barcode: ${barcode}
-
-            </p>
-
-        `;
-
-        grid.appendChild(card);
-
-    });
-
-}
-
-// =====================================================
-
-// SEARCH PRODUCTS
-
-// =====================================================
-
-function searchProducts() {
-
-    const search = document.getElementById("productSearch").value.toLowerCase();
-
-    document.querySelectorAll("#productGrid .product-card").forEach(function(card) {
-
-        card.style.display = card.dataset.name.includes(search) ? "block" : "none";
-
-    });
-
-}
-
-// =====================================================
-
-// START SCANNER
-
-// =====================================================
-
-async function startScanner() {
-
-    const scannerBox = document.getElementById("scannerBox");
-
-    const result = document.getElementById("scanResult");
-
-    scannerBox.style.display = "block";
-
-    result.textContent = "📷 Starting camera...";
-
-    try {
-
-        if (html5QrCode && scannerRunning) {
-
-            try {
-
-                await html5QrCode.stop();
-
-            } catch (e) {}
-
-            scannerRunning = false;
-
-        }
-
-        if (html5QrCode) {
-
-            try {
-
-                html5QrCode.clear();
-
-            } catch (e) {}
-
-        }
-
-        html5QrCode = new Html5Qrcode("reader");
-
-        await html5QrCode.start(
-
-            { facingMode: "environment" },
-
-            {
-
-                fps: 15,
-
-                qrbox: { width: 280, height: 160 },
-
-                formatsToSupport: [
-
-                    Html5QrcodeSupportedFormats.EAN_13,
-
-                    Html5QrcodeSupportedFormats.EAN_8,
-
-                    Html5QrcodeSupportedFormats.UPC_A,
-
-                    Html5QrcodeSupportedFormats.UPC_E,
-
-                    Html5QrcodeSupportedFormats.CODE_128,
-
-                    Html5QrcodeSupportedFormats.CODE_39
-
-                ]
-
-            },
-
-            function(decodedText) {
-
-                handleScannedBarcode(decodedText);
-
-            },
-
-            function(errorMessage) {
-
-                // Scanner searching.
-
-            }
-
-        );
-
-        scannerRunning = true;
-
-        result.textContent = "📷 Point camera at the product barcode.";
-
-    } catch (error) {
-
-        console.error(error);
-
-        result.textContent = "❌ Camera could not start. Please allow camera permission.";
-
-    }
-
-}
-
-// =====================================================
-
-// STOP SCANNER
-
-// =====================================================
-
-async function stopScanner() {
-
-    if (html5QrCode && scannerRunning) {
-
-        try {
-
-            await html5QrCode.stop();
-
-        } catch (error) {
-
-            console.log(error);
-
-        }
-
-        scannerRunning = false;
-
-    }
-
-    const scannerBox = document.getElementById("scannerBox");
-
-    if (scannerBox) {
-
-        scannerBox.style.display = "none";
-
-    }
-
-}
-
-// =====================================================
-
-// HANDLE BARCODE
-
-// =====================================================
-
-async function handleScannedBarcode(barcode) {
-
-    barcode = String(barcode).trim();
-
-    const now = Date.now();
-
-    if (barcode === lastScannedBarcode && now - lastScanTime < 2000) {
-
-        return;
-
-    }
-
-    lastScannedBarcode = barcode;
-
-    lastScanTime = now;
-
-    console.log("Barcode scanned:", barcode);
-
-    const product = productDatabase[barcode];
-
-    if (!product) {
-
-        document.getElementById("scanResult").textContent =
-
-            "❌ Product not found: " + barcode;
-
-        return;
-
-    }
-
-    await stopScanner();
-
-    const currentProduct = document.getElementById("currentProduct");
-
-    currentProduct.className = "waiting-box";
-
-    currentProduct.innerHTML = `
-
-        ⏳ Authorizing
-
-        <strong>${product.emoji} ${product.name}</strong>...
-
-    `;
-
-    try {
-
-        const response = await fetch(
-
-            "http://" + ESP8266_IP +
-
-            "/authorize?name=" +
-
-            encodeURIComponent(product.name) +
-
-            "&t=" + Date.now(),
-
-            {
-
-                method: "GET",
-
-                cache: "no-store"
-
-            }
-
-        );
-
-        const result = await response.text();
-
-        console.log("ESP response:", result);
-
-        if (!response.ok) {
-
-            currentProduct.className = "danger-box";
-
-            currentProduct.innerHTML = `❌ ${result}`;
-
-            return;
-
-        }
-
-        addToCart(product.name, product.price);
-
-        currentProduct.className = "success-box";
-
-        currentProduct.innerHTML = `
-
-            <h3>✅ ${product.emoji} ${product.name} Authorized</h3>
-
-            <p>Place the product inside the trolley.</p>
-
-            <p>
-
-                Assigned Weight:
-
-                <strong>${product.weight} g</strong>
-
-            </p>
-
-            <br>
-
-            <button class="primary" onclick="startScanner()">
-
-                📷 Scan Next Product
-
-            </button>
-
-        `;
-
-        document.getElementById("scanInstruction").textContent =
-
-            "Product authorized. Place it in the trolley or scan the next product.";
-
-        document.getElementById("scanResult").textContent =
-
-            "✅ " + product.name + " authorized successfully.";
-
-        updateLiveTrolley();
-
-    } catch (error) {
-
-        console.error("Authorization error:", error);
-
-        currentProduct.className = "danger-box";
-
-        currentProduct.innerHTML = `
-
-            <h3>🔴 ESP8266 Connection Failed</h3>
-
-            <p>
-
-                Make sure the phone and ESP8266 are connected
-
-                to the same Wi-Fi.
-
-            </p>
-
-        `;
-
-    }
-
-}
-
-// =====================================================
-
-// ADD TO CART
-
-// =====================================================
-
-function addToCart(name, price) {
-
-    const existing = cart.find(function(item) {
-
-        return item.name === name;
-
-    });
-
-    if (existing) {
-
-        existing.quantity++;
-
-    } else {
-
-        cart.push({
-
-            name: name,
-
-            price: price,
-
-            weight: 250,
-
-            quantity: 1
-
-        });
-
-    }
-
-    updateCart();
-
-    checkBudget();
-
-}
-
-// =====================================================
-
-// UPDATE CART
-
-// =====================================================
-
-function updateCart() {
-
-    const container = document.getElementById("cartItems");
-
-    const totalElement = document.getElementById("cartTotal");
-
-    const countElement = document.getElementById("cartCount");
-
-    if (!container) return;
-
-    if (cart.length === 0) {
-
-        container.innerHTML = `<p class="center">Your cart is empty.</p>`;
-
-        totalElement.textContent = "0";
-
-        countElement.textContent = "0";
-
-        return;
-
-    }
-
-    let total = 0;
-
-    let count = 0;
-
-    container.innerHTML = "";
-
-    cart.forEach(function(item) {
-
-        const itemTotal = item.price * item.quantity;
-
-        total += itemTotal;
-
-        count += item.quantity;
-
-        const div = document.createElement("div");
-
-        div.className = "cart-item";
-
-        const product = Object.values(productDatabase).find(function(p) {
-
-            return p.name === item.name;
-
-        });
-
-        const emoji = product ? product.emoji : "🛍️";
-
-        div.innerHTML = `
-
-            <div>
-
-                <strong>${emoji} ${item.name}</strong>
-
-                <br>
-
-                <span class="small">₹${item.price} × ${item.quantity}</span>
-
-                <br>
-
-                <span class="small">
-
-                    Assigned weight: ${item.weight * item.quantity} g
-
-                </span>
-
-            </div>
-
-            <strong>₹${itemTotal}</strong>
-
-        `;
-
-        container.appendChild(div);
-
-    });
-
-    totalElement.textContent = total;
-
-    countElement.textContent = count;
-
-}
-
-// =====================================================
-
-// BUDGET
-
-// =====================================================
-
-function checkBudget() {
-
-    let total = 0;
-
-    cart.forEach(function(item) {
-
-        total += item.price * item.quantity;
-
-    });
-
-    if (budget > 0 && total > budget) {
-
-        console.log("Budget exceeded.");
-
-    }
-
-}
-
-// =====================================================
-
-// LIVE TROLLEY DATA
-
-// =====================================================
-
-async function updateLiveTrolley() {
-
-    try {
-
-        const response = await fetch(
-
-            "http://" + ESP8266_IP + "/data?t=" + Date.now(),
-
-            {
-
-                method: "GET",
-
-                cache: "no-store"
-
-            }
-
-        );
-
-        if (!response.ok) {
-
-            throw new Error("ESP not responding");
-
-        }
-
-        const data = await response.json();
-
-        document.getElementById("liveScannedCount").textContent = data.scannedCount;
-
-        document.getElementById("liveTrolleyCount").textContent = data.trolleyCount;
-
-        document.getElementById("liveLogicalWeight").textContent = data.logicalWeight + " g";
-
-        const productList = document.getElementById("liveTrolleyProducts");
-
-        if (data.trolleyProducts && data.trolleyProducts.length > 0) {
-
-            productList.innerHTML = data.trolleyProducts.map(function(name) {
-
-                const product = Object.values(productDatabase).find(function(p) {
-
-                    return p.name === name;
-
-                });
-
-                const emoji = product ? product.emoji : "🛒";
-
-                return `
-
-                    <div>
-
-                        ${emoji} <strong>${name}</strong>
-
-                        <span class="small">— 250 g</span>
-
-                    </div>
-
-                `;
-
-            }).join("");
-
-        } else {
-
-            productList.innerHTML = `<p class="small">No products in trolley.</p>`;
-
-        }
-
-        const message = document.getElementById("liveTrolleyMessage");
-
-        if (data.extra === true) {
-
-            message.className = "danger-box";
-
-            message.innerHTML = `
-
-                <h3>🚨 EXTRA PRODUCT DETECTED</h3>
-
-                <p>This product was not scanned.</p>
-
-                <br>
-
-                <strong>Please remove it from the trolley.</strong>
-
-            `;
-
-        } else if (data.authorizedProducts && data.authorizedProducts.length > 0) {
-
-            message.className = "waiting-box";
-
-            message.innerHTML = `
-
-                ⏳ <strong>Product Authorized</strong>
-
-                <br><br>
-
-                Place the scanned product inside the trolley.
-
-            `;
-
-        } else if (data.trolleyCount > 0) {
-
-            message.className = "success-box";
-
-            message.innerHTML = `
-
-                <h3>✅ Trolley Updated</h3>
-
-                <p>All placed products are authenticated.</p>
-
-                <br>
-
-                <button class="primary" onclick="startScanner()">
-
-                    📷 Scan Next Product
-
-                </button>
-
-            `;
-
-        } else {
-
-            message.className = "waiting-box";
-
-            message.innerHTML = `
-
-                🛒 <strong>Trolley is empty.</strong>
-
-                <br><br>
-
-                Scan a product to begin.
-
-            `;
-
-        }
-
-    } catch (error) {
-
-        console.log("Live trolley update:", error);
-
-    }
-
-}
-
-// =====================================================
-
-// OLD TROLLEY STATUS
-
-// =====================================================
-
-async function getESPData() {
-
-    try {
-
-        const response = await fetch(
-
-            "http://" + ESP8266_IP + "/data?t=" + Date.now(),
-
-            { cache: "no-store" }
-
-        );
-
-        if (!response.ok) {
-
-            throw new Error("ESP not responding");
-
-        }
-
-        const data = await response.json();
-
-        document.getElementById("espConnection").textContent = "🟢 ESP8266 Connected";
-
-        document.getElementById("espConnection").style.color = "#16a34a";
-
-        document.getElementById("espScannedCount").textContent = data.scannedCount;
-
-        document.getElementById("espTrolleyCount").textContent = data.trolleyCount;
-
-        document.getElementById("espLogicalWeight").textContent = data.logicalWeight + " g";
-
-        displayProductList(
-
-            "authorizedProducts",
-
-            data.authorizedProducts,
-
-            "No scanned products waiting."
-
-        );
-
-        displayProductList(
-
-            "trolleyProducts",
-
-            data.trolleyProducts,
-
-            "No products in trolley."
-
-        );
-
-        const comparison = document.getElementById("cartComparison");
-
-        if (data.extra === true) {
-
-            comparison.className = "card danger-box";
-
-            comparison.innerHTML = `
-
-                🚨 <strong>EXTRA PRODUCT DETECTED</strong>
-
-                <br><br>
-
-                Remove the unscanned product.
-
-            `;
-
-        } else if (data.authorizedProducts && data.authorizedProducts.length > 0) {
-
-            comparison.className = "card waiting-box";
-
-            comparison.innerHTML = `
-
-                ⏳ Product scanned.
-
-                <br><br>
-
-                Place it inside the trolley.
-
-            `;
-
-        } else if (data.trolleyCount > 0) {
-
-            comparison.className = "card success-box";
-
-            comparison.innerHTML = `
-
-                ✅ All placed products are authenticated.
-
-            `;
-
-        } else {
-
-            comparison.className = "card";
-
-            comparison.innerHTML = "🛒 Trolley is empty.";
-
-        }
-
-    } catch (error) {
-
-        document.getElementById("espConnection").textContent = "🔴 ESP8266 Not Connected";
-
-        document.getElementById("espConnection").style.color = "#dc2626";
-
-    }
-
-}
-
-// =====================================================
-
-// DISPLAY PRODUCT LIST
-
-// =====================================================
-
-function displayProductList(elementId, products, emptyMessage) {
-
-    const container = document.getElementById(elementId);
-
-    if (!products || products.length === 0) {
-
-        container.innerHTML = `<p class="small">${emptyMessage}</p>`;
-
-        return;
-
-    }
-
-    container.innerHTML = "";
-
-    products.forEach(function(name) {
-
-        const div = document.createElement("div");
-
-        const product = Object.values(productDatabase).find(function(p) {
-
-            return p.name === name;
-
-        });
-
-        const emoji = product ? product.emoji : "🛒";
-
-        div.innerHTML = `
-
-            ${emoji} <strong>${name}</strong>
-
-            <span class="small">— 250 g</span>
-
-        `;
-
-        container.appendChild(div);
-
-    });
-
-}
-
-// =====================================================
-
-// RESET TROLLEY
-
-// =====================================================
-
-async function resetTrolley() {
-
-    const confirmReset = confirm("Reset the Inventra trolley?");
-
-    if (!confirmReset) return;
-
-    try {
-
-        const response = await fetch(
-
-            "http://" + ESP8266_IP + "/reset?t=" + Date.now(),
-
-            { cache: "no-store" }
-
-        );
-
-        const text = await response.text();
-
-        console.log(text);
-
-        cart = [];
-
-        updateCart();
-
-        document.getElementById("currentProduct").className = "waiting-box";
-
-        document.getElementById("currentProduct").innerHTML = "No product scanned yet.";
-
-        alert("✅ Trolley reset successfully.");
-
-        updateLiveTrolley();
-
-    } catch (error) {
-
-        alert("❌ Could not reset trolley.");
-
-    }
-
-}
-
-// =====================================================
-
-// DONE SHOPPING
-
-// =====================================================
-
-function doneShopping() {
-
-    if (cart.length === 0) {
-
-        alert("Your cart is empty.");
-
-        return;
-
-    }
-
-    generateBill();
-
-}
-
-// =====================================================
-
-// GENERATE BILL
-
-// =====================================================
-
-function generateBill() {
-
-    const bill = document.getElementById("billContent");
-
-    let total = 0;
-
-    let itemCount = 0;
-
-    let html = `
-
-        <h3>Inventra Shopping Bill</h3>
-
-        <hr>
-
-    `;
-
-    cart.forEach(function(item) {
-
-        const itemTotal = item.price * item.quantity;
-
-        total += itemTotal;
-
-        itemCount += item.quantity;
-
-        const product = Object.values(productDatabase).find(function(p) {
-
-            return p.name === item.name;
-
-        });
-
-        const emoji = product ? product.emoji : "🛍️";
-
-        html += `
-
-            <div class="cart-item">
-
-                <div>
-
-                    <strong>${emoji} ${item.name}</strong>
-
-                    <br>
-
-                    <span class="small">₹${item.price} × ${item.quantity}</span>
-
-                </div>
-
-                <strong>₹${itemTotal}</strong>
-
-            </div>
-
-        `;
-
-    });
-
-    html += `
-
-        <hr>
-
-        <p>Total Products: <strong>${itemCount}</strong></p>
-
-        <p class="cart-total">Total Amount: ₹${total}</p>
-
-    `;
-
-    bill.innerHTML = html;
-
-    showScreen("bill");
-
-}
-
-// =====================================================
-
-// PAYMENT QR
-
-// =====================================================
-
-function showPayment() {
-
-    let total = 0;
-
-    cart.forEach(function(item) {
-
-        total += item.price * item.quantity;
-
-    });
-
-    document.getElementById("paymentAmount").textContent = total;
-
-    const qr = document.getElementById("paymentQR");
-
-    qr.innerHTML = "";
-
-    new QRCode(qr, {
-
-        text: "INVENTRA-PAYMENT-AMOUNT-" + total,
-
-        width: 220,
-
-        height: 220
-
-    });
-
-    showScreen("payment");
-
-}
-
-// =====================================================
-
-// PAYMENT COMPLETE
-
-// =====================================================
-
-function paymentComplete() {
-
-    alert(
-
-        "✅ Payment completed successfully!\n\nThank you for shopping with Inventra."
-
+void printStatus()
+{
+  Serial.println();
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "        INVENTRA STATUS"
+  );
+
+  Serial.println(
+    "================================"
+  );
+
+  Serial.print(
+    "Total Scanned: "
+  );
+
+  Serial.println(
+    authorizedCount + trolleyCount
+  );
+
+  Serial.print(
+    "Products in Trolley: "
+  );
+
+  Serial.println(
+    trolleyCount
+  );
+
+  Serial.print(
+    "Virtual Trolley Weight: "
+  );
+
+  Serial.print(
+    trolleyCount * PRODUCT_WEIGHT
+  );
+
+  Serial.println(
+    " g"
+  );
+
+  if (
+    authorizedCount > 0
+  )
+  {
+    Serial.println();
+    Serial.println(
+      "WAITING FOR PLACEMENT:"
     );
 
-    cart = [];
+    for (
+      int i = 0;
+      i < authorizedCount;
+      i++
+    )
+    {
+      Serial.print("  ");
+      Serial.println(
+        authorizedProducts[i]
+      );
+    }
+  }
 
-    updateCart();
+  if (
+    trolleyCount > 0
+  )
+  {
+    Serial.println();
+    Serial.println(
+      "PRODUCTS IN TROLLEY:"
+    );
 
-    showScreen("home");
+    for (
+      int i = 0;
+      i < trolleyCount;
+      i++
+    )
+    {
+      Serial.print("  ");
+      Serial.println(
+        trolleyProducts[i]
+      );
+    }
+  }
 
+  if (
+    extraProductDetected
+  )
+  {
+    Serial.println();
+    Serial.println(
+      "⚠ EXTRA PRODUCT DETECTED"
+    );
+  }
+
+  Serial.println(
+    "================================"
+  );
 }
 
 // =====================================================
-
-// FAST LIVE POLLING
-
+// SEND DATA TO WEBSITE
 // =====================================================
 
-setInterval(function() {
+void sendData()
+{
+  int totalScanned =
+    authorizedCount +
+    trolleyCount;
 
-    const productsScreen = document.getElementById("products");
+  int logicalWeight =
+    trolleyCount *
+    PRODUCT_WEIGHT;
 
-    if (productsScreen && productsScreen.style.display !== "none") {
+  String json = "{";
 
-        updateLiveTrolley();
+  json +=
+    "\"connected\":true,";
 
+  json +=
+    "\"scannedCount\":";
+
+  json +=
+    String(totalScanned);
+
+  json += ",";
+
+  json +=
+    "\"trolleyCount\":";
+
+  json +=
+    String(trolleyCount);
+
+  json += ",";
+
+  // IMPORTANT:
+  // This is ONLY the predefined logical weight.
+  // Actual HX711 weight is never sent.
+  json +=
+    "\"logicalWeight\":";
+
+  json +=
+    String(logicalWeight);
+
+  json += ",";
+
+  json +=
+    "\"capacity\":";
+
+  json +=
+    String(MAX_CAPACITY);
+
+  json += ",";
+
+  json +=
+    "\"extra\":";
+
+  json +=
+    (
+      extraProductDetected
+      ? "true"
+      : "false"
+    );
+
+  json += ",";
+
+  json +=
+    "\"capacityExceeded\":false,";
+
+  json +=
+    "\"authorizedProducts\":";
+
+  json +=
+    makeProductArray(
+      authorizedProducts,
+      authorizedCount
+    );
+
+  json += ",";
+
+  json +=
+    "\"trolleyProducts\":";
+
+  json +=
+    makeProductArray(
+      trolleyProducts,
+      trolleyCount
+    );
+
+  json += "}";
+
+  allowCORS();
+
+  server.send(
+    200,
+    "application/json",
+    json
+  );
+}
+
+// =====================================================
+// INITIAL BASELINE
+// =====================================================
+
+void establishInitialBaseline()
+{
+  if (
+    !scale.is_ready()
+  )
+  {
+    return;
+  }
+
+  float total = 0;
+
+  const int samples = 10;
+
+  for (
+    int i = 0;
+    i < samples;
+    i++
+  )
+  {
+    total +=
+      scale.get_units(1);
+
+    delay(20);
+  }
+
+  baselineWeight =
+    total / samples;
+
+  candidateWeight =
+    baselineWeight;
+
+  checkingChange = false;
+}
+
+// =====================================================
+// AUTHORIZE PRODUCT
+// =====================================================
+
+void authorizeProduct()
+{
+  if (
+    !server.hasArg("name")
+  )
+  {
+    allowCORS();
+
+    server.send(
+      400,
+      "text/plain",
+      "Product name missing"
+    );
+
+    return;
+  }
+
+  String productName =
+    server.arg("name");
+
+  productName.trim();
+
+  if (
+    productName.length() == 0
+  )
+  {
+    allowCORS();
+
+    server.send(
+      400,
+      "text/plain",
+      "Invalid product"
+    );
+
+    return;
+  }
+
+  // ===================================================
+  // CAPACITY CHECK
+  // ===================================================
+
+  int totalProducts =
+    authorizedCount +
+    trolleyCount;
+
+  if (
+    totalProducts >=
+    MAX_PRODUCTS
+  )
+  {
+    allowCORS();
+
+    server.send(
+      400,
+      "text/plain",
+      "Trolley capacity reached"
+    );
+
+    return;
+  }
+
+  // ===================================================
+  // IMPORTANT
+  //
+  // DO NOT:
+  // - tare
+  // - update baseline
+  // - reset trolley count
+  // - reset trolley products
+  //
+  // Scanning ONLY authorizes a product.
+  // ===================================================
+
+  extraProductDetected = false;
+  extraRemovalPending = false;
+
+  alertOff();
+
+  // ---------------------------------------------------
+  // ADD TO AUTHORIZED QUEUE
+  // ---------------------------------------------------
+
+  authorizedProducts[
+    authorizedCount
+  ] = productName;
+
+  authorizedCount++;
+
+  waitingForPlacement = true;
+
+  authorizationTime =
+    millis();
+
+  checkingChange = false;
+
+  Serial.println();
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "       PRODUCT AUTHORIZED"
+  );
+
+  Serial.println(
+    "================================"
+  );
+
+  Serial.print(
+    "New Product: "
+  );
+
+  Serial.println(
+    productName
+  );
+
+  Serial.print(
+    "Already in Trolley: "
+  );
+
+  Serial.println(
+    trolleyCount
+  );
+
+  Serial.print(
+    "Waiting for Placement: "
+  );
+
+  Serial.println(
+    authorizedCount
+  );
+
+  Serial.println(
+    "Baseline NOT changed."
+  );
+
+  Serial.println(
+    "Waiting for physical placement..."
+  );
+
+  Serial.println(
+    "================================"
+  );
+
+  allowCORS();
+
+  server.send(
+    200,
+    "text/plain",
+    "Product authorized"
+  );
+}
+
+// =====================================================
+// REMOVE FIRST AUTHORIZED PRODUCT
+// =====================================================
+
+String removeFirstAuthorizedProduct()
+{
+  if (
+    authorizedCount <= 0
+  )
+  {
+    return "";
+  }
+
+  String product =
+    authorizedProducts[0];
+
+  for (
+    int i = 0;
+    i <
+    authorizedCount - 1;
+    i++
+  )
+  {
+    authorizedProducts[i] =
+      authorizedProducts[i + 1];
+  }
+
+  authorizedProducts[
+    authorizedCount - 1
+  ] = "";
+
+  authorizedCount--;
+
+  return product;
+}
+
+// =====================================================
+// REGISTER AUTHORIZED PRODUCT
+// =====================================================
+
+void registerAuthorizedPlacement()
+{
+  if (
+    authorizedCount <= 0
+  )
+  {
+    return;
+  }
+
+  if (
+    trolleyCount >=
+    MAX_PRODUCTS
+  )
+  {
+    return;
+  }
+
+  String product =
+    removeFirstAuthorizedProduct();
+
+  if (
+    product.length() == 0
+  )
+  {
+    return;
+  }
+
+  // ---------------------------------------------------
+  // ADD PRODUCT TO EXISTING TROLLEY LIST
+  // ---------------------------------------------------
+
+  trolleyProducts[
+    trolleyCount
+  ] = product;
+
+  trolleyCount++;
+
+  // Keep waiting if another product was already scanned.
+  waitingForPlacement =
+    (
+      authorizedCount > 0
+    );
+
+  extraProductDetected = false;
+  extraRemovalPending = false;
+
+  alertOff();
+
+  Serial.println();
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "       AUTHORIZED PRODUCT"
+  );
+
+  Serial.println(
+    "          PLACED ✓"
+  );
+
+  Serial.println(
+    "================================"
+  );
+
+  Serial.print(
+    "Product: "
+  );
+
+  Serial.println(
+    product
+  );
+
+  Serial.print(
+    "Products in Trolley: "
+  );
+
+  Serial.println(
+    trolleyCount
+  );
+
+  Serial.print(
+    "Virtual Trolley Weight: "
+  );
+
+  Serial.print(
+    trolleyCount *
+    PRODUCT_WEIGHT
+  );
+
+  Serial.println(
+    " g"
+  );
+
+  Serial.println(
+    "STATUS: AUTHORIZED ✓"
+  );
+
+  Serial.println(
+    "================================"
+  );
+}
+
+// =====================================================
+// EXTRA PRODUCT
+// =====================================================
+
+void registerExtraProduct()
+{
+  // ---------------------------------------------------
+  // DO NOT TOUCH trolleyProducts[]
+  // DO NOT TOUCH trolleyCount
+  // DO NOT TOUCH authorizedProducts[]
+  //
+  // Only set the warning.
+  // ---------------------------------------------------
+
+  extraProductDetected = true;
+
+  extraRemovalPending = true;
+
+  waitingForPlacement = false;
+
+  alertOn();
+
+  Serial.println();
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "     !!! EXTRA PRODUCT !!!"
+  );
+
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "Product was NOT scanned."
+  );
+
+  Serial.println(
+    "Please remove the extra product."
+  );
+
+  Serial.println(
+    "Existing trolley products KEPT."
+  );
+
+  Serial.println(
+    "LED ON + BUZZER"
+  );
+
+  Serial.println(
+    "================================"
+  );
+}
+
+// =====================================================
+// EXTRA PRODUCT REMOVED
+// =====================================================
+
+void clearExtraProduct()
+{
+  extraProductDetected = false;
+
+  extraRemovalPending = false;
+
+  alertOff();
+
+  Serial.println();
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "EXTRA PRODUCT REMOVED"
+  );
+
+  Serial.println(
+    "Existing trolley products remain."
+  );
+
+  Serial.println(
+    "TROLLEY STATUS NORMAL"
+  );
+
+  Serial.println(
+    "================================"
+  );
+}
+
+// =====================================================
+// LOAD CELL PROCESSING
+// =====================================================
+
+void processLoadCell()
+{
+  if (
+    !scale.is_ready()
+  )
+  {
+    return;
+  }
+
+  if (
+    millis() -
+    lastSensorRead <
+    SENSOR_INTERVAL
+  )
+  {
+    return;
+  }
+
+  lastSensorRead =
+    millis();
+
+  // ---------------------------------------------------
+  // TAKE MULTIPLE READINGS
+  // ---------------------------------------------------
+
+  float total = 0;
+
+  const int READINGS = 3;
+
+  for (
+    int i = 0;
+    i < READINGS;
+    i++
+  )
+  {
+    total +=
+      scale.get_units(1);
+  }
+
+  float currentWeight =
+    total / READINGS;
+
+  float difference =
+    currentWeight -
+    baselineWeight;
+
+  // ===================================================
+  // SCAN SETTLING PERIOD
+  // ===================================================
+  //
+  // IMPORTANT:
+  // We DO NOT change baseline here.
+  //
+  // This prevents a scan from becoming a fake
+  // "product placement".
+  // ===================================================
+
+  if (
+    waitingForPlacement &&
+    millis() -
+    authorizationTime <
+    SCAN_SETTLE_TIME
+  )
+  {
+    checkingChange = false;
+    return;
+  }
+
+  // ===================================================
+  // WAIT FOR A REAL CHANGE
+  // ===================================================
+
+  if (
+    !checkingChange
+  )
+  {
+    // Small fluctuation → ignore.
+    if (
+      fabs(difference) <
+      DETECTION_THRESHOLD
+    )
+    {
+      return;
     }
 
-}, 300);
+    // Prevent immediate repeat.
+    if (
+      millis() -
+      lastEventTime <
+      EVENT_LOCKOUT
+    )
+    {
+      return;
+    }
+
+    // Start confirmation.
+    candidateWeight =
+      currentWeight;
+
+    changeStartTime =
+      millis();
+
+    checkingChange = true;
+
+    return;
+  }
+
+  // ===================================================
+  // CONFIRM THAT WEIGHT HAS SETTLED
+  // ===================================================
+
+  float movement =
+    fabs(
+      currentWeight -
+      candidateWeight
+    );
+
+  if (
+    movement >
+    STABILITY_BAND
+  )
+  {
+    // Still moving.
+    candidateWeight =
+      currentWeight;
+
+    changeStartTime =
+      millis();
+
+    return;
+  }
+
+  // ---------------------------------------------------
+  // Must remain stable for CONFIRM_TIME.
+  // ---------------------------------------------------
+
+  if (
+    millis() -
+    changeStartTime <
+    CONFIRM_TIME
+  )
+  {
+    return;
+  }
+
+  float finalDifference =
+    currentWeight -
+    baselineWeight;
+
+  // ===================================================
+  // CONFIRMED PRODUCT ADDITION
+  // ===================================================
+
+  if (
+    finalDifference >=
+    DETECTION_THRESHOLD
+  )
+  {
+    // -------------------------------------------------
+    // AUTHORIZED PRODUCT
+    // -------------------------------------------------
+
+    if (
+      authorizedCount > 0
+    )
+    {
+      registerAuthorizedPlacement();
+    }
+
+    // -------------------------------------------------
+    // UNAUTHORIZED PRODUCT
+    // -------------------------------------------------
+
+    else
+    {
+      registerExtraProduct();
+    }
+
+    // -------------------------------------------------
+    // VERY IMPORTANT
+    //
+    // Only AFTER a confirmed physical change do we
+    // update the baseline.
+    // -------------------------------------------------
+
+    baselineWeight =
+      currentWeight;
+
+    lastEventTime =
+      millis();
+
+    checkingChange = false;
+
+    candidateWeight =
+      currentWeight;
+
+    printStatus();
+
+    return;
+  }
+
+  // ===================================================
+  // CONFIRMED REMOVAL
+  // ===================================================
+
+  if (
+    finalDifference <=
+    -DETECTION_THRESHOLD
+  )
+  {
+    // -------------------------------------------------
+    // If an extra product was detected:
+    //
+    // DO NOT remove any authorized trolley product.
+    // Just clear the extra warning.
+    // -------------------------------------------------
+
+    if (
+      extraRemovalPending
+    )
+    {
+      clearExtraProduct();
+    }
+
+    // -------------------------------------------------
+    // Normal authorized product removal
+    //
+    // Only do this when there is NO extra warning.
+    // -------------------------------------------------
+
+    else
+    {
+      if (
+        trolleyCount > 0
+      )
+      {
+        Serial.println();
+        Serial.println(
+          "AUTHORIZED PRODUCT REMOVED"
+        );
+
+        Serial.print(
+          "Removed: "
+        );
+
+        Serial.println(
+          trolleyProducts[
+            trolleyCount - 1
+          ]
+        );
+
+        trolleyProducts[
+          trolleyCount - 1
+        ] = "";
+
+        trolleyCount--;
+
+        Serial.print(
+          "Products in Trolley: "
+        );
+
+        Serial.println(
+          trolleyCount
+        );
+
+        Serial.print(
+          "Virtual Weight: "
+        );
+
+        Serial.print(
+          trolleyCount *
+          PRODUCT_WEIGHT
+        );
+
+        Serial.println(
+          " g"
+        );
+      }
+    }
+
+    // New physical state is now baseline.
+    baselineWeight =
+      currentWeight;
+
+    lastEventTime =
+      millis();
+
+    checkingChange = false;
+
+    candidateWeight =
+      currentWeight;
+
+    printStatus();
+
+    return;
+  }
+
+  // ===================================================
+  // RESET DETECTION
+  // ===================================================
+
+  checkingChange = false;
+
+  candidateWeight =
+    currentWeight;
+}
 
 // =====================================================
-
-// INITIALIZE
-
+// RESET TROLLEY
 // =====================================================
 
-renderProducts();
+void resetTrolley()
+{
+  authorizedCount = 0;
 
-</script>
+  trolleyCount = 0;
 
-</body>
+  extraProductDetected = false;
 
-</html>
+  extraRemovalPending = false;
+
+  waitingForPlacement = false;
+
+  checkingChange = false;
+
+  alertOff();
+
+  for (
+    int i = 0;
+    i < MAX_PRODUCTS;
+    i++
+  )
+  {
+    authorizedProducts[i] = "";
+
+    trolleyProducts[i] = "";
+  }
+
+  delay(100);
+
+  establishInitialBaseline();
+
+  Serial.println();
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "     INVENTRA TROLLEY RESET"
+  );
+
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "Waiting for product scan..."
+  );
+}
+
+// =====================================================
+// RESET HTTP
+// =====================================================
+
+void handleReset()
+{
+  resetTrolley();
+
+  allowCORS();
+
+  server.send(
+    200,
+    "text/plain",
+    "Trolley reset"
+  );
+}
+
+// =====================================================
+// ROOT
+// =====================================================
+
+void handleRoot()
+{
+  allowCORS();
+
+  server.send(
+    200,
+    "text/plain",
+    "INVENTRA ESP8266 SERVER OK"
+  );
+}
+
+// =====================================================
+// SETUP
+// =====================================================
+
+void setup()
+{
+  Serial.begin(
+    115200
+  );
+
+  delay(500);
+
+  Serial.println();
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "     INVENTRA SMART TROLLEY"
+  );
+
+  Serial.println(
+    "     FINAL VERSION"
+  );
+
+  Serial.println(
+    "================================"
+  );
+
+  // ===================================================
+  // OUTPUTS
+  // ===================================================
+
+  pinMode(
+    LED_PIN,
+    OUTPUT
+  );
+
+  pinMode(
+    BUZZER_PIN,
+    OUTPUT
+  );
+
+  alertOff();
+
+  // ===================================================
+  // HX711
+  // ===================================================
+
+  scale.begin(
+    DOUT,
+    SCK
+  );
+
+  scale.set_scale(
+    calibration_factor
+  );
+
+  Serial.println();
+
+  Serial.println(
+    "KEEP TROLLEY EMPTY."
+  );
+
+  Serial.println(
+    "Zeroing load cell..."
+  );
+
+  delay(1500);
+
+  scale.tare();
+
+  delay(500);
+
+  establishInitialBaseline();
+
+  Serial.print(
+    "Initial Baseline: "
+  );
+
+  Serial.println(
+    baselineWeight
+  );
+
+  // ===================================================
+  // WIFI
+  // ===================================================
+
+  WiFi.mode(
+    WIFI_STA
+  );
+
+  WiFi.begin(
+    ssid,
+    password
+  );
+
+  Serial.print(
+    "Connecting to WiFi"
+  );
+
+  while (
+    WiFi.status() !=
+    WL_CONNECTED
+  )
+  {
+    delay(300);
+
+    Serial.print(".");
+  }
+
+  Serial.println();
+
+  Serial.println(
+    "WiFi connected!"
+  );
+
+  Serial.print(
+    "ESP8266 IP: "
+  );
+
+  Serial.println(
+    WiFi.localIP()
+  );
+
+  // ===================================================
+  // HTTP ROUTES
+  // ===================================================
+
+  server.on(
+    "/",
+    HTTP_GET,
+    handleRoot
+  );
+
+  server.on(
+    "/data",
+    HTTP_GET,
+    sendData
+  );
+
+  server.on(
+    "/authorize",
+    HTTP_GET,
+    authorizeProduct
+  );
+
+  server.on(
+    "/reset",
+    HTTP_GET,
+    handleReset
+  );
+
+  server.begin();
+
+  Serial.println(
+    "HTTP server started."
+  );
+
+  // ===================================================
+  // FINAL INFORMATION
+  // ===================================================
+
+  Serial.println();
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println(
+    "Calibration: 420.0"
+  );
+
+  Serial.println(
+    "Virtual Product Weight: 250 g"
+  );
+
+  Serial.println(
+    "Maximum Products: 4"
+  );
+
+  Serial.println(
+    "Maximum Capacity: 1000 g"
+  );
+
+  Serial.println(
+    "Duplicate Products: ALLOWED"
+  );
+
+  Serial.println(
+    "False Scan Placement Protection: ON"
+  );
+
+  Serial.println(
+    "Extra Product Protection: ON"
+  );
+
+  Serial.println(
+    "================================"
+  );
+
+  Serial.println();
+
+  Serial.println(
+    "WAITING FOR PRODUCT SCAN..."
+  );
+}
+
+// =====================================================
+// LOOP
+// =====================================================
+
+void loop()
+{
+  // Keep web server responsive.
+  server.handleClient();
+
+  // Check load cell.
+  processLoadCell();
+
+  // No long delay.
+  yield();
+}
