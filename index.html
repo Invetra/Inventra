@@ -73,7 +73,8 @@ input{width:100%;padding:12px;border:1px solid #ccc;border-radius:9px;font-size:
 
 <section id="floor" class="screen" style="display:none">
 <div class="center">
-<h2>🏬 Mall Floor</h2><p>Select a floor to start shopping.</p>
+<h2>🏬 Mall Floor</h2>
+<p>Select a floor to start shopping.</p>
 <div class="card">
 <h3>Floor 1 — Grocery</h3>
 <p>Salt, Atta, Butter, Milk, Green Peas, Ice Cream and Snacks</p>
@@ -169,7 +170,7 @@ input{width:100%;padding:12px;border:1px solid #ccc;border-radius:9px;font-size:
 <script>
 "use strict";
 
-// UPDATED ESP8266 IP ADDRESS
+// ESP8266 CONNECTION
 const ESP8266_IP = "172.20.10.5";
 const ESP_BASE = "http://" + ESP8266_IP;
 
@@ -274,16 +275,6 @@ try{return await fetch(url,{...options,signal:controller.signal});}
 finally{clearTimeout(timer);}
 }
 
-function explainConnectionError(error){
-if(error.name==="AbortError"){
-return "Request timed out. Check ESP8266 power, IP address, and Wi-Fi.";
-}
-if(location.protocol==="https:"){
-return "The page is HTTPS but the ESP8266 uses HTTP. The browser may block this request as mixed content. Test http://172.20.10.5/data directly in Safari.";
-}
-return "Could not reach the ESP8266. Check that your phone and ESP8266 are connected to the same hotspot and that the IP address is correct.";
-}
-
 async function handleScannedBarcode(barcode){
 barcode=String(barcode).trim();
 const now=Date.now();
@@ -320,7 +311,9 @@ await updateLiveTrolley();
 }catch(error){
 console.error("Authorization failed:",error);
 current.className="danger-box";
-current.textContent="❌ Authorization failed: "+explainConnectionError(error);
+let msg=error.name==="AbortError"?"Request timed out. Check ESP8266 power, IP and Wi-Fi.":error.message;
+if(location.protocol==="https:")msg+=" Browser may be blocking HTTPS-to-HTTP access (mixed content).";
+current.textContent="❌ Authorization failed: "+msg;
 result.textContent="Authorization failed. See message above.";
 }finally{
 authorizationInProgress=false;
@@ -381,10 +374,7 @@ else{message.className="waiting-box";message.textContent="🛒 Trolley is empty.
 }catch(error){
 console.error("Live data error:",error);
 const message=document.getElementById("liveTrolleyMessage");
-if(message){
-message.className="danger-box";
-message.textContent="🔴 Cannot read ESP data: "+explainConnectionError(error);
-}
+if(message){message.className="danger-box";message.textContent="🔴 Cannot read ESP data: "+error.message+". Check ESP IP, Wi-Fi, and browser permissions.";}
 }
 }
 
@@ -406,7 +396,7 @@ else if(data.authorizedProducts?.length){comparison.className="card waiting-box"
 else if(Number(data.trolleyCount)>0){comparison.className="card success-box";comparison.textContent="✅ All placed products are authenticated.";}
 else{comparison.className="card";comparison.textContent="🛒 Trolley is empty.";}
 }catch(error){
-document.getElementById("espConnection").textContent="🔴 ESP8266 Not Connected: "+explainConnectionError(error);
+document.getElementById("espConnection").textContent="🔴 ESP8266 Not Connected: "+error.message;
 document.getElementById("espConnection").style.color="#dc2626";
 }
 }
@@ -434,7 +424,7 @@ document.getElementById("currentProduct").className="waiting-box";
 document.getElementById("currentProduct").textContent="No product scanned yet.";
 alert("✅ Trolley reset successfully.");
 await updateLiveTrolley();
-}catch(error){alert("❌ Could not reset trolley: "+explainConnectionError(error));}
+}catch(error){alert("❌ Could not reset trolley: "+error.message);}
 }
 
 function doneShopping(){
